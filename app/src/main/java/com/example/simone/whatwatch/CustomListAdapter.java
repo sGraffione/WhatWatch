@@ -51,41 +51,13 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
         imageView = (ImageView) convertView.findViewById(R.id.photo);
 
-        /*Target target = new Target() {
-            private View convertView;
-            @Override
-            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                imageView.setImageBitmap(bitmap);   //imposta l'immagine di sfondo di ImageView
-                Drawable image = imageView.getDrawable();
-                convertView.setBackground(image);   //ritorna un drawable e lo usa per impostare lo sfondo dell'item
-                imageView.setImageBitmap(null);     //rimuove lo sfondo da ImageView
-            }
-
-            @Override
-            public void onBitmapFailed(Drawable errorDrawable) {}
-
-            @Override
-            public void onPrepareLoad(Drawable placeHolderDrawable) {}
-
-            private Target init(View convertView){
-                this.convertView = convertView;
-                return this;
-            }
-        }.init(convertView);
-
-        Picasso.with(context).load((String) data.get("backdrop_path")).into(target);*/
-
         Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
         title.setText((String) data.get("original_title"));
-        Button btnAddElement = (Button) convertView.findViewById(R.id.btnAddToWatch);
-        btnAddElement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
+        TextView rating = (TextView) convertView.findViewById(R.id.rating);
+
 
         return convertView;
     }
