@@ -42,23 +42,23 @@
         android:id="@+id/btnAddToWatch"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignBottom="@+id/photo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="25dp"
-        android:layout_marginEnd="35dp"
+        android:layout_marginEnd="34dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:background="@drawable/button_selector"
-        android:text="+" />
+        android:text="+"
+        android:layout_alignTop="@+id/rating"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:text="TextView"
-        android:layout_alignTop="@+id/btnAddToWatch"
+        android:layout_marginStart="29dp"
+        android:layout_below="@+id/Title"
         android:layout_toEndOf="@+id/photo"
-        android:layout_marginStart="30dp" />
+        android:layout_marginTop="37dp" />
 
 
 </RelativeLayout>
