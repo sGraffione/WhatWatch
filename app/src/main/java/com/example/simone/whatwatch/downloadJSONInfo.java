@@ -17,7 +17,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 //caricamento del file json in background
 public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
 
