@@ -17,10 +17,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- * Created by marco on 31/07/17.
- */
-
 public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
 
     private ProgressDialog pDialog;
