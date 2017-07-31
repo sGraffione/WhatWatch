@@ -61,7 +61,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rating.setText("Cioa");
+                rating.setText("Ciao");
             }
         });
 

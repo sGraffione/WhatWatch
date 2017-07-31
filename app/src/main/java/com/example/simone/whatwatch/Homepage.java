@@ -47,7 +47,7 @@ public class Homepage extends Fragment {
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
                 //String selFilm = ((TextView) view.findViewById(R.id.Title)).getText().toString();
                 HashMap<String, Object> hm_film = filmInfo.get(position);
-                int id = (int) hm_film.get("id");
+                String id = hm_film.get("id").toString();
                 Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
                 appInfo.putExtra("id", id);
                 startActivity(appInfo);
