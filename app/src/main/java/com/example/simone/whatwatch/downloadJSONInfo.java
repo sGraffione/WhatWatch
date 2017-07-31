@@ -79,7 +79,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 JSONObject film = jArray.getJSONObject(i);
                 String TAG_TITLE = film.getString("original_title");
                 String TAG_OVERVIEW = film.getString("overview");
-                String TAG_PHOTO = "https://image.tmdb.org/t/p/w300"+film.getString("poster_path");
+                String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
 
 
                 //General information of film
