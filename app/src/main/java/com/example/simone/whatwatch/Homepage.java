@@ -45,11 +45,10 @@ public class Homepage extends Fragment {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                //String selFilm = ((TextView) view.findViewById(R.id.Title)).getText().toString();
                 HashMap<String, Object> hm_film = filmInfo.get(position);
-                String id = hm_film.get("id").toString();
+                int id_film = Integer.parseInt(hm_film.get("id").toString());
                 Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
-                appInfo.putExtra("id", id);
+                appInfo.putExtra("id", id_film);
                 startActivity(appInfo);
             }
         });

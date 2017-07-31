@@ -24,13 +24,13 @@ import java.util.HashMap;
 public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
 
     private ProgressDialog pDialog;
-    private HashMap<String, Object> filmInfo;
+    private ArrayList<HashMap<String, Object>> filmInfo;
     private ListView lv;
     private CustomListAdapter adapter;
     private Context context;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public ParsingInfoFilm(HashMap<String, Object> filmInfo)
+    public ParsingInfoFilm(Context context, ArrayList<HashMap<String, Object>> filmInfo)
     {
         this.filmInfo = filmInfo;
         pDialog = new ProgressDialog(context);
@@ -94,6 +94,8 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
                 info.put("vote_average", TAG_RATING);
                 info.put("release_date", TAG_RELEASE);
                 info.put("genres", TAG_GENRE);
+
+                filmInfo.add(info);
             }
 
         }catch (IOException e){
