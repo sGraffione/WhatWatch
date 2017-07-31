@@ -1,8 +1,8 @@
 package com.example.simone.whatwatch;
 
-/**
- * Created by raimo on 31/07/2017.
- */
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+
 
 public class WatchListDB {
 
@@ -25,6 +25,29 @@ public class WatchListDB {
     public static final String DROP_FILM_TABLE =
             "DROP TABLE IF EXISTS" + FILM_TABLE;
 
+    //database and database helper objects
+    private SQLiteDatabase db;
+    private DBHelper dbHelper;
 
+    //costruttore della classe
+    public WatchListDB(Context context){
+        dbHelper = new DBHelper(context, DB_NAME, null, DB_VERSION);
+    }
+
+    //metodo per aprire il database in sola lettura
+    private void openReadableDB(){
+        db = dbHelper.getReadableDatabase();
+    }
+
+    //metodo per aprire il dababase in scrittura/lettura
+    private void openWriteableDB(){
+        db = dbHelper.getWritableDatabase();
+    }
+
+    //metodo per la chiusura
+    private void closeDB(){
+        if(db != null)
+            db.close();
+    }
 
 }
