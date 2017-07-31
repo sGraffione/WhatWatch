@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -77,7 +79,13 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
         title.setText((String) data.get("original_title"));
+        Button btnAddElement = (Button) convertView.findViewById(R.id.btnAddToWatch);
+        btnAddElement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
 
         return convertView;
     }
