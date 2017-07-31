@@ -17,9 +17,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Created by marco on 31/07/17.
+ */
 
-//caricamento del file json in background
-public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
+public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
 
     private ProgressDialog pDialog;
     private ArrayList<HashMap<String, Object>> filmInfo;
@@ -28,7 +30,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
     private Context context;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public downloadJSONInfo(Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv)
+    public ParsingInfoFilm(Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv)
     {
         this.filmInfo = filmInfo;
         this.lv = lv;
@@ -79,8 +81,8 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 JSONObject film = jArray.getJSONObject(i);
                 String TAG_TITLE = film.getString("original_title");
                 String TAG_OVERVIEW = film.getString("overview");
-                int TAG_ID = film.getInt("id");
-                String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
+
+                String TAG_PHOTO = "https://image.tmdb.org/t/p/w300"+film.getString("poster_path");
 
 
                 //General information of film

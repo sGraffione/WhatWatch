@@ -7,7 +7,7 @@
     tools:context="com.example.simone.whatwatch.ShowInfoAboutListElement">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/poster"
         android:layout_width="150dp"
         android:layout_height="200dp"
         android:layout_marginStart="22dp"
@@ -36,12 +36,12 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="Overview"
-        android:layout_alignTop="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
+        android:layout_alignTop="@+id/poster"
+        android:layout_toEndOf="@+id/poster"
         android:layout_marginStart="15dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/add_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="21dp"
@@ -52,11 +52,11 @@
         android:layout_marginEnd="13dp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button"
-        android:layout_alignBottom="@+id/button"
+        android:layout_alignBaseline="@+id/add_button"
+        android:layout_alignBottom="@+id/add_button"
         android:layout_alignStart="@+id/Overview"
         android:text="rating" />
 
