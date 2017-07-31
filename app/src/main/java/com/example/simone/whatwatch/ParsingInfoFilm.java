@@ -24,17 +24,15 @@ import java.util.HashMap;
 public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
 
     private ProgressDialog pDialog;
-    private ArrayList<HashMap<String, Object>> filmInfo;
+    private HashMap<String, Object> filmInfo;
     private ListView lv;
     private CustomListAdapter adapter;
     private Context context;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public ParsingInfoFilm(Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv)
+    public ParsingInfoFilm(HashMap<String, Object> filmInfo)
     {
         this.filmInfo = filmInfo;
-        this.lv = lv;
-        this.context = context;
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
@@ -81,7 +79,9 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
                 JSONObject film = jArray.getJSONObject(i);
                 String TAG_TITLE = film.getString("original_title");
                 String TAG_OVERVIEW = film.getString("overview");
-
+                String TAG_RATING = film.getString("vote_average");
+                String TAG_RELEASE = film.getString("release_date");
+                JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
                 String TAG_PHOTO = "https://image.tmdb.org/t/p/w300"+film.getString("poster_path");
 
 
@@ -91,11 +91,9 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
                 info.put("overview", TAG_OVERVIEW);
                 info.put("poster_path", TAG_PHOTO);
                 info.put("position", i);
-                //HashMap<String, Object> imageDownload = new HashMap<>();
-                //imageDownload.put("backdrop_path", TAG_PHOTO);
-                //imageDownload.put("position", i);   //indica il numero della foto
-
-                filmInfo.add(info);
+                info.put("vote_average", TAG_RATING);
+                info.put("release_date", TAG_RELEASE);
+                info.put("genres", TAG_GENRE);
             }
 
         }catch (IOException e){
@@ -112,9 +110,6 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
         super.onPostExecute(result);
         if(pDialog.isShowing())
             pDialog.dismiss();
-
-        adapter = new CustomListAdapter(context, R.layout.film_element, filmInfo);
-        lv.setAdapter(adapter);
 
     }
 }
