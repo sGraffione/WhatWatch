@@ -1,7 +1,10 @@
 package com.example.simone.whatwatch;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.util.ArrayList;
 
 
 public class WatchListDB {
@@ -49,5 +52,46 @@ public class WatchListDB {
         if(db != null)
             db.close();
     }
+
+    //metodo per richiamare una singola colonna
+    public FilmDescriptionDB getFilm(int id){
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
+        cursor.moveToFirst();
+        FilmDescriptionDB film = getFilmFromCursor(cursor);
+        if(cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return film;
+    }
+
+    //metodo per richiamare più colonne
+    public ArrayList<FilmDescriptionDB> getFilm(String listname){
+    }
+
+
+    //funzione per estrarre dati dai cursori
+    private static FilmDescriptionDB getFilmFromCursor(Cursor cursor){
+        if(cursor == null || cursor.getCount() == 0){
+            return null;
+        }
+        else{
+            try {
+                FilmDescriptionDB film = new FilmDescriptionDB(
+                        cursor.getInt(FILM_ID_COL),
+                        cursor.getString(FILM_NAME_COL)
+                );
+                return film;
+            }
+            catch (Exception e){
+                return  null;
+            }
+        }
+    }
+
 
 }
