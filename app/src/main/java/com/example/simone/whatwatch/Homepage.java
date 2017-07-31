@@ -63,9 +63,4 @@ public class Homepage extends Fragment {
 
     }
 
-    public void onClickHandler(View view) {
-        TextView text = (TextView) view.findViewById(R.id.rating);
-        text.setText("Hello");
-
-    }
 }

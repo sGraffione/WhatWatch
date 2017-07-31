@@ -50,8 +50,7 @@
         android:layout_alignTop="@+id/rating"
         android:layout_alignParentEnd="true"
         android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:onClick="onClickHandler"/>
+        android:focusableInTouchMode="false"/>
 
     <TextView
         android:id="@+id/rating"

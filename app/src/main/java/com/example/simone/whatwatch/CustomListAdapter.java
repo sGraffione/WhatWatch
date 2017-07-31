@@ -50,13 +50,20 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         HashMap<String, Object> data = filmList.get(position);
 
         imageView = (ImageView) convertView.findViewById(R.id.photo);
+        Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
 
         Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
         title.setText((String) data.get("original_title"));
 
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
+        final TextView rating = (TextView) convertView.findViewById(R.id.rating);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rating.setText("Cioa");
+            }
+        });
 
 
         return convertView;
