@@ -17,18 +17,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
+public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<String, Object>>>{
 
     private ProgressDialog pDialog;
     private ArrayList<HashMap<String, Object>> filmInfo;
-    private ListView lv;
-    private CustomListAdapter adapter;
-    private Context context;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public ParsingInfoFilm(Context context, ArrayList<HashMap<String, Object>> filmInfo)
+    public ParsingInfoFilm(Context context)
     {
-        this.filmInfo = filmInfo;
+        filmInfo = new ArrayList<>();
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
@@ -39,13 +36,11 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        if(adapter != null){
-            adapter.clear();
-        }
+
     }
 
     @Override
-    protected Void doInBackground(String... urlString){
+    protected ArrayList<HashMap<String, Object>> doInBackground(String... urlString){
         try {
             HttpURLConnection urlConnection;
             URL url = new URL(urlString[0]);
@@ -69,16 +64,13 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
 
-
-            JSONArray jArray = JSONData.getJSONArray("results");
-            for (int i = 0; i < jArray.length(); i++) {
-                JSONObject film = jArray.getJSONObject(i);
+                JSONObject film = JSONData;
                 String TAG_TITLE = film.getString("original_title");
                 String TAG_OVERVIEW = film.getString("overview");
                 String TAG_RATING = film.getString("vote_average");
                 String TAG_RELEASE = film.getString("release_date");
                 JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
-                String TAG_PHOTO = "https://image.tmdb.org/t/p/w300"+film.getString("poster_path");
+                String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
 
 
                 //General information of film
@@ -86,13 +78,11 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
                 info.put("original_title", TAG_TITLE);
                 info.put("overview", TAG_OVERVIEW);
                 info.put("poster_path", TAG_PHOTO);
-                info.put("position", i);
                 info.put("vote_average", TAG_RATING);
                 info.put("release_date", TAG_RELEASE);
                 info.put("genres", TAG_GENRE);
 
                 filmInfo.add(info);
-            }
 
         }catch (IOException e){
             e.printStackTrace();
@@ -100,11 +90,11 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, Void>{
             e.printStackTrace();
         }
 
-        return null;
+        return filmInfo;
     }
 
     @Override
-    protected void onPostExecute(Void result){
+    protected void onPostExecute(ArrayList<HashMap<String, Object>> result){
         super.onPostExecute(result);
         if(pDialog.isShowing())
             pDialog.dismiss();
