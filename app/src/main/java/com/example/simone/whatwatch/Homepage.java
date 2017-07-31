@@ -35,7 +35,6 @@ public class Homepage extends Fragment {
         filmInfo = new ArrayList<>();
         lv = (ListView) view.findViewById(R.id.filmList);
 
-
         URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
         new downloadJSONInfo(getActivity(), filmInfo, lv).execute(URLSelected);
 
