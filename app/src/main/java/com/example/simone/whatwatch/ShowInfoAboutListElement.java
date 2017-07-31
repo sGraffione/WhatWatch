@@ -28,7 +28,7 @@ public class ShowInfoAboutListElement extends Activity {
         TextView overview = (TextView) findViewById(R.id.Overview);
         TextView rating = (TextView) findViewById(R.id.rating);
 
-        new ParsingInfoFilm(filmInfo).execute();
+        new ParsingInfoFilm(filmInfo).execute(url);
 
 
 

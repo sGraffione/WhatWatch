@@ -89,6 +89,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 info.put("overview", TAG_OVERVIEW);
                 info.put("poster_path", TAG_PHOTO);
                 info.put("position", i);
+                info.put("id", TAG_ID);
                 //HashMap<String, Object> imageDownload = new HashMap<>();
                 //imageDownload.put("backdrop_path", TAG_PHOTO);
                 //imageDownload.put("position", i);   //indica il numero della foto
