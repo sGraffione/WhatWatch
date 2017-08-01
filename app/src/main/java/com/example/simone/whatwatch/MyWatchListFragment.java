@@ -2,6 +2,7 @@ package com.example.simone.whatwatch;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,7 +37,7 @@ public class MyWatchListFragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridview);
 
         WatchListDB watchListDB = new WatchListDB(getContext());
-        ArrayList<FilmDescriptionDB> films = watchListDB.getAll();
+        final ArrayList<FilmDescriptionDB> films = watchListDB.getAll();
 
         watchlistAdapter = new WatchlistAdapter(getContext(), films);
         gridView.setAdapter(watchlistAdapter);
@@ -57,6 +58,16 @@ public class MyWatchListFragment extends Fragment {
                 alertDialog.show();
 
                 return true;
+            }
+        });
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int id_film = films.get(i).getId();
+                Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
+                appInfo.putExtra("id", id_film);
+                startActivity(appInfo);
             }
         });
 

@@ -11,6 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class WatchlistAdapter extends BaseAdapter {
@@ -57,6 +59,7 @@ public class WatchlistAdapter extends BaseAdapter {
         TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
         FilmDescriptionDB film = films.get(position);
         nameTextView.setText(film.getName());
+        //Picasso.with(mContext).load(films.getImg()).into(imageView);
 
 
 

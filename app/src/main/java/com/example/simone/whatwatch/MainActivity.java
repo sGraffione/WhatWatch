@@ -24,7 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
+    String typeSelected = "movie";
+    String firstPart = "https://api.themoviedb.org/3/discover/";
+    String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
     int homepageSearchSelected = R.id.Popularity;
+    int getHomepageSearchTypeSelected = R.id.Movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,26 +73,48 @@ public class MainActivity extends AppCompatActivity {
                 menu.findItem(R.id.Most_Voted).setChecked(true);
                 break;
         }
+
+        switch (getHomepageSearchTypeSelected){
+            case R.id.Movies:
+                menu.findItem(R.id.Movies).setChecked(true);
+                break;
+            case R.id.Tv_shows:
+                menu.findItem(R.id.Tv_shows).setChecked(true);
+                break;
+        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
-        int id = item.getItemId();
-
-        switch (id){
-            case R.id.Popularity:
-                homepageSearchSelected = R.id.Popularity;
-                URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
-                break;
-            case R.id.Most_Voted:
-                homepageSearchSelected = R.id.Most_Voted;
-                URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1\n";
-                break;
+        String URLSelected;
+        int id = item.getGroupId();
+        if(id == R.id.typeGroup){
+            switch(item.getItemId()){
+                case R.id.Movies:
+                    getHomepageSearchTypeSelected = R.id.Movies;
+                    typeSelected = "movie";
+                    break;
+                case R.id.Tv_shows:
+                    getHomepageSearchTypeSelected = R.id.Tv_shows;
+                    typeSelected = "tv";
+                    break;
+            }
+        }else{
+            switch (id){
+                case R.id.Popularity:
+                    homepageSearchSelected = R.id.Popularity;
+                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
+                    break;
+                case R.id.Most_Voted:
+                    homepageSearchSelected = R.id.Most_Voted;
+                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1\n";
+                    break;
+            }
         }
 
+        URLSelected = firstPart + typeSelected + secondPart;
         List<Fragment> allFragment = getSupportFragmentManager().getFragments();
         ((Homepage) allFragment.get(0)).refresh(URLSelected);
         return super.onOptionsItemSelected(item);
