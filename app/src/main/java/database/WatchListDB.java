@@ -24,10 +24,10 @@ public class WatchListDB {
     public static final int FILM_NAME_COL = 1;
 
     public static final String CREATE_FILM_TABLE =
-            "CREATE TABLE" + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL);";
+            "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL);";
 
     public static final String DROP_FILM_TABLE =
-            "DROP TABLE IF EXISTS" + FILM_TABLE;
+            "DROP TABLE IF EXISTS " + FILM_TABLE;
 
     //database and database helper objects
     private SQLiteDatabase db;

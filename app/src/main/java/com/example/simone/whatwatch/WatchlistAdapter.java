@@ -46,7 +46,7 @@ public class WatchlistAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1
-        ArrayList<FilmDescriptionDB> film = new ArrayList<>();
+        ArrayList<FilmDescriptionDB> films = new ArrayList<>();
 
         // 2
         if (convertView == null) {
@@ -55,15 +55,16 @@ public class WatchlistAdapter extends BaseAdapter {
         }
 
         // 3
-
+        ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
+        TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
 
         WatchListDB watchListDB = new WatchListDB(mContext);
+        films = watchListDB.getAll();
 
-
-
-
-        final ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
-        final TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
+        for(int i = 0; i < films.size(); i++){
+            FilmDescriptionDB film = films.get(i);
+            nameTextView.setText(film.getName());
+        }
 
         // 4
         //imageView.setImageResource(film.getImageResource());
