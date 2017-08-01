@@ -94,10 +94,42 @@ public class WatchListDB {
         }
     }
 
-    //public long insertFilm(FilmDescriptionDB film){
-     //   ContentValues in = new ContentValues();
-       // in.put()
-    //}
 
+    //metodi per modificare il database
+    public long insertFilm(FilmDescriptionDB film){
+        ContentValues in = new ContentValues();
+        in.put(FILM_NAME, film.getName());
+
+        this.openWriteableDB();
+        long rowID = db.insert(FILM_TABLE, null, in);
+        this.closeDB();
+
+        return rowID;
+    }
+
+    public int updateFilm(FilmDescriptionDB film){
+        ContentValues up = new ContentValues();
+        up.put(FILM_NAME, film.getName());
+
+        String where =  FILM_ID + "=?";
+        String[] whereArgs = {String.valueOf(film.getId())};
+
+        this.openWriteableDB();
+        int rowCount = db.update(FILM_TABLE, up, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
+
+    public int deleteFilm(int id){
+        String where = FILM_ID + "=?";
+        String[] whereArgs = {String.valueOf(id)};
+
+        this.openWriteableDB();
+        int rowCount = db.delete(FILM_TABLE, where, whereArgs);
+        this.closeDB();
+
+        return rowCount;
+    }
 
 }
