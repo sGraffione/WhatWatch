@@ -1,8 +1,4 @@
-package com.example.simone.whatwatch;
-
-/**
- * Created by raimo on 31/07/2017.
- */
+package database;
 
 // Classe per definire la tabella, in questo caso definisce le colonne che contengono i dati di un film
 
