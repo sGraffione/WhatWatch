@@ -54,10 +54,26 @@ public class WatchListDB {
             db.close();
     }
 
-    //metodo per richiamare una singola colonna
+    //metodo per richiamare una singola colonna in base all'id
     public FilmDescriptionDB getFilm(int id){
         String where = FILM_ID + "= ?";
         String[] whereArgs = {Integer.toString(id)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
+        cursor.moveToFirst();
+        FilmDescriptionDB film = getFilmFromCursor(cursor);
+        if(cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return film;
+    }
+
+    //metodo per richiamare una singola colonna in base al nome
+    public FilmDescriptionDB getFilm(String name){
+        String where = FILM_NAME + "= ?";
+        String[] whereArgs = {name};
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
