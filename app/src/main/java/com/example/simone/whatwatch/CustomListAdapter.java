@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.squareup.picasso.Target;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import database.FilmDescriptionDB;
@@ -50,6 +52,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
             convertView = layoutInflater.inflate(R.layout.film_element, null, true);
 
         }
+        final View view = convertView;
         final HashMap<String, Object> data = filmList.get(position);
 
         imageView = (ImageView) convertView.findViewById(R.id.photo);
@@ -66,8 +69,8 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
             public void onClick(View v) {
                 FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get("original_title"));
                 WatchListDB watchListDB = new WatchListDB(getContext());
-                watchListDB.insertFilm(film);
-                Toast.makeText(getContext(), "You added the film to your watchist.", Toast.LENGTH_SHORT);
+                long row = watchListDB.insertFilm(film);
+                ((TextView) view.findViewById(R.id.rating)).setText(String.valueOf(row));
             }
         });
 

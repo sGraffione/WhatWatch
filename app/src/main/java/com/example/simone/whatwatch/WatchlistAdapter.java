@@ -15,11 +15,11 @@ import java.util.ArrayList;
 
 public class WatchlistAdapter extends BaseAdapter {
 
-    private final Context mContext;
-    private final FilmDescriptionDB[] films;
+    private Context mContext;
+    private ArrayList<FilmDescriptionDB> films;
 
     // 1
-    public WatchlistAdapter(Context context, FilmDescriptionDB[] films) {
+    public WatchlistAdapter(Context context, ArrayList<FilmDescriptionDB> films) {
         this.mContext = context;
         this.films = films;
     }
@@ -27,7 +27,7 @@ public class WatchlistAdapter extends BaseAdapter {
     // 2
     @Override
     public int getCount() {
-        return films.length;
+        return films.size();
     }
 
     // 3
@@ -45,8 +45,6 @@ public class WatchlistAdapter extends BaseAdapter {
     // 5
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // 1
-        ArrayList<FilmDescriptionDB> films = new ArrayList<>();
 
         // 2
         if (convertView == null) {
@@ -57,19 +55,10 @@ public class WatchlistAdapter extends BaseAdapter {
         // 3
         ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
         TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
+        FilmDescriptionDB film = films.get(position);
+        nameTextView.setText(film.getName());
 
-        WatchListDB watchListDB = new WatchListDB(mContext);
-        films = watchListDB.getAll();
 
-        for(int i = 0; i < films.size(); i++){
-            FilmDescriptionDB film = films.get(i);
-            nameTextView.setText(film.getName());
-        }
-
-        // 4
-        //imageView.setImageResource(film.getImageResource());
-       // nameTextView.setText(mContext.getString(book.getName()));
-        //authorTextView.setText(mContext.getString(book.getAuthor()));
 
         return convertView;
     }

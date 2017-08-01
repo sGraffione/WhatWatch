@@ -24,17 +24,18 @@ import database.WatchListDB;
 public class MyWatchListFragment extends Fragment {
     private static final String TAG = "My Watchlist";
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_my_watch_list, container, false);
-        FilmDescriptionDB[] filmDescriptionDB = new FilmDescriptionDB[10];
         GridView gridView = (GridView) view.findViewById(R.id.gridview);
-        WatchlistAdapter watchlistAdapter = new WatchlistAdapter(getActivity(), filmDescriptionDB);
-        gridView.setAdapter(watchlistAdapter);
 
+        WatchListDB watchListDB = new WatchListDB(getContext());
+        ArrayList<FilmDescriptionDB> films = watchListDB.getAll();
+
+        WatchlistAdapter watchlistAdapter = new WatchlistAdapter(getContext(), films);
+        gridView.setAdapter(watchlistAdapter);
 
 
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -3,13 +3,12 @@ package com.example.simone.whatwatch;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Simone on 28/07/2017.
- */
 
 class SectionsPageAdapter extends FragmentPagerAdapter {
 
