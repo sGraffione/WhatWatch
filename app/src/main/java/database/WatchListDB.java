@@ -145,11 +145,14 @@ public class WatchListDB {
         this.closeDB();
 
         if(cursor == null || cursor.getCount() == 0){
+            cursor.close();
             return null;
         }
         else{
             try{
-                return cursor.getString(FILM_IMG_URL_COL);
+                String url = cursor.getString(FILM_IMG_URL_COL);
+                cursor.close();
+                return url;
             }
             catch (Exception e){
                 return null;
