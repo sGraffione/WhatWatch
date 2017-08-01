@@ -1,6 +1,7 @@
 package com.example.simone.whatwatch;
 
 import database.FilmDescriptionDB;
+import database.WatchListDB;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class WatchlistAdapter extends BaseAdapter {
 
@@ -43,7 +46,7 @@ public class WatchlistAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1
-        final FilmDescriptionDB film = films[position];
+        ArrayList<FilmDescriptionDB> film = new ArrayList<>();
 
         // 2
         if (convertView == null) {
@@ -52,6 +55,13 @@ public class WatchlistAdapter extends BaseAdapter {
         }
 
         // 3
+
+
+        WatchListDB watchListDB = new WatchListDB(mContext);
+
+
+
+
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
         final TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
 

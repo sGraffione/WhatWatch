@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import database.FilmDescriptionDB;
+import database.WatchListDB;
+
 public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
     ArrayList<HashMap<String, Object>> filmList;
@@ -47,7 +50,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
             convertView = layoutInflater.inflate(R.layout.film_element, null, true);
 
         }
-        HashMap<String, Object> data = filmList.get(position);
+        final HashMap<String, Object> data = filmList.get(position);
 
         imageView = (ImageView) convertView.findViewById(R.id.photo);
         Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
@@ -61,7 +64,10 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rating.setText("Ciao");
+                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get("original_title"));
+                WatchListDB watchListDB = new WatchListDB(getContext());
+                watchListDB.insertFilm(film);
+                Toast.makeText(getContext(), "You added the film to your watchist.", Toast.LENGTH_SHORT);
             }
         });
 

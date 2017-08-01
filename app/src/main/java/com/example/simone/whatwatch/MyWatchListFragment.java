@@ -15,8 +15,10 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import java.util.ArrayList;
+import java.util.WeakHashMap;
 
 import database.FilmDescriptionDB;
+import database.WatchListDB;
 
 
 public class MyWatchListFragment extends Fragment {
@@ -32,6 +34,8 @@ public class MyWatchListFragment extends Fragment {
         GridView gridView = (GridView) view.findViewById(R.id.gridview);
         WatchlistAdapter watchlistAdapter = new WatchlistAdapter(getActivity(), filmDescriptionDB);
         gridView.setAdapter(watchlistAdapter);
+
+
 
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
