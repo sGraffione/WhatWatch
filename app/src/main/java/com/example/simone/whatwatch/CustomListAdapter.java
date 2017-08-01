@@ -71,6 +71,8 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 WatchListDB watchListDB = new WatchListDB(getContext());
                 long row = watchListDB.insertFilm(film);
                 ((TextView) view.findViewById(R.id.rating)).setText(String.valueOf(row));
+                /*MainActivity mainActivity = new MainActivity();
+                mainActivity.refreshFragmentWhatchList();*/
             }
         });
 

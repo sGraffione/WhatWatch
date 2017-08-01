@@ -2,6 +2,7 @@ package com.example.simone.whatwatch;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
@@ -43,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MyWatchListFragment(), "My Watchlist");
         adapter.addFragment(new Homepage(), "Homepage");
+        adapter.addFragment(new MyWatchListFragment(), "My Watchlist");
         adapter.addFragment(new WatchedListFragment(), "Watched");
         viewPager.setAdapter(adapter);
     }
@@ -89,8 +90,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         List<Fragment> allFragment = getSupportFragmentManager().getFragments();
-        ((Homepage) allFragment.get(1)).refresh(URLSelected);
+        ((Homepage) allFragment.get(0)).refresh(URLSelected);
         return super.onOptionsItemSelected(item);
     }
 
+    public void refreshFragmentWhatchList(){
+        //List<Fragment> allFragment = getSupportFragmentManager().getFragments();
+        MyWatchListFragment myWatchListFragment = new MyWatchListFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.detach(myWatchListFragment);
+        fragmentTransaction.attach(myWatchListFragment);
+        fragmentTransaction.commit();
+    }
 }

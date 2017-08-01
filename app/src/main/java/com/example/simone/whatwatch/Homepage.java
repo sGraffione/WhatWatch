@@ -26,7 +26,7 @@ public class Homepage extends Fragment {
 
     ArrayList<HashMap<String, Object>> filmInfo;
     ListView lv;
-    String URLSelected;
+    String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
     Button btnAddElement;
 
 
@@ -38,7 +38,6 @@ public class Homepage extends Fragment {
         filmInfo = new ArrayList<>();
         lv = (ListView) view.findViewById(R.id.filmList);
 
-        URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
         new downloadJSONInfo(getActivity(), filmInfo, lv).execute(URLSelected);
 
 
@@ -62,7 +61,7 @@ public class Homepage extends Fragment {
     public void refresh(String url){
         filmInfo.clear();
         new downloadJSONInfo(getActivity(), filmInfo, lv).execute(url);
-
+        URLSelected = url;
     }
 
 }

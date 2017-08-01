@@ -20,7 +20,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_FILM_TABLE);
-
         //db.execSQL("INSERT INTO film_data VALUES (1, 'Inception')");
     }
 

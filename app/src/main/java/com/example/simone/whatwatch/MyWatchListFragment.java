@@ -24,17 +24,21 @@ import database.WatchListDB;
 public class MyWatchListFragment extends Fragment {
     private static final String TAG = "My Watchlist";
 
+    private GridView gridView;
+
+    private WatchlistAdapter watchlistAdapter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_my_watch_list, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.gridview);
+        gridView = (GridView) view.findViewById(R.id.gridview);
 
         WatchListDB watchListDB = new WatchListDB(getContext());
         ArrayList<FilmDescriptionDB> films = watchListDB.getAll();
 
-        WatchlistAdapter watchlistAdapter = new WatchlistAdapter(getContext(), films);
+        watchlistAdapter = new WatchlistAdapter(getContext(), films);
         gridView.setAdapter(watchlistAdapter);
 
 
