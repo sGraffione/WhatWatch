@@ -1,20 +1,20 @@
 package com.example.simone.whatwatch;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Button;
+        import android.app.Activity;
+        import android.content.Intent;
+        import android.graphics.Color;
+        import android.os.Bundle;
+        import android.support.v4.content.ContextCompat;
+        import android.widget.ImageView;
+        import android.widget.TextView;
+        import android.widget.Button;
 
-import com.squareup.picasso.Picasso;
+        import com.squareup.picasso.Picasso;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
+        import java.net.URL;
+        import java.util.ArrayList;
+        import java.util.HashMap;
+        import java.util.concurrent.ExecutionException;
 
 
 public class ShowInfoAboutListElement extends Activity {
