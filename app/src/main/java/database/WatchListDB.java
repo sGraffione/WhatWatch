@@ -1,5 +1,6 @@
 package database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -70,8 +71,8 @@ public class WatchListDB {
     }
 
     //metodo per richiamare più colonne
-    public ArrayList<FilmDescriptionDB> getFilm(String listname){
-    }
+    //public ArrayList<FilmDescriptionDB> getFilm(String listname){
+    //}
 
 
     //funzione per estrarre dati dai cursori
@@ -92,6 +93,11 @@ public class WatchListDB {
             }
         }
     }
+
+    //public long insertFilm(FilmDescriptionDB film){
+     //   ContentValues in = new ContentValues();
+       // in.put()
+    //}
 
 
 }
