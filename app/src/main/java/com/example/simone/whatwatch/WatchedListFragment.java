@@ -24,8 +24,8 @@ public class WatchedListFragment extends Fragment {
 
         FilmDescriptionDB[] filmDescriptionDB = new FilmDescriptionDB[10];
         GridView gridView = (GridView) view.findViewById(R.id.gridview);
-        WatchlistAdapter watchlistAdapter = new WatchlistAdapter(getActivity(), filmDescriptionDB);
-        gridView.setAdapter(watchlistAdapter);
+        WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), filmDescriptionDB);
+        gridView.setAdapter(watchedAdapter);
 
         return view;
     }
