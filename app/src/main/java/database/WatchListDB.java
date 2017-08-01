@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import java.util.ArrayList;
 
 
@@ -22,6 +21,8 @@ public class WatchListDB {
 
     public static String FILM_NAME = "film_name";
     public static final int FILM_NAME_COL = 1;
+
+
 
     public static final String CREATE_FILM_TABLE =
             "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE);";
@@ -131,6 +132,7 @@ public class WatchListDB {
     //metodi per modificare il database
     public long insertFilm(FilmDescriptionDB film){
         ContentValues in = new ContentValues();
+        in.put(FILM_ID, film.getId());
         in.put(FILM_NAME, film.getName());
 
         this.openWriteableDB();
