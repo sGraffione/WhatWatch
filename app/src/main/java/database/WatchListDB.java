@@ -153,6 +153,8 @@ public class WatchListDB {
                 String url = cursor.getString(FILM_IMG_URL_COL);
                 cursor.close();
                 return url;
+                //In questo punto si poteva anche fare direttamente return cursor.getString(FILM_IMG_URL_COL), ma così non si lascerebbe aperto il cursore
+                //Accetto suggerimenti su come poterr ottimizzare questo passaggio
             }
             catch (Exception e){
                 return null;
