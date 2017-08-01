@@ -1,4 +1,4 @@
-package com.example.simone.whatwatch;
+package database;
 
 import android.content.Context;
 import android.database.Cursor;

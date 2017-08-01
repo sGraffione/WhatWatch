@@ -1,4 +1,4 @@
-package com.example.simone.whatwatch;
+package database;
 
 // Classe per definire la tabella, in questo caso definisce le colonne che contengono i dati di un film
 

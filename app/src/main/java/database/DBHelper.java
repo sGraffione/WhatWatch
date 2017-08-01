@@ -1,11 +1,13 @@
-package com.example.simone.whatwatch;
+package database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static com.example.simone.whatwatch.WatchListDB.CREATE_FILM_TABLE;
+import database.WatchListDB;
+
+import static database.WatchListDB.CREATE_FILM_TABLE;
 
 
 
