@@ -54,7 +54,7 @@ public class WatchListDB {
             db.close();
     }
 
-    //metodo per richiamare una singola colonna in base all'id
+    //metodo per richiamare una singola riga
     public FilmDescriptionDB getFilm(int id){
         String where = FILM_ID + "= ?";
         String[] whereArgs = {Integer.toString(id)};

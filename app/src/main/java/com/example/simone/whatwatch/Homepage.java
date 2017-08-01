@@ -54,7 +54,6 @@ public class Homepage extends Fragment {
         });
 
 
-
         return view;
     }
 
