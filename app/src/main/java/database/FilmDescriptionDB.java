@@ -8,7 +8,10 @@ public class FilmDescriptionDB {
     private int id;
     private String name;
 
-    public FilmDescriptionDB() {};
+    public FilmDescriptionDB() {
+        id = 0;
+        name = null;
+    };
 
     public FilmDescriptionDB(String name) {
         this.name = name;
