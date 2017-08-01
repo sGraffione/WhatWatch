@@ -24,7 +24,7 @@ public class WatchListDB {
     public static final int FILM_NAME_COL = 1;
 
     public static final String CREATE_FILM_TABLE =
-            "CREATE TABLE" + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE);";
+            "CREATE TABLE" + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL);";
 
     public static final String DROP_FILM_TABLE =
             "DROP TABLE IF EXISTS" + FILM_TABLE;
@@ -86,9 +86,26 @@ public class WatchListDB {
         return film;
     }
 
-    //metodo per richiamare più colonne
-    //public ArrayList<FilmDescriptionDB> getFilm(String listname){
-    //}
+    //metodo per richiamare tutte le colonne
+    public ArrayList<FilmDescriptionDB> getAll(){
+        this.openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + FILM_TABLE, null);
+
+        cursor.moveToFirst();
+
+        ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
+
+        while(cursor.moveToNext()){
+            films.add(getFilmFromCursor(cursor));
+        }
+
+        if (cursor != null){
+            cursor.close();
+        }
+        this.closeDB();
+
+        return films;
+    }
 
 
     //funzione per estrarre dati dai cursori
