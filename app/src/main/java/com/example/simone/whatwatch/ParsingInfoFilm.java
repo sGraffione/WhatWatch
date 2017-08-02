@@ -98,7 +98,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                 //General information of film
                 HashMap<String, Object> info = new HashMap<>();
-                info.put("original_title", TAG_TITLE);
+                info.put("name", TAG_TITLE);
                 info.put("overview", TAG_OVERVIEW);
                 info.put("poster_path", TAG_PHOTO);
                 info.put("vote_average", TAG_RATING);
