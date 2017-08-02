@@ -176,6 +176,33 @@ public class WatchListDB {
         }
     }
 
+
+    //Estrazione del campo watched dal db
+    public int getWatched(int id){
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+        String[] column = {FILM_WATCHED};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
+        this.closeDB();
+
+        if(cursor == null || cursor.getCount() == 0){
+            cursor.close();
+            return 0;
+        }
+        else{
+            try{
+                int watched = cursor.getInt(FILM_WATCHED_COL);
+                cursor.close();
+                return watched;
+            }
+            catch (Exception e){
+                return 0;
+            }
+        }
+    }
+
     //                                  //
     //METODI PER MODIFICARE IL DATABASE //
     //                                  //
@@ -219,6 +246,60 @@ public class WatchListDB {
         this.closeDB();
 
         return rowCount;
+    }
+
+
+    public int updateEpisode(int id){
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+        String[] column = {FILM_EP, FILM_EP_MAX};
+        ContentValues ep = new ContentValues();
+
+
+        this.openWriteableDB();
+
+        Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
+        int current_ep = cursor.getInt(FILM_EP_COL);
+        int max_ep = cursor.getInt(FILM_EP_MAX_COL);
+        cursor.close();
+
+        if (current_ep < max_ep){
+            current_ep += 1;
+        }
+
+        ep.put(FILM_EP, current_ep);
+        db.update(FILM_TABLE, ep, where, whereArgs);
+
+        this.closeDB();
+
+        return current_ep;
+    }
+
+
+    public int updateSeason(int id){
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+        String[] column = {FILM_EP, FILM_EP_MAX};
+        ContentValues sns = new ContentValues();
+
+
+        this.openWriteableDB();
+
+        Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
+        int current_season = cursor.getInt(FILM_SEASON_COL);
+        int max_season = cursor.getInt(FILM_SEASON_MAX_COL);
+        cursor.close();
+
+        if (current_season < max_season){
+            current_season += 1;
+        }
+
+        sns.put(FILM_EP, current_season);
+        db.update(FILM_TABLE, sns, where, whereArgs);
+
+        this.closeDB();
+
+        return current_season;
     }
 
 
