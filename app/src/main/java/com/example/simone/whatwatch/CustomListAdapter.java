@@ -3,9 +3,11 @@ package com.example.simone.whatwatch;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,9 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import org.json.JSONArray;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -69,14 +74,23 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         TextView title = (TextView) convertView.findViewById(R.id.Title);
         title.setText((String) data.get(TAG_TITLENAME));
 
-        final TextView rating = (TextView) convertView.findViewById(R.id.rating);
+        TextView rating = (TextView) convertView.findViewById(R.id.rating);
+        Double ratingValue = (Double) data.get("vote_average");
+        if( ratingValue < 6){
+            rating.setTextColor(Color.RED);
+        }else if( ratingValue > 7.5){
+            rating.setTextColor(Color.GREEN);
+        }else{
+            rating.setTextColor(ContextCompat.getColor(getContext(), R.color.Orange));
+        }
+        rating.setText(new DecimalFormat("##.#").format(ratingValue));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME));
                 WatchListDB watchListDB = new WatchListDB(getContext());
                 long row = watchListDB.insertFilm(film);
-                ((TextView) view.findViewById(R.id.rating)).setText(String.valueOf(row));
                 /*MainActivity mainActivity = new MainActivity();
                 mainActivity.refreshFragmentWhatchList();*/
             }

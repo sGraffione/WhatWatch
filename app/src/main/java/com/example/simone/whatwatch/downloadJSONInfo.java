@@ -84,6 +84,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     String TAG_OVERVIEW = film.getString("overview");
                     int TAG_ID = film.getInt("id");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
+                    Double TAG_RATING = film.getDouble("vote_average");
 
 
                     //General information of film
@@ -91,7 +92,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     info.put("original_title", TAG_TITLE);
                     info.put("overview", TAG_OVERVIEW);
                     info.put("poster_path", TAG_PHOTO);
-                    info.put("position", i);
+                    info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
 
                     filmInfo.add(info);
@@ -104,14 +105,14 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     String TAG_OVERVIEW = tv_serie.getString("overview");
                     int TAG_ID = tv_serie.getInt("id");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + tv_serie.getString("poster_path");
-
+                    Double TAG_RATING = tv_serie.getDouble("vote_average");
 
                     //General information of film
                     HashMap<String, Object> info = new HashMap<>();
                     info.put("name", TAG_NAME);
                     info.put("overview", TAG_OVERVIEW);
                     info.put("poster_path", TAG_PHOTO);
-                    info.put("position", i);
+                    info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
 
                     filmInfo.add(info);
