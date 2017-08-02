@@ -25,13 +25,17 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
     private ListView lv;
     private CustomListAdapter adapter;
     private Context context;
+    private String type;
+    private String searchType;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public downloadJSONInfo(Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv)
+    public downloadJSONInfo(Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv, String type, String searchType)
     {
         this.filmInfo = filmInfo;
         this.lv = lv;
         this.context = context;
+        this.type = type;
+        this.searchType = searchType;
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
@@ -71,26 +75,47 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
 
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
-
-
             JSONArray jArray = JSONData.getJSONArray("results");
-            for (int i = 0; i < jArray.length(); i++) {
-                JSONObject film = jArray.getJSONObject(i);
-                String TAG_TITLE = film.getString("original_title");
-                String TAG_OVERVIEW = film.getString("overview");
-                int TAG_ID = film.getInt("id");
-                String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
+            if(type.equals("movie")){
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject film = jArray.getJSONObject(i);
+                    String TAG_TITLE = film.getString("original_title");
+                    String TAG_OVERVIEW = film.getString("overview");
+                    int TAG_ID = film.getInt("id");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
 
 
-                //General information of film
-                HashMap<String, Object> info = new HashMap<>();
-                info.put("original_title", TAG_TITLE);
-                info.put("overview", TAG_OVERVIEW);
-                info.put("poster_path", TAG_PHOTO);
-                info.put("position", i);
-                info.put("id", TAG_ID);
+                    //General information of film
+                    HashMap<String, Object> info = new HashMap<>();
+                    info.put("original_title", TAG_TITLE);
+                    info.put("overview", TAG_OVERVIEW);
+                    info.put("poster_path", TAG_PHOTO);
+                    info.put("position", i);
+                    info.put("id", TAG_ID);
 
-                filmInfo.add(info);
+                    filmInfo.add(info);
+                }
+            }else if(type.equals("tv")) {
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    JSONObject tv_serie = jArray.getJSONObject(i);
+                    String TAG_NAME = tv_serie.getString("name");
+                    String TAG_OVERVIEW = tv_serie.getString("overview");
+                    int TAG_ID = tv_serie.getInt("id");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + tv_serie.getString("poster_path");
+
+
+                    //General information of film
+                    HashMap<String, Object> info = new HashMap<>();
+                    info.put("name", TAG_NAME);
+                    info.put("overview", TAG_OVERVIEW);
+                    info.put("poster_path", TAG_PHOTO);
+                    info.put("position", i);
+                    info.put("id", TAG_ID);
+
+                    filmInfo.add(info);
+                }
             }
 
         }catch (IOException e){
@@ -108,7 +133,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
         if(pDialog.isShowing())
             pDialog.dismiss();
 
-        adapter = new CustomListAdapter(context, R.layout.film_element, filmInfo);
+        adapter = new CustomListAdapter(context, R.layout.film_element, filmInfo, type);
         lv.setAdapter(adapter);
 
     }

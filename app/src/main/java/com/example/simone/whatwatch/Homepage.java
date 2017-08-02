@@ -38,7 +38,7 @@ public class Homepage extends Fragment {
         filmInfo = new ArrayList<>();
         lv = (ListView) view.findViewById(R.id.filmList);
 
-        new downloadJSONInfo(getActivity(), filmInfo, lv).execute(URLSelected);
+        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSearch()).execute(URLSelected);
 
 
 
@@ -60,7 +60,7 @@ public class Homepage extends Fragment {
 
     public void refresh(String url){
         filmInfo.clear();
-        new downloadJSONInfo(getActivity(), filmInfo, lv).execute(url);
+        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSelected()).execute(url);
         URLSelected = url;
     }
 
