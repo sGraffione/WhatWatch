@@ -1,34 +1,33 @@
 package com.example.simone.whatwatch;
 
 import android.app.Activity;
-        import android.content.Intent;
-        import android.graphics.Color;
-        import android.os.Bundle;
-        import android.support.v4.content.ContextCompat;
-        import android.widget.ImageView;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-        import android.widget.Button;
 
-        import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Picasso;
 
-        import org.json.JSONArray;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 
-public class ShowInfoAboutListElement extends Activity {
+public class ShowInfoAboutTvElement extends Activity {
 
     ArrayList<HashMap<String, Object>> filmInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_info_about_list_element);
+        setContentView(R.layout.activity_show_info_about_tv_element);
 
         final TextView Title = (TextView) findViewById(R.id.Title);
         final ImageView poster = (ImageView) findViewById(R.id.poster);
@@ -70,8 +69,8 @@ public class ShowInfoAboutListElement extends Activity {
             rating.setTextColor(ContextCompat.getColor(this, R.color.Orange));
         }
         rating.setText((String) filmInfo.get(0).get("vote_average"));
-        if(!type.equals("movie"))
-            setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
+
+        setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
     }
 
     private void setEpisodeList(JSONArray seasons) {

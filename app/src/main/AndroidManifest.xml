@@ -23,6 +23,9 @@
         <activity
             android:name=".ShowInfoAboutListElement">
         </activity>
+        <activity
+            android:name=".ShowInfoAboutTvElement">
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -41,28 +41,65 @@ public class Homepage extends Fragment {
         new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSearch()).execute(URLSelected);
 
 
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-                HashMap<String, Object> hm_film = filmInfo.get(position);
-                int id_film = Integer.parseInt(hm_film.get("id").toString());
-                Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
-                appInfo.putExtra("id", id_film);
-                appInfo.putExtra("type", ((MainActivity)getActivity()).getTypeSelected());
-                startActivity(appInfo);
-            }
-        });
+        if(((MainActivity)getActivity()).getTypeSelected().equals("movie")){
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                    HashMap<String, Object> hm_film = filmInfo.get(position);
+                    int id_film = Integer.parseInt(hm_film.get("id").toString());
+                    Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
+                    appInfo.putExtra("id", id_film);
+                    appInfo.putExtra("type", ((MainActivity)getActivity()).getTypeSelected());
+                    startActivity(appInfo);
+                }
+            });
+        }else{
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                    HashMap<String, Object> hm_film = filmInfo.get(position);
+                    int id_tv = Integer.parseInt(hm_film.get("id").toString());
+                    Intent appInfo = new Intent(getActivity(), ShowInfoAboutTvElement.class);
+                    appInfo.putExtra("id", id_tv);
+                    appInfo.putExtra("type", ((MainActivity)getActivity()).getTypeSelected());
+                    startActivity(appInfo);
+                }
+            });
+        }
 
         lv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.black));
 
         return view;
     }
 
-    public void refresh(String url){
+    public void refresh(String url) {
         filmInfo.clear();
-        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSelected()).execute(url);
+        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity) getActivity()).getTypeSelected(), ((MainActivity) getActivity()).getTypeSelected()).execute(url);
         URLSelected = url;
+        if (((MainActivity) getActivity()).getTypeSelected().equals("movie")) {
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                    HashMap<String, Object> hm_film = filmInfo.get(position);
+                    int id_film = Integer.parseInt(hm_film.get("id").toString());
+                    Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
+                    appInfo.putExtra("id", id_film);
+                    appInfo.putExtra("type", ((MainActivity) getActivity()).getTypeSelected());
+                    startActivity(appInfo);
+                }
+            });
+        } else {
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
+                    HashMap<String, Object> hm_film = filmInfo.get(position);
+                    int id_tv = Integer.parseInt(hm_film.get("id").toString());
+                    Intent appInfo = new Intent(getActivity(), ShowInfoAboutTvElement.class);
+                    appInfo.putExtra("id", id_tv);
+                    appInfo.putExtra("type", ((MainActivity) getActivity()).getTypeSelected());
+                    startActivity(appInfo);
+                }
+            });
+        }
     }
-
 }
