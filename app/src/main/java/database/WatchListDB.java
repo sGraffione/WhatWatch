@@ -25,20 +25,34 @@ public class WatchListDB {
     public static String FILM_TYPE = "film_type";
     public static final int FILM_TYPE_COL = 2;
 
+    public static String FILM_SEASON = "film_season";
+    public static final int FILM_SEASON_COL = 3;
+
+    public static String FILM_SEASON_MAX = "film_season_max";
+    public static final int FILM_SEASON_MAX_COL = 4;
+
     public static String FILM_EP = "film_episode";
-    public static final int FILM_EP_COL = 3;
+    public static final int FILM_EP_COL = 5;
+
+    public static String FILM_EP_MAX = "film_episode_max";
+    public static final int FILM_EP_MAX_COL = 6;
 
     public static String FILM_WATCHED = "film_watched";
-    public static final int FILM_WATCHED_COL = 4;
+    public static final int FILM_WATCHED_COL = 7;
 
     public static String FILM_IMG_URL = "film_img_url";
-    public static final int FILM_IMG_URL_COL = 5;
+    public static final int FILM_IMG_URL_COL = 8;
 
 
+
+    //public static final String CREATE_FILM_TABLE =
+      //      "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
+        //            FILM_EP + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " TEXT);";
 
     public static final String CREATE_FILM_TABLE =
             "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
-                    FILM_EP + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " TEXT);";
+                    FILM_SEASON + " INTEGER, " + FILM_SEASON_MAX + " INTEGER, " + FILM_EP + " INTEGER, " + FILM_EP_MAX + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " +
+                    FILM_IMG_URL + " TEXT);";
 
     public static final String DROP_FILM_TABLE =
             "DROP TABLE IF EXISTS " + FILM_TABLE;
@@ -227,7 +241,10 @@ public class WatchListDB {
                         cursor.getInt(FILM_ID_COL),
                         cursor.getString(FILM_NAME_COL),
                         cursor.getString(FILM_TYPE_COL),
+                        cursor.getInt(FILM_SEASON_COL),
+                        cursor.getInt(FILM_SEASON_MAX_COL),
                         cursor.getInt(FILM_EP_COL),
+                        cursor.getInt(FILM_EP_MAX_COL),
                         cursor.getInt(FILM_WATCHED_COL),
                         cursor.getString(FILM_IMG_URL_COL)
                 );

@@ -8,7 +8,10 @@ public class FilmDescriptionDB {
     private int id;
     private String name;
     private String type;
+    private int season;
+    private int season_max;
     private int episode;
+    private int episode_max;
     private int watched;
     private String img_url;
 
@@ -18,22 +21,23 @@ public class FilmDescriptionDB {
         id = 0;
         name = null;
         type = null;
+        season = 1;
+        season_max = 1;
         episode = 1;
+        episode_max = 1;
         watched = 0;
         img_url = null;
     };
 
-    public FilmDescriptionDB(String name) {
-        this.name = name;
-    }
-
-    public FilmDescriptionDB(int id) { this.id = id; }
 
     public FilmDescriptionDB(int id, String name){
         this.id = id;
         this.name = name;
         this.type = "Film";
-        this.episode = 0;
+        this.season = 1;
+        this.season_max = 1;
+        this.episode = 1;
+        this.episode_max = 1;
         this.watched = 0;
         this.img_url = null;
     }
@@ -42,7 +46,10 @@ public class FilmDescriptionDB {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.episode = 0;
+        this.season = 1;
+        this.season_max = 1;
+        this.episode = 1;
+        this.episode_max = 1;
         this.watched = 0;
         this.img_url = null;
     }
@@ -51,34 +58,46 @@ public class FilmDescriptionDB {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.episode = 0;
+        this.season = 1;
+        this.season_max = 1;
+        this.episode = 1;
+        this.episode_max = 1;
         this.watched = 0;
         this.img_url = url;
     }
 
-    public FilmDescriptionDB(int id, String name, String type, int episode){
+    public FilmDescriptionDB(int id, String name, String type, int season, int season_max, int episode, int episode_max){
         this.id = id;
         this.name = name;
         this.type = type;
+        this.season = season;
+        this.season_max = season_max;
         this.episode = episode;
+        this.episode_max = episode_max;
         this.watched = 0;
         this.img_url = null;
     }
 
-    public FilmDescriptionDB(int id, String name, String type, int episode, String url){
+    public FilmDescriptionDB(int id, String name, String type, int season, int season_max, int episode, int episode_max, String url){
         this.id = id;
         this.name = name;
         this.type = type;
+        this.season = season;
+        this.season_max = season_max;
         this.episode = episode;
+        this.episode_max = episode_max;
         this.watched = 0;
         this.img_url = url;
     }
 
-    public FilmDescriptionDB(int id, String name, String type, int episode, int watched, String url){
+    public FilmDescriptionDB(int id, String name, String type, int season, int season_max, int episode, int episode_max, int watched, String url){
         this.id = id;
         this.name = name;
         this.type = type;
+        this.season = season;
+        this.season_max = season_max;
         this.episode = episode;
+        this.episode_max = episode_max;
         this.watched = watched;
         this.img_url = url;
     }
@@ -97,8 +116,17 @@ public class FilmDescriptionDB {
     public void setType(String type) { this.type = type; }
     public String getType() { return type; }
 
+    public void setSeason(int season) {this.season = season; }
+    public int getSeason() { return season; };
+
+    public void setSeasonMax(int season_max) {this.season_max = season_max; }
+    public int getSeasonMax() { return season_max; };
+
     public void setEpisode(int episode) {this.episode = episode; }
-    public int getEpisode(){ return episode; };
+    public int getEpisode() { return episode; };
+
+    public void setEpisodeMax(int episode_max) {this.episode_max = episode_max; }
+    public int getEpisodeMax() { return episode_max; };
 
     public void setWatched(int status) { this.watched = status; }
     public int getWatched() { return watched; }
