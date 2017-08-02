@@ -33,12 +33,18 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
     ArrayList<HashMap<String, Object>> filmList;
     Context context;
     int resource;
+    String TAG_TITLENAME;
 
-    public CustomListAdapter(Context context, int resource, ArrayList<HashMap<String, Object>> filmList) {
+    public CustomListAdapter(Context context, int resource, ArrayList<HashMap<String, Object>> filmList, String TAG_TYPE) {
         super(context, resource, filmList);
         this.filmList = filmList;
         this.context = context;
         this.resource = resource;
+        if(TAG_TYPE.equals("movie")){
+            TAG_TITLENAME = "original_title";
+        }else{
+            TAG_TITLENAME = "name";
+        }
     }
 
     @Override
@@ -61,13 +67,13 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
-        title.setText((String) data.get("original_title"));
+        title.setText((String) data.get(TAG_TITLENAME));
 
         final TextView rating = (TextView) convertView.findViewById(R.id.rating);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get("original_title"));
+                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME));
                 WatchListDB watchListDB = new WatchListDB(getContext());
                 long row = watchListDB.insertFilm(film);
                 ((TextView) view.findViewById(R.id.rating)).setText(String.valueOf(row));

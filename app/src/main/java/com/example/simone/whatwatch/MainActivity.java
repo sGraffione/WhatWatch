@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     String typeSelected = "movie";
+    String searchTypeSelected = "popularity";
     String firstPart = "https://api.themoviedb.org/3/discover/";
     String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
     int homepageSearchSelected = R.id.Popularity;
@@ -106,10 +107,12 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.Popularity:
                     homepageSearchSelected = R.id.Popularity;
                     secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
+                    searchTypeSelected = "popularity";
                     break;
                 case R.id.Most_Voted:
                     homepageSearchSelected = R.id.Most_Voted;
                     secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1\n";
+                    searchTypeSelected = "vote";
                     break;
             }
         }
@@ -127,5 +130,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.detach(myWatchListFragment);
         fragmentTransaction.attach(myWatchListFragment);
         fragmentTransaction.commit();
+    }
+
+    public String getTypeSelected(){
+        return typeSelected;
+    }
+    public String getTypeSearch(){
+        return searchTypeSelected;
     }
 }
