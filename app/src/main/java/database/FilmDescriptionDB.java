@@ -27,6 +27,15 @@ public class FilmDescriptionDB {
 
     public FilmDescriptionDB(int id) { this.id = id; }
 
+    public FilmDescriptionDB(int id, String name){
+        this.id = id;
+        this.name = name;
+        this.type = "Film";
+        this.episode = 0;
+        this.watched = 0;
+        this.img_url = null;
+    }
+
     public FilmDescriptionDB(int id, String name, String type){
         this.id = id;
         this.name = name;
