@@ -1,6 +1,8 @@
 package database;
 
 
+import java.util.ArrayList;
+
 public class FilmDescriptionDB {
 
     private int id;
@@ -26,6 +28,15 @@ public class FilmDescriptionDB {
     }
 
     public FilmDescriptionDB(int id) { this.id = id; }
+
+    public FilmDescriptionDB(int id, String name){
+        this.id = id;
+        this.name = name;
+        this.type = "Film";
+        this.episode = 0;
+        this.watched = 0;
+        this.img_url = null;
+    }
 
     public FilmDescriptionDB(int id, String name, String type){
         this.id = id;
@@ -81,9 +92,7 @@ public class FilmDescriptionDB {
     }
 
     public void setName(String name) { this.name = name; }
-    public String getName(){
-        return name;
-    }
+    public String getName() { return name; }
 
     public void setType(String type) { this.type = type; }
     public String getType() { return type; }
@@ -104,4 +113,6 @@ public class FilmDescriptionDB {
         this.episode = episode;
         this.img_url = url;
     }
+
+
 }

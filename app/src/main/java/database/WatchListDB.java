@@ -184,8 +184,12 @@ public class WatchListDB {
 
     public int updateFilm(FilmDescriptionDB film){
         ContentValues up = new ContentValues();
-        up.put(FILM_NAME, film.getName());
-        up.put(FILM_ID, film.getId());
+        up.put(FILM_ID, film.getName());
+        up.put(FILM_NAME, film.getId());
+        up.put(FILM_TYPE, film.getType());
+        up.put(FILM_EP, film.getEpisode());
+        up.put(FILM_WATCHED, film.getWatched());
+        up.put(FILM_IMG_URL, film.getImg());
 
         String where =  FILM_ID + "=?";
         String[] whereArgs = {String.valueOf(film.getId())};
