@@ -25,20 +25,34 @@ public class WatchListDB {
     public static String FILM_TYPE = "film_type";
     public static final int FILM_TYPE_COL = 2;
 
+    public static String FILM_SEASON = "film_season";
+    public static final int FILM_SEASON_COL = 3;
+
+    public static String FILM_SEASON_MAX = "film_season_max";
+    public static final int FILM_SEASON_MAX_COL = 4;
+
     public static String FILM_EP = "film_episode";
-    public static final int FILM_EP_COL = 3;
+    public static final int FILM_EP_COL = 5;
+
+    public static String FILM_EP_MAX = "film_episode_max";
+    public static final int FILM_EP_MAX_COL = 6;
 
     public static String FILM_WATCHED = "film_watched";
-    public static final int FILM_WATCHED_COL = 4;
+    public static final int FILM_WATCHED_COL = 7;
 
     public static String FILM_IMG_URL = "film_img_url";
-    public static final int FILM_IMG_URL_COL = 5;
+    public static final int FILM_IMG_URL_COL = 8;
 
 
+
+    //public static final String CREATE_FILM_TABLE =
+      //      "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
+        //            FILM_EP + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " TEXT);";
 
     public static final String CREATE_FILM_TABLE =
             "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
-                    FILM_EP + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " TEXT);";
+                    FILM_SEASON + " INTEGER, " + FILM_SEASON_MAX + " INTEGER, " + FILM_EP + " INTEGER, " + FILM_EP_MAX + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " +
+                    FILM_IMG_URL + " TEXT);";
 
     public static final String DROP_FILM_TABLE =
             "DROP TABLE IF EXISTS " + FILM_TABLE;
@@ -170,7 +184,10 @@ public class WatchListDB {
         in.put(FILM_ID, film.getId());
         in.put(FILM_NAME, film.getName());
         in.put(FILM_TYPE , film.getType());
-        in.put(FILM_EP , film.getEpisode());
+        in.put(FILM_SEASON, film.getSeason());
+        in.put(FILM_SEASON_MAX, film.getSeasonMax());
+        in.put(FILM_EP, film.getEpisode());
+        in.put(FILM_EP_MAX, film.getEpisodeMax());
         in.put(FILM_WATCHED , film.getWatched());
         in.put(FILM_IMG_URL , film.getImg());
 
@@ -184,12 +201,15 @@ public class WatchListDB {
 
     public int updateFilm(FilmDescriptionDB film){
         ContentValues up = new ContentValues();
-        up.put(FILM_ID, film.getName());
-        up.put(FILM_NAME, film.getId());
-        up.put(FILM_TYPE, film.getType());
+        up.put(FILM_ID, film.getId());
+        up.put(FILM_NAME, film.getName());
+        up.put(FILM_TYPE , film.getType());
+        up.put(FILM_SEASON, film.getSeason());
+        up.put(FILM_SEASON_MAX, film.getSeasonMax());
         up.put(FILM_EP, film.getEpisode());
-        up.put(FILM_WATCHED, film.getWatched());
-        up.put(FILM_IMG_URL, film.getImg());
+        up.put(FILM_EP_MAX, film.getEpisodeMax());
+        up.put(FILM_WATCHED , film.getWatched());
+        up.put(FILM_IMG_URL , film.getImg());
 
         String where =  FILM_ID + "=?";
         String[] whereArgs = {String.valueOf(film.getId())};
@@ -227,7 +247,10 @@ public class WatchListDB {
                         cursor.getInt(FILM_ID_COL),
                         cursor.getString(FILM_NAME_COL),
                         cursor.getString(FILM_TYPE_COL),
+                        cursor.getInt(FILM_SEASON_COL),
+                        cursor.getInt(FILM_SEASON_MAX_COL),
                         cursor.getInt(FILM_EP_COL),
+                        cursor.getInt(FILM_EP_MAX_COL),
                         cursor.getInt(FILM_WATCHED_COL),
                         cursor.getString(FILM_IMG_URL_COL)
                 );
