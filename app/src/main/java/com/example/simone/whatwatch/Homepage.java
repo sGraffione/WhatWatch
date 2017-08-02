@@ -49,6 +49,7 @@ public class Homepage extends Fragment {
                 int id_film = Integer.parseInt(hm_film.get("id").toString());
                 Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
                 appInfo.putExtra("id", id_film);
+                appInfo.putExtra("type", ((MainActivity)getActivity()).getTypeSelected());
                 startActivity(appInfo);
             }
         });

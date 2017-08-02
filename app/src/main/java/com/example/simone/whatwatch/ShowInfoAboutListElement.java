@@ -31,21 +31,29 @@ public class ShowInfoAboutListElement extends Activity {
         final TextView overview = (TextView) findViewById(R.id.Overview);
         final TextView rating = (TextView) findViewById(R.id.rating);
 
+        String type = "movie";
+        int id_film;
         filmInfo = new ArrayList<>();
 
         Intent intent = getIntent();
         if(intent != null){
-            int id_film = getIntent().getIntExtra("id", 0);
-            String url = "https://api.themoviedb.org/3/movie/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
+            id_film = getIntent().getIntExtra("id", 0);
+            type = getIntent().getStringExtra("type");
+            String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
             try{
-                filmInfo = new ParsingInfoFilm(this).execute(url).get();
+                filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
             }catch (ExecutionException e){
                 e.printStackTrace();
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
         }
-        Title.setText((String) filmInfo.get(0).get("original_title"));
+
+        if(type.equals("movie")){
+            Title.setText((String) filmInfo.get(0).get("original_title"));
+        }else{
+            Title.setText((String) filmInfo.get(0).get("name"));
+        }
         Picasso.with(this).load((String) filmInfo.get(0).get("poster_path")).into(poster);
         overview.setText((String) filmInfo.get(0).get("overview"));
         Double ratingValue = Double.parseDouble((String) filmInfo.get(0).get("vote_average"));
