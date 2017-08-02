@@ -176,6 +176,33 @@ public class WatchListDB {
         }
     }
 
+
+    //Estrazione del campo watched dal db
+    public int getWatched(int id){
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+        String[] column = {FILM_WATCHED};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
+        this.closeDB();
+
+        if(cursor == null || cursor.getCount() == 0){
+            cursor.close();
+            return 0;
+        }
+        else{
+            try{
+                int watched = cursor.getInt(FILM_WATCHED_COL);
+                cursor.close();
+                return watched;
+            }
+            catch (Exception e){
+                return 0;
+            }
+        }
+    }
+
     //                                  //
     //METODI PER MODIFICARE IL DATABASE //
     //                                  //
