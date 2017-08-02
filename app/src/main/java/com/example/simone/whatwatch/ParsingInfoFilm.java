@@ -103,6 +103,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                 info.put("poster_path", TAG_PHOTO);
                 info.put("vote_average", TAG_RATING);
                 info.put("genres", TAG_GENRE);
+                info.put("seasons", TAG_SEASONS);
 
                 filmInfo.add(info);
             }
