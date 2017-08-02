@@ -184,7 +184,10 @@ public class WatchListDB {
         in.put(FILM_ID, film.getId());
         in.put(FILM_NAME, film.getName());
         in.put(FILM_TYPE , film.getType());
-        in.put(FILM_EP , film.getEpisode());
+        in.put(FILM_SEASON, film.getSeason());
+        in.put(FILM_SEASON_MAX, film.getSeasonMax());
+        in.put(FILM_EP, film.getEpisode());
+        in.put(FILM_EP_MAX, film.getEpisodeMax());
         in.put(FILM_WATCHED , film.getWatched());
         in.put(FILM_IMG_URL , film.getImg());
 
@@ -198,12 +201,15 @@ public class WatchListDB {
 
     public int updateFilm(FilmDescriptionDB film){
         ContentValues up = new ContentValues();
-        up.put(FILM_ID, film.getName());
-        up.put(FILM_NAME, film.getId());
-        up.put(FILM_TYPE, film.getType());
+        up.put(FILM_ID, film.getId());
+        up.put(FILM_NAME, film.getName());
+        up.put(FILM_TYPE , film.getType());
+        up.put(FILM_SEASON, film.getSeason());
+        up.put(FILM_SEASON_MAX, film.getSeasonMax());
         up.put(FILM_EP, film.getEpisode());
-        up.put(FILM_WATCHED, film.getWatched());
-        up.put(FILM_IMG_URL, film.getImg());
+        up.put(FILM_EP_MAX, film.getEpisodeMax());
+        up.put(FILM_WATCHED , film.getWatched());
+        up.put(FILM_IMG_URL , film.getImg());
 
         String where =  FILM_ID + "=?";
         String[] whereArgs = {String.valueOf(film.getId())};
