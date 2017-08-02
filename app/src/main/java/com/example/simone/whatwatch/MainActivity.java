@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
         }else{
-            switch (id){
+            switch (item.getItemId()){
                 case R.id.Popularity:
                     homepageSearchSelected = R.id.Popularity;
                     secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
