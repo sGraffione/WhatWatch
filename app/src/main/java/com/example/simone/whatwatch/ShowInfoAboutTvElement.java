@@ -53,11 +53,7 @@ public class ShowInfoAboutTvElement extends Activity {
             }
         }
 
-        if(type.equals("movie")){
-            Title.setText((String) filmInfo.get(0).get("original_title"));
-        }else{
-            Title.setText((String) filmInfo.get(0).get("name"));
-        }
+        Title.setText((String) filmInfo.get(0).get("name"));
         Picasso.with(this).load((String) filmInfo.get(0).get("poster_path")).into(poster);
         overview.setText((String) filmInfo.get(0).get("overview"));
         Double ratingValue = Double.parseDouble((String) filmInfo.get(0).get("vote_average"));

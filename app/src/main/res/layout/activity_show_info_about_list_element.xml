@@ -44,22 +44,93 @@
         android:id="@+id/add_button"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/poster"
-        android:layout_marginEnd="35dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginEnd="25dp"
         android:background="@drawable/button_selector"
         android:text="+"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_above="@+id/Overview"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="74dp" />
 
     <TextView
         android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignTop="@+id/add_button"
-        android:layout_marginEnd="136dp"
-        android:layout_toStartOf="@+id/add_button"
         android:text="rating"
-        android:textSize="36sp" />
+        android:textSize="36sp"
+        android:layout_marginTop="139dp"
+        android:layout_alignTop="@+id/poster"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/year"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:text="TextView"
+        android:layout_marginStart="79dp"
+        android:layout_alignTop="@+id/rating"
+        android:layout_toEndOf="@+id/director" />
+
+    <TextView
+        android:id="@+id/genres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/poster"
+        android:layout_below="@+id/poster"
+        android:text="TextView"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/cast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/Overview"
+        android:layout_marginTop="32dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/runtime"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/year"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/year"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/director"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/rating"
+        android:layout_alignTop="@+id/poster"
+        android:text="TextView" />
+
+    <CheckBox
+        android:id="@+id/seen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/add_button"
+        android:layout_alignEnd="@+id/add_button"
+        android:layout_marginBottom="80dp"
+        android:text="Seen" />
+
+    <Button
+        android:id="@+id/youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to youtube"
+        android:layout_marginTop="21dp"
+        android:layout_alignTop="@+id/seen"
+        android:layout_toEndOf="@+id/director"
+        android:layout_marginStart="46dp" />
+
+    <ListView
+        android:id="@+id/similar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignEnd="@+id/add_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp" />
 
 </RelativeLayout>

@@ -72,9 +72,10 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                 String TAG_TITLE = film.getString("original_title");
                 String TAG_OVERVIEW = film.getString("overview");
                 String TAG_RATING = film.getString("vote_average");
-                String TAG_RELEASE = film.getString("release_date");
+                String TAG_YEAR = film.getString("release_date");
                 JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
                 String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+                String TAG_RUNTIME = film.getString("runtime");
 
 
                 //General information of film
@@ -83,8 +84,9 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                 info.put("overview", TAG_OVERVIEW);
                 info.put("poster_path", TAG_PHOTO);
                 info.put("vote_average", TAG_RATING);
-                info.put("release_date", TAG_RELEASE);
                 info.put("genres", TAG_GENRE);
+                info.put("year", TAG_YEAR.substring(0,4));
+                info.put("runtime", TAG_RUNTIME);
 
                 filmInfo.add(info);
             }else{

@@ -42,15 +42,16 @@
         android:id="@+id/btnAddToWatch"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_above="@+id/button2"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginStart="28dp"
+        android:layout_toEndOf="@+id/button2"
         android:background="@drawable/button_selector"
-        android:text="+"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:layout_marginStart="28dp"
-        android:layout_above="@+id/button2"
-        android:layout_toEndOf="@+id/button2" />
+        android:text="+"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/rating"

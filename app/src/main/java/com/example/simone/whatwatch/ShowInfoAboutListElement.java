@@ -35,6 +35,8 @@ public class ShowInfoAboutListElement extends Activity {
         final Button add_button = (Button) findViewById(R.id.add_button);
         final TextView overview = (TextView) findViewById(R.id.Overview);
         final TextView rating = (TextView) findViewById(R.id.rating);
+        TextView year = (TextView) findViewById(R.id.year);
+        TextView runtime =(TextView) findViewById(R.id.runtime);
 
         String type = "movie";
         int id_film;
@@ -54,14 +56,12 @@ public class ShowInfoAboutListElement extends Activity {
             }
         }
 
-        if(type.equals("movie")){
-            Title.setText((String) filmInfo.get(0).get("original_title"));
-        }else{
-            Title.setText((String) filmInfo.get(0).get("name"));
-        }
-        Picasso.with(this).load((String) filmInfo.get(0).get("poster_path")).into(poster);
-        overview.setText((String) filmInfo.get(0).get("overview"));
-        Double ratingValue = Double.parseDouble((String) filmInfo.get(0).get("vote_average"));
+        HashMap<String, Object> data = filmInfo.get(0);
+
+        Title.setText((String) data.get("original_title"));
+        Picasso.with(this).load((String) data.get("poster_path")).into(poster);
+        overview.setText((String) data.get("overview"));
+        Double ratingValue = Double.parseDouble((String) data.get("vote_average"));
         if( ratingValue < 6){
             rating.setTextColor(Color.RED);
         }else if( ratingValue > 7.5){
@@ -69,32 +69,9 @@ public class ShowInfoAboutListElement extends Activity {
         }else{
             rating.setTextColor(ContextCompat.getColor(this, R.color.Orange));
         }
-        rating.setText((String) filmInfo.get(0).get("vote_average"));
-        if(!type.equals("movie"))
-            setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
-    }
+        rating.setText((String) data.get("vote_average") + "/10");
+        year.setText((String) data.get("year"));
+        runtime.setText("Runtime: " + (String) data.get("runtime"));
 
-    private void setEpisodeList(JSONArray seasons) {
-        ArrayList<HashMap<String, Object>> seasonList = new ArrayList<>();
-        if (seasons != null) {
-            for (int i=0;i<seasons.length();i++){
-                HashMap<String, Object> seasonElement = new HashMap<>();
-                try{
-                    JSONObject season = seasons.getJSONObject(i);
-                    int nSeason = season.getInt("season_number");
-                    int nEpisode = season.getInt("episode_count");
-
-                    seasonElement.put("season_number", nSeason);
-                    seasonElement.put("episode_count", nEpisode);
-
-                    seasonList.add(seasonElement);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }
-        ListView lv = (ListView) findViewById(R.id.season_list);
-        ListEpisodesAdapter listEpisodeAdapter = new ListEpisodesAdapter(this, R.layout.film_element, seasonList);
-        lv.setAdapter(listEpisodeAdapter);
     }
 }
