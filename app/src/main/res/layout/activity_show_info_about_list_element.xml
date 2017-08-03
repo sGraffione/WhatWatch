@@ -1,140 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.simone.whatwatch.ShowInfoAboutListElement">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageView
-        android:id="@+id/poster"
-        android:layout_width="300dp"
-        android:layout_height="500dp"
-        android:layout_marginStart="23dp"
-        app:srcCompat="@color/colorPrimary"
-        android:layout_below="@+id/director"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="15dp" />
-
-    <TextView
-        android:id="@+id/Title"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="false"
-        android:layout_centerInParent="false"
-        android:layout_marginTop="32dp"
-        android:text="Titolo"
-        android:textAlignment="center"
-        android:textSize="30sp" />
+        android:layout_height="match_parent"
+        tools:context="com.example.simone.whatwatch.ShowInfoAboutListElement">
 
-    <TextView
-        android:id="@+id/Overview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/poster"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="54dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="Overview"
-        android:textSize="18sp" />
+        <ImageView
+            android:id="@+id/poster"
+            android:layout_width="300dp"
+            android:layout_height="500dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/director"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="15dp"
+            app:srcCompat="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="25dp"
-        android:background="@drawable/button_selector"
-        android:text="+"
-        android:textSize="30sp"
-        android:layout_above="@+id/Overview"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="74dp" />
+        <TextView
+            android:id="@+id/Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="false"
+            android:layout_marginTop="32dp"
+            android:text="Titolo"
+            android:textAlignment="center"
+            android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/rating"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="rating"
-        android:textSize="36sp"
-        android:layout_marginTop="139dp"
-        android:layout_alignTop="@+id/poster"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/Overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/poster"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="54dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Overview"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/year"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:text="TextView"
-        android:textSize="36sp"
-        android:layout_alignBaseline="@+id/rating"
-        android:layout_alignBottom="@+id/rating"
-        android:layout_alignStart="@+id/youtube" />
+        <Button
+            android:id="@+id/add_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/Overview"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="74dp"
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/button_selector"
+            android:text="+"
+            android:textSize="30sp" />
 
-    <TextView
-        android:id="@+id/genres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/poster"
-        android:layout_below="@+id/poster"
-        android:text="TextView"
-        android:textSize="18sp" />
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/poster"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="139dp"
+            android:text="rating"
+            android:textSize="36sp" />
 
-    <TextView
-        android:id="@+id/cast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/Overview"
-        android:layout_marginTop="32dp"
-        android:text="TextView" />
+        <TextView
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignBaseline="@+id/rating"
+            android:layout_alignBottom="@+id/rating"
+            android:layout_alignStart="@+id/youtube"
+            android:text="TextView"
+            android:textSize="36sp" />
 
-    <TextView
-        android:id="@+id/runtime"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignBottom="@+id/year"
-        android:layout_marginStart="24dp"
-        android:layout_toEndOf="@+id/year"
-        android:text="textView"
-        android:textSize="36sp" />
+        <TextView
+            android:id="@+id/genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/poster"
+            android:layout_below="@+id/poster"
+            android:text="TextView"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/director"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:layout_below="@+id/Title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp" />
+        <TextView
+            android:id="@+id/cast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Overview"
+            android:layout_marginTop="32dp"
+            android:text="TextView" />
 
-    <CheckBox
-        android:id="@+id/seen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/add_button"
-        android:layout_alignEnd="@+id/add_button"
-        android:layout_marginBottom="80dp"
-        android:text="Seen" />
+        <TextView
+            android:id="@+id/runtime"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/year"
+            android:layout_marginStart="24dp"
+            android:layout_toEndOf="@+id/year"
+            android:text="textView"
+            android:textSize="36sp" />
 
-    <Button
-        android:id="@+id/youtube"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to youtube"
-        android:layout_marginTop="21dp"
-        android:layout_alignTop="@+id/seen"
-        android:layout_toEndOf="@+id/director"
-        android:layout_marginStart="46dp" />
+        <TextView
+            android:id="@+id/director"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:text="TextView"
+            android:textAlignment="center" />
 
-    <ListView
-        android:id="@+id/similar"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_alignEnd="@+id/add_button"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp" />
+        <CheckBox
+            android:id="@+id/seen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/add_button"
+            android:layout_alignEnd="@+id/add_button"
+            android:layout_marginBottom="80dp"
+            android:text="Seen" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/youtube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/seen"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="21dp"
+            android:layout_toEndOf="@+id/director"
+            android:text="Go to youtube" />
+
+    </RelativeLayout>
+</ScrollView>
