@@ -22,12 +22,14 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
     private ProgressDialog pDialog;
     private ArrayList<HashMap<String, Object>> filmInfo;
     private String type;
+    private boolean extraInfo;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public ParsingInfoFilm(Context context, String type)
+    public ParsingInfoFilm(Context context, String type, boolean extraInfo)
     {
         filmInfo = new ArrayList<>();
         this.type = type;
+        this.extraInfo = extraInfo;
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
@@ -68,44 +70,56 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                 JSONObject film = JSONData;
 
-            if(type.equals("movie")){
-                String TAG_TITLE = film.getString("original_title");
-                String TAG_OVERVIEW = film.getString("overview");
-                String TAG_RATING = film.getString("vote_average");
-                String TAG_YEAR = film.getString("release_date");
-                JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
-                String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
-                String TAG_RUNTIME = film.getString("runtime");
+            if(!extraInfo){
+                if(type.equals("movie")){
+                    String TAG_TITLE = film.getString("original_title");
+                    String TAG_OVERVIEW = film.getString("overview");
+                    String TAG_RATING = film.getString("vote_average");
+                    String TAG_YEAR = film.getString("release_date");
+                    JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+                    String TAG_RUNTIME = film.getString("runtime");
 
 
-                //General information of film
-                HashMap<String, Object> info = new HashMap<>();
-                info.put("original_title", TAG_TITLE);
-                info.put("overview", TAG_OVERVIEW);
-                info.put("poster_path", TAG_PHOTO);
-                info.put("vote_average", TAG_RATING);
-                info.put("genres", TAG_GENRE);
-                info.put("year", TAG_YEAR.substring(0,4));
-                info.put("runtime", TAG_RUNTIME);
+                    //General information of film
+                    HashMap<String, Object> info = new HashMap<>();
+                    info.put("original_title", TAG_TITLE);
+                    info.put("overview", TAG_OVERVIEW);
+                    info.put("poster_path", TAG_PHOTO);
+                    info.put("vote_average", TAG_RATING);
+                    info.put("genres", TAG_GENRE);
+                    info.put("year", TAG_YEAR.substring(0,4));
+                    info.put("runtime", TAG_RUNTIME);
 
-                filmInfo.add(info);
+                    filmInfo.add(info);
+                }else{
+                    String TAG_TITLE = film.getString("name");
+                    String TAG_OVERVIEW = film.getString("overview");
+                    String TAG_RATING = film.getString("vote_average");
+                    JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
+                    JSONArray TAG_SEASONS = JSONData.getJSONArray("seasons");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+
+
+                    //General information of film
+                    HashMap<String, Object> info = new HashMap<>();
+                    info.put("name", TAG_TITLE);
+                    info.put("overview", TAG_OVERVIEW);
+                    info.put("poster_path", TAG_PHOTO);
+                    info.put("vote_average", TAG_RATING);
+                    info.put("genres", TAG_GENRE);
+                    info.put("seasons", TAG_SEASONS);
+
+                    filmInfo.add(info);
+                }
             }else{
-                String TAG_TITLE = film.getString("name");
-                String TAG_OVERVIEW = film.getString("overview");
-                String TAG_RATING = film.getString("vote_average");
-                JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
-                JSONArray TAG_SEASONS = JSONData.getJSONArray("seasons");
-                String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+                JSONArray jArray = film.getJSONArray("crew");
+                String TAG_DIRECTOR = jArray.getJSONObject(0).getString("name");
+                JSONArray TAG_CAST = film.getJSONArray("cast");
 
-
-                //General information of film
                 HashMap<String, Object> info = new HashMap<>();
-                info.put("name", TAG_TITLE);
-                info.put("overview", TAG_OVERVIEW);
-                info.put("poster_path", TAG_PHOTO);
-                info.put("vote_average", TAG_RATING);
-                info.put("genres", TAG_GENRE);
-                info.put("seasons", TAG_SEASONS);
+                info.put("director", TAG_DIRECTOR);
+                info.put("cast", TAG_CAST);
 
                 filmInfo.add(info);
             }

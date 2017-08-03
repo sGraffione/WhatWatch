@@ -45,7 +45,7 @@ public class ShowInfoAboutListElement extends Activity {
 
 
         String type = "movie";
-        int id_film;
+        int id_film = 0;
         filmInfo = new ArrayList<>();
 
         Intent intent = getIntent();
@@ -54,7 +54,7 @@ public class ShowInfoAboutListElement extends Activity {
             type = getIntent().getStringExtra("type");
             String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
             try{
-                filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
+                filmInfo = new ParsingInfoFilm(this, type, false).execute(url).get();
             }catch (ExecutionException e){
                 e.printStackTrace();
             }catch (InterruptedException e){
@@ -79,7 +79,17 @@ public class ShowInfoAboutListElement extends Activity {
         year.setText((String) data.get("year"));
         runtime.setText((String) data.get("runtime") + ("m"));
 
+        try{
+            String url = "https://api.themoviedb.org/3/credit/"+id_film+"?api_key=22dee1f565e5788c58062fdeaf490afc";
+            filmInfo = new ParsingInfoFilm(this, type, true).execute(url).get();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
+        director.setText((String) data.get("director"));
+        cast.setText((String) data.get("cast"));
     }
 
-}
+    }
