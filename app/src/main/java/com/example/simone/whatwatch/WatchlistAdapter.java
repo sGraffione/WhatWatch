@@ -62,8 +62,6 @@ public class WatchlistAdapter extends BaseAdapter {
         //Picasso.with(mContext).load(films.getImg()).into(imageView);
 
 
-
-
         return convertView;
     }
 }

@@ -45,7 +45,7 @@ public class ShowInfoAboutTvElement extends Activity {
             type = getIntent().getStringExtra("type");
             String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
             try{
-                filmInfo = new ParsingInfoFilm(this, type, false).execute(url).get();
+                filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
             }catch (ExecutionException e){
                 e.printStackTrace();
             }catch (InterruptedException e){

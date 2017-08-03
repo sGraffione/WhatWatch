@@ -52,9 +52,9 @@ public class ShowInfoAboutListElement extends Activity {
         if(intent != null){
             id_film = getIntent().getIntExtra("id", 0);
             type = getIntent().getStringExtra("type");
-            String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
+            String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits\n";
             try{
-                filmInfo = new ParsingInfoFilm(this, type, false).execute(url).get();
+                filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
             }catch (ExecutionException e){
                 e.printStackTrace();
             }catch (InterruptedException e){
@@ -78,18 +78,6 @@ public class ShowInfoAboutListElement extends Activity {
         rating.setText((String) data.get("vote_average") + "/10");
         year.setText((String) data.get("year"));
         runtime.setText((String) data.get("runtime") + ("m"));
-
-        try{
-            String url = "https://api.themoviedb.org/3/credit/"+id_film+"?api_key=22dee1f565e5788c58062fdeaf490afc";
-            filmInfo = new ParsingInfoFilm(this, type, true).execute(url).get();
-        }catch (ExecutionException e){
-            e.printStackTrace();
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-
-        director.setText((String) data.get("director"));
-        cast.setText((String) data.get("cast"));
+        director.setText("Directed by " + (String) data.get("director"));
     }
-
-    }
+}

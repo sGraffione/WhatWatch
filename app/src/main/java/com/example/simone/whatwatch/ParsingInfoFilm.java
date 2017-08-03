@@ -22,14 +22,12 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
     private ProgressDialog pDialog;
     private ArrayList<HashMap<String, Object>> filmInfo;
     private String type;
-    private boolean extraInfo;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public ParsingInfoFilm(Context context, String type, boolean extraInfo)
+    public ParsingInfoFilm(Context context, String type)
     {
         filmInfo = new ArrayList<>();
         this.type = type;
-        this.extraInfo = extraInfo;
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
@@ -45,6 +43,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
     @Override
     protected ArrayList<HashMap<String, Object>> doInBackground(String... urlString){
+        //android.os.Debug.waitForDebugger();
         try {
             HttpURLConnection urlConnection;
             URL url = new URL(urlString[0]);
@@ -70,7 +69,6 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                 JSONObject film = JSONData;
 
-            if(!extraInfo){
                 if(type.equals("movie")){
                     String TAG_TITLE = film.getString("original_title");
                     String TAG_OVERVIEW = film.getString("overview");
@@ -79,6 +77,12 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
                     String TAG_RUNTIME = film.getString("runtime");
+
+                    JSONObject jArrayCredits = film.getJSONObject("credits");
+                    JSONArray jArrayCrew = jArrayCredits.getJSONArray("crew");
+                    String TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");
+                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
+
 
 
                     //General information of film
@@ -90,6 +94,8 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     info.put("genres", TAG_GENRE);
                     info.put("year", TAG_YEAR.substring(0,4));
                     info.put("runtime", TAG_RUNTIME);
+                    info.put("director", TAG_DIRECTOR);
+                    info.put("cast", TAG_CAST);
 
                     filmInfo.add(info);
                 }else{
@@ -112,17 +118,6 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                     filmInfo.add(info);
                 }
-            }else{
-                JSONArray jArray = film.getJSONArray("crew");
-                String TAG_DIRECTOR = jArray.getJSONObject(0).getString("name");
-                JSONArray TAG_CAST = film.getJSONArray("cast");
-
-                HashMap<String, Object> info = new HashMap<>();
-                info.put("director", TAG_DIRECTOR);
-                info.put("cast", TAG_CAST);
-
-                filmInfo.add(info);
-            }
 
         }catch (IOException e){
             e.printStackTrace();
