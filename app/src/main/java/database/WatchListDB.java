@@ -299,6 +299,23 @@ public class WatchListDB {
     }
 
 
+    public int updateWatched(int id){
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+        ContentValues w = new ContentValues();
+        int watched = 1;
+
+        this.openWriteableDB();
+
+        w.put(FILM_WATCHED, watched);
+        db.update(FILM_TABLE, w, where, whereArgs);
+
+        this.closeDB();
+
+        return watched;
+    }
+
+
     public int deleteFilm(int id){
         String where = FILM_ID + "=?";
         String[] whereArgs = {String.valueOf(id)};
