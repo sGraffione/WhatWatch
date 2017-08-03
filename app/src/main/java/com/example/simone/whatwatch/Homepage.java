@@ -67,7 +67,7 @@ public class Homepage extends Fragment {
             });
         }
 
-        lv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.DarkSlateGray));
+        lv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         return view;
     }
