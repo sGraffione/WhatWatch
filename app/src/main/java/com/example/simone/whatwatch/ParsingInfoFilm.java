@@ -65,16 +65,14 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
             br.close();
 
             String jsonString = sb.toString();
-            JSONObject JSONData = new JSONObject(jsonString);
-
-                JSONObject film = JSONData;
+            JSONObject film = new JSONObject(jsonString);
 
                 if(type.equals("movie")){
                     String TAG_TITLE = film.getString("original_title");
                     String TAG_OVERVIEW = film.getString("overview");
                     String TAG_RATING = film.getString("vote_average");
                     String TAG_YEAR = film.getString("release_date");
-                    JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
+                    JSONArray TAG_GENRE = film.getJSONArray("genres");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
                     String TAG_RUNTIME = film.getString("runtime");
 
@@ -106,9 +104,20 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     String TAG_TITLE = film.getString("name");
                     String TAG_OVERVIEW = film.getString("overview");
                     String TAG_RATING = film.getString("vote_average");
-                    JSONArray TAG_GENRE = JSONData.getJSONArray("genres");
-                    JSONArray TAG_SEASONS = JSONData.getJSONArray("seasons");
+                    JSONArray TAG_GENRE = film.getJSONArray("genres");
+                    JSONArray TAG_SEASONS = film.getJSONArray("seasons");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+                    String TAG_YEAR = film.getString("first_air_date");
+
+                    String TAG_RUNTIME = film.getString("episode_run_time");
+
+                    JSONArray TAG_CREATOR = film.getJSONArray("created_by");
+
+                    JSONObject jArrayCredits = film.getJSONObject("credits");
+                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
+
+                    JSONObject jArrayVideos = film.getJSONObject("videos");
+                    JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
 
 
                     //General information of film
@@ -119,6 +128,11 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     info.put("vote_average", TAG_RATING);
                     info.put("genres", TAG_GENRE);
                     info.put("seasons", TAG_SEASONS);
+                    info.put("runtime", TAG_RUNTIME);
+                    info.put("creator", TAG_CREATOR);
+                    info.put("cast", TAG_CAST);
+                    info.put("videos", TAG_VIDEOS);
+                    info.put("year", TAG_YEAR.substring(0,4));
 
                     filmInfo.add(info);
                 }
