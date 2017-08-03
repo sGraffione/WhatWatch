@@ -39,4 +39,9 @@ class SectionsPageAdapter extends FragmentPagerAdapter {
         return mFragmentList.size();
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
 }

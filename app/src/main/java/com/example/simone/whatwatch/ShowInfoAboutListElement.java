@@ -5,7 +5,10 @@ import android.app.Activity;
         import android.graphics.Color;
         import android.os.Bundle;
         import android.support.v4.content.ContextCompat;
-        import android.widget.ImageView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
         import android.widget.Button;
@@ -37,6 +40,9 @@ public class ShowInfoAboutListElement extends Activity {
         final TextView rating = (TextView) findViewById(R.id.rating);
         TextView year = (TextView) findViewById(R.id.year);
         TextView runtime =(TextView) findViewById(R.id.runtime);
+        TextView director = (TextView) findViewById(R.id.director);
+        TextView cast = (TextView) findViewById(R.id.cast);
+
 
         String type = "movie";
         int id_film;
@@ -71,7 +77,9 @@ public class ShowInfoAboutListElement extends Activity {
         }
         rating.setText((String) data.get("vote_average") + "/10");
         year.setText((String) data.get("year"));
-        runtime.setText("Runtime: " + (String) data.get("runtime"));
+        runtime.setText((String) data.get("runtime") + ("m"));
+
 
     }
+
 }

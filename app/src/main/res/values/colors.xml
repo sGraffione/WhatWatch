@@ -49,7 +49,7 @@
     <color name="Orange">#FFA500</color>
     <color name="LightSalmon">#FFA07A</color>
     <color name="DarkOrange">#FF8C00</color>
-    <color name="Coral">#FF7F50</color>
+    <color name="Coral">#ff7f50</color>
     <color name="HotPink">#FF69B4</color>
     <color name="Tomato">#FF6347</color>
     <color name="OrangeRed">#FF4500</color>
@@ -103,7 +103,7 @@
     <color name="PaleTurquoise">#AFEEEE</color>
     <color name="GreenYellow">#ADFF2F</color>
     <color name="LightBlue">#ADD8E6</color>
-    <color name="DarkGray">#A9A9A9</color>
+    <color name="DarkGray">#a9a9a9</color>
     <color name="Brown">#A52A2A</color>
     <color name="Sienna">#A0522D</color>
     <color name="YellowGreen">#9ACD32</color>

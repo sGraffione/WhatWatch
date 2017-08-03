@@ -66,10 +66,12 @@
         android:id="@+id/year"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_marginStart="19dp"
         android:text="TextView"
-        android:layout_marginStart="79dp"
-        android:layout_alignTop="@+id/rating"
-        android:layout_toEndOf="@+id/director" />
+        android:textSize="36sp"
+        android:layout_alignBaseline="@+id/rating"
+        android:layout_alignBottom="@+id/rating"
+        android:layout_alignStart="@+id/youtube" />
 
     <TextView
         android:id="@+id/genres"
@@ -96,7 +98,8 @@
         android:layout_alignBottom="@+id/year"
         android:layout_marginStart="24dp"
         android:layout_toEndOf="@+id/year"
-        android:text="TextView" />
+        android:text="textView"
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/director"
