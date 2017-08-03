@@ -134,11 +134,14 @@ public class FilmDescriptionDB {
     public void setImg(String url) { this.img_url = url; }
     public String getImg() { return img_url; }
 
-    public void setData(int id, String name, String type, int episode, String url){
+    public void setData(int id, String name, String type, int season, int season_max, int episode, int episode_max, String url){
         this.id = id;
         this.name = name;
         this.type = type;
+        this.season = season;
+        this.season_max = season_max;
         this.episode = episode;
+        this.episode_max = episode_max;
         this.img_url = url;
     }
 
