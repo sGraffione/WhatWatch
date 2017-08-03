@@ -129,6 +129,7 @@ public class ShowInfoAboutTvElement extends Activity {
         ListView lv = (ListView) findViewById(R.id.season_list);
         ListEpisodesAdapter listEpisodeAdapter = new ListEpisodesAdapter(this, R.layout.film_element, seasonList);
         lv.setAdapter(listEpisodeAdapter);
+        lv.setBackgroundColor(ContextCompat.getColor(this, R.color.Really_Really_Dark_Gray));
     }
 
     private ArrayList<HashMap<String, Object>> parsingJSONArray(JSONArray input) {
