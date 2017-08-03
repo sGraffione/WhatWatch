@@ -108,17 +108,18 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     JSONArray TAG_SEASONS = film.getJSONArray("seasons");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
                     String TAG_YEAR = film.getString("first_air_date");
-
-                    String TAG_RUNTIME = film.getString("episode_run_time");
+                    JSONArray jArrayRuntime = film.getJSONArray("episode_run_time");
+                    int TAG_RUNTIME = (int) jArrayRuntime.get(0);
 
                     JSONArray TAG_CREATOR = film.getJSONArray("created_by");
 
+
                     JSONObject jArrayCredits = film.getJSONObject("credits");
-                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
 
                     JSONObject jArrayVideos = film.getJSONObject("videos");
                     JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
 
+                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
 
                     //General information of film
                     HashMap<String, Object> info = new HashMap<>();

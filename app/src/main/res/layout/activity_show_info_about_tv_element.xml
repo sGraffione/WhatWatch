@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -101,14 +102,14 @@
             android:text="TextView"
             android:textSize="36sp" />
 
-        <TextView
+        <Button
             android:id="@+id/youtube"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/seen"
-            android:layout_toEndOf="@id/creators"
             android:layout_marginStart="46dp"
             android:layout_marginTop="21dp"
+            android:layout_toEndOf="@id/creators"
             android:text="Go to Youtube" />
 
         <CheckBox

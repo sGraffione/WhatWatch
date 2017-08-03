@@ -131,7 +131,7 @@ public class ShowInfoAboutListElement extends Activity {
             for(int i = 0; i < input.length(); i++){
                 try {
                     JSONObject element = input.getJSONObject(i);
-                        if (element.getString("name").equals("Official Trailer")) {
+                        if (element.getString("type").equals("Trailer")) {
                             video = element.getString("key");
                             return video;
                         }
