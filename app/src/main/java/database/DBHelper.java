@@ -4,9 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import database.WatchListDB;
-
 import static database.WatchListDB.CREATE_FILM_TABLE;
 
 
@@ -20,7 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_FILM_TABLE);
-        //db.execSQL("INSERT INTO film_data VALUES (1, 'Inception')");
     }
 
     @Override
