@@ -3,7 +3,8 @@ package com.example.simone.whatwatch;
 import android.app.Activity;
         import android.content.Intent;
         import android.graphics.Color;
-        import android.os.Bundle;
+import android.net.Uri;
+import android.os.Bundle;
         import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,12 +37,14 @@ public class ShowInfoAboutListElement extends Activity {
         final TextView Title = (TextView) findViewById(R.id.Title);
         final ImageView poster = (ImageView) findViewById(R.id.poster);
         final Button add_button = (Button) findViewById(R.id.add_button);
+        final Button ytBtn = (Button) findViewById(R.id.youtube);
         final TextView overview = (TextView) findViewById(R.id.Overview);
         final TextView rating = (TextView) findViewById(R.id.rating);
         TextView year = (TextView) findViewById(R.id.year);
         TextView runtime =(TextView) findViewById(R.id.runtime);
         TextView director = (TextView) findViewById(R.id.director);
         TextView cast = (TextView) findViewById(R.id.cast);
+        TextView genres = (TextView) findViewById(R.id.genres);
 
 
         String type = "movie";
@@ -52,7 +55,7 @@ public class ShowInfoAboutListElement extends Activity {
         if(intent != null){
             id_film = getIntent().getIntExtra("id", 0);
             type = getIntent().getStringExtra("type");
-            String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits\n";
+            String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
             try{
                 filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
             }catch (ExecutionException e){
@@ -79,5 +82,64 @@ public class ShowInfoAboutListElement extends Activity {
         year.setText((String) data.get("year"));
         runtime.setText((String) data.get("runtime") + ("m"));
         director.setText("Directed by " + (String) data.get("director"));
+        ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
+        genres.setText((String) genre.get(0).get("name"));
+        for(int i = 1; i < genre.size(); i++){
+            genres.append(", " + (String) genre.get(i).get("name"));
+        }
+
+        ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
+        cast.setText((String) peopleOfIbiza.get(0).get("name"));
+        for(int i = 1; i < 5; i++){
+            cast.append(", " + (String) peopleOfIbiza.get(i).get("name"));
+        }
+
+        final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
+        ytBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
+            }
+        });
+
+    }
+
+    private ArrayList<HashMap<String, Object>> parsingJSONArray(JSONArray input) {
+        ArrayList<HashMap<String, Object>> names = new ArrayList<>();
+        if (input != null) {
+            for (int i = 0; i < input.length(); i++) {
+                HashMap<String, Object> name = new HashMap<>();
+                try {
+                    JSONObject season = input.getJSONObject(i);
+                    String nameValue = season.getString("name");
+
+                    name.put("name", nameValue);
+
+                    names.add(name);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return names;
+        }
+        return null;
+    }
+
+    private String parsingVideos(JSONArray input){
+        String video = null;
+        if(input != null){
+            for(int i = 0; i < input.length(); i++){
+                try {
+                    JSONObject element = input.getJSONObject(i);
+                        if (element.getString("name").equals("Official Trailer")) {
+                            video = element.getString("key");
+                            return video;
+                        }
+                    } catch(JSONException e){
+                        e.printStackTrace();
+                    }
+            }
+        }
+        return null;
     }
 }

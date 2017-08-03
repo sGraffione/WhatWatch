@@ -167,6 +167,7 @@
     <color name="Navy">#000080</color>
     <color name="Black">#000000</color>
     <color name="Really_Really_Dark_Gray">#262626</color>
+    <color name="Really_Really_Dark_Grey_But_Not_Too_Much">#1A1A1A</color>
 
 
 </resources>

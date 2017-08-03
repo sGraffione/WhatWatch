@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -36,11 +37,9 @@
             android:id="@+id/Overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/poster"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="54dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
+            android:layout_alignStart="@+id/genres"
+            android:layout_below="@+id/genres"
+            android:layout_marginTop="33dp"
             android:text="Overview"
             android:textSize="18sp" />
 
@@ -83,15 +82,16 @@
             android:layout_alignStart="@+id/poster"
             android:layout_below="@+id/poster"
             android:text="TextView"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/cast"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignStart="@+id/Overview"
             android:layout_below="@+id/Overview"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="33dp"
             android:text="TextView" />
 
         <TextView

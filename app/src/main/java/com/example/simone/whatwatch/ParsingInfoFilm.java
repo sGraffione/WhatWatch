@@ -83,6 +83,9 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     String TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");
                     JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
 
+                    JSONObject jArrayVideos = film.getJSONObject("videos");
+                    JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
+
 
 
                     //General information of film
@@ -96,6 +99,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     info.put("runtime", TAG_RUNTIME);
                     info.put("director", TAG_DIRECTOR);
                     info.put("cast", TAG_CAST);
+                    info.put("videos", TAG_VIDEOS);
 
                     filmInfo.add(info);
                 }else{
