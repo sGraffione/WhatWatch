@@ -78,7 +78,7 @@ public class ShowInfoAboutListElement extends Activity {
         }else{
             rating.setTextColor(ContextCompat.getColor(this, R.color.Orange));
         }
-        rating.setText((String) data.get("vote_average") + "/10");
+        rating.setText((String) data.get("vote_average"));
         year.setText((String) data.get("year"));
         runtime.setText((String) data.get("runtime") + ("m"));
         director.setText("Directed by " + (String) data.get("director"));

@@ -1,6 +1,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/Really_Really_Dark_Gray"
     android:paddingBottom="20dp">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,17 +32,19 @@
             android:layout_marginTop="32dp"
             android:text="Titolo"
             android:textAlignment="center"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="30sp" />
 
         <TextView
             android:id="@+id/Overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/genres"
-            android:layout_below="@+id/poster"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="16dp"
             android:text="Overview"
-            android:textSize="18sp" />
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="18sp"
+            android:layout_below="@+id/genres"
+            android:layout_alignStart="@+id/genres" />
 
         <Button
             android:id="@+id/add_button"
@@ -67,12 +70,13 @@
 
         <ListView
             android:id="@+id/season_list"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/Overview"
+            android:isScrollContainer="false"
+            android:layout_alignStart="@id/genres"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="68dp"
-            android:isScrollContainer="false" />
+            android:layout_below="@+id/Overview" />
 
         <TextView
             android:id="@+id/genres"
@@ -81,6 +85,7 @@
             android:layout_alignStart="@+id/poster"
             android:layout_below="@+id/poster"
             android:text="TextView"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="14sp" />
 
         <TextView
@@ -91,7 +96,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
             android:text="TextView"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/WhiteSmoke" />
 
         <TextView
             android:id="@+id/year"
@@ -99,8 +105,9 @@
             android:layout_height="50dp"
             android:layout_alignBaseline="@+id/rating"
             android:layout_alignBottom="@+id/rating"
-            android:layout_alignStart="@id/youtube"
+            android:layout_alignStart="@+id/youtube"
             android:text="TextView"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="36sp" />
 
         <Button
@@ -120,7 +127,8 @@
             android:layout_alignBottom="@+id/add_button"
             android:layout_alignEnd="@+id/add_button"
             android:layout_marginBottom="80dp"
-            android:text="Seen" />
+            android:text="Seen"
+            android:textColor="@color/WhiteSmoke" />
 
         <TextView
             android:id="@+id/runtime"
@@ -130,6 +138,17 @@
             android:layout_marginStart="24dp"
             android:layout_toEndOf="@+id/year"
             android:text="TextView"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="36sp" />
+
+        <TextView
+            android:id="@+id/scale"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/rating"
+            android:layout_toEndOf="@+id/rating"
+            android:text="/10"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="36sp" />
 
     </RelativeLayout>
