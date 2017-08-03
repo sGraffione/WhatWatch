@@ -63,6 +63,7 @@ public class WatchlistAdapter extends BaseAdapter {
 
 
 
+
         return convertView;
     }
 }
