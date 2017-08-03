@@ -10,11 +10,10 @@
         android:id="@+id/poster"
         android:layout_width="300dp"
         android:layout_height="500dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="68dp"
-        app:srcCompat="@color/colorPrimary" />
+        android:layout_marginStart="23dp"
+        app:srcCompat="@color/colorPrimary"
+        android:layout_below="@+id/Title"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/Title"
@@ -26,7 +25,7 @@
         android:layout_marginTop="32dp"
         android:text="Titolo"
         android:textAlignment="center"
-        android:textSize="20sp" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/Overview"
@@ -66,7 +65,6 @@
         android:id="@+id/year"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="19dp"
         android:text="TextView"
         android:textSize="36sp"
         android:layout_alignBaseline="@+id/rating"
@@ -105,9 +103,11 @@
         android:id="@+id/director"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/rating"
-        android:layout_alignTop="@+id/poster"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textAlignment="center"
+        android:layout_below="@+id/Title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
 
     <CheckBox
         android:id="@+id/seen"
