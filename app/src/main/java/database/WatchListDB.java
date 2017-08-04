@@ -130,8 +130,6 @@ public class WatchListDB {
 
         //cursor.moveToFirst();
 
-
-
         while(cursor.moveToNext()){
             films.add(getFilmFromCursor(cursor));
         }
