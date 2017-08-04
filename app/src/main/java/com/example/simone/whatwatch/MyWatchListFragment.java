@@ -27,7 +27,7 @@ public class MyWatchListFragment extends Fragment {
 
     private GridView gridView;
 
-    private WatchlistAdapter watchlistAdapter;
+    private WatchlistAdapter watchlistAdapter = null;
 
     @Nullable
     @Override
@@ -39,6 +39,8 @@ public class MyWatchListFragment extends Fragment {
         WatchListDB watchListDB = new WatchListDB(getContext());
         final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0);
         if(films != null){
+            if(watchlistAdapter != null)
+                gridView.setAdapter(null);
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
         }

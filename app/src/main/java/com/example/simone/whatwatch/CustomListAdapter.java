@@ -92,18 +92,23 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
             public void onClick(View v) {
                 FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME));
                 WatchListDB watchListDB = new WatchListDB(getContext());
-                long row = watchListDB.insertFilm(film);
-                if(row != -1){
-                    Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
-                    Fragment toRefresh = MainActivity.getToRefresh();
-                    android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                    if (toRefresh != null && ft != null) {
-                        ft.detach(toRefresh);
-                        ft.attach(toRefresh);
-                        ft.commitAllowingStateLoss();
+                int res = watchListDB.verifyId((int) data.get("id"));
+                if(res==0) {
+                    long row = watchListDB.insertFilm(film);
+                    if (row != -1) {
+                        Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
+                        Fragment toRefresh = MainActivity.getToRefresh();
+                        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                        if (toRefresh != null && ft != null) {
+                            ft.detach(toRefresh);
+                            ft.attach(toRefresh);
+                            ft.commitAllowingStateLoss();
+                        }
+                    } else {
+                        Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "It's already in your Watchlist! (DATABASE CHECK)", Toast.LENGTH_SHORT).show();
                 }
             }
         });
