@@ -2,8 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Really_Really_Dark_Gray"
-    android:paddingBottom="20dp">
+    android:background="@color/Really_Really_Dark_Gray">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -165,13 +164,13 @@
             android:id="@+id/tag_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/poster"
             android:layout_marginEnd="64dp"
             android:layout_marginTop="57dp"
+            android:layout_toStartOf="@+id/director"
             android:text="Rating"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="36sp"
-            android:layout_alignTop="@+id/poster"
-            android:layout_toStartOf="@+id/director" />
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/tag_runtime"
