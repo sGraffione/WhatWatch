@@ -1,11 +1,13 @@
 package com.example.simone.whatwatch;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.MainThread;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -93,6 +95,13 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 long row = watchListDB.insertFilm(film);
                 /*MainActivity mainActivity = new MainActivity();
                 mainActivity.refreshFragmentWhatchList();*/
+                Fragment toRefresh = MainActivity.getToRefresh();
+                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                if (toRefresh != null && ft != null) {
+                    ft.detach(toRefresh);
+                    ft.attach(toRefresh);
+                    ft.commitAllowingStateLoss();
+                }
             }
         });
 

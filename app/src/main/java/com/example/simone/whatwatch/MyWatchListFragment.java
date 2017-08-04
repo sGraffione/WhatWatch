@@ -65,10 +65,11 @@ public class MyWatchListFragment extends Fragment {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                /*
                 int id_film = films.get(i).getId();
                 Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
                 appInfo.putExtra("id", id_film);
-                startActivity(appInfo);
+                startActivity(appInfo);*/
             }
         });
 

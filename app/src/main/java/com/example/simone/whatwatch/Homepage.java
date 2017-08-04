@@ -29,16 +29,26 @@ public class Homepage extends Fragment {
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
     Button btnAddElement;
 
+    View view = null;
+
+    @Override
+    public void onCreate(Bundle b) {
+        super.onCreate(b);
+    }
+
+    private void downloadJson(View view) {
+        filmInfo = new ArrayList<>();
+        lv = (ListView) view.findViewById(R.id.filmList);
+        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSearch()).execute(URLSelected);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_homepage, container, false);
+        view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        filmInfo = new ArrayList<>();
-        lv = (ListView) view.findViewById(R.id.filmList);
 
-        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSearch()).execute(URLSelected);
+
 
 
         if(((MainActivity)getActivity()).getTypeSelected().equals("movie")){

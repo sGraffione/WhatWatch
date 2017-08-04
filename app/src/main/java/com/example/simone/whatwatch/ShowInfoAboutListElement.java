@@ -8,13 +8,15 @@ import android.os.Bundle;
         import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
         import android.widget.Button;
+import android.widget.Toast;
 
-        import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Picasso;
 
         import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,6 +27,9 @@ import java.net.URL;
         import java.util.HashMap;
         import java.util.concurrent.ExecutionException;
 
+import database.FilmDescriptionDB;
+import database.WatchListDB;
+
 
 public class ShowInfoAboutListElement extends Activity {
 
@@ -34,12 +39,13 @@ public class ShowInfoAboutListElement extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_info_about_list_element);
 
-        final TextView Title = (TextView) findViewById(R.id.Title);
-        final ImageView poster = (ImageView) findViewById(R.id.poster);
-        final Button add_button = (Button) findViewById(R.id.add_button);
-        final Button ytBtn = (Button) findViewById(R.id.youtube);
-        final TextView overview = (TextView) findViewById(R.id.Overview);
-        final TextView rating = (TextView) findViewById(R.id.rating);
+        TextView Title = (TextView) findViewById(R.id.Title);
+        ImageView poster = (ImageView) findViewById(R.id.poster);
+        Button add_button = (Button) findViewById(R.id.add_button);
+        CheckBox seen = (CheckBox) findViewById(R.id.seen);
+        Button ytBtn = (Button) findViewById(R.id.youtube);
+        TextView overview = (TextView) findViewById(R.id.Overview);
+        TextView rating = (TextView) findViewById(R.id.rating);
         TextView year = (TextView) findViewById(R.id.year);
         TextView runtime =(TextView) findViewById(R.id.runtime);
         TextView director = (TextView) findViewById(R.id.director);
@@ -65,7 +71,7 @@ public class ShowInfoAboutListElement extends Activity {
             }
         }
 
-        HashMap<String, Object> data = filmInfo.get(0);
+        final HashMap<String, Object> data = filmInfo.get(0);
 
         Title.setText((String) data.get("original_title"));
         Picasso.with(this).load((String) data.get("poster_path")).into(poster);
@@ -102,6 +108,19 @@ public class ShowInfoAboutListElement extends Activity {
             }
         });
 
+        final int id = id_film;
+        add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("original_title"));
+                WatchListDB watchListDB = new WatchListDB(view.getContext());
+                long row = watchListDB.insertFilm(film);
+                if(row!=-1)
+                    Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private ArrayList<HashMap<String, Object>> parsingJSONArray(JSONArray input) {

@@ -27,12 +27,24 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
+    private static Fragment toRefresh = null;
+    private static android.support.v4.app.FragmentManager fragmentManager = null;
+
     String typeSelected = "movie";
     String searchTypeSelected = "popularity";
     String firstPart = "https://api.themoviedb.org/3/discover/";
     String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
     int homepageSearchSelected = R.id.Popularity;
     int getHomepageSearchTypeSelected = R.id.Movies;
+
+
+    public static Fragment getToRefresh() {
+        return toRefresh;
+    }
+
+    public static  android.support.v4.app.FragmentTransaction getFragmentTransaction() {
+        return fragmentManager.beginTransaction();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +60,15 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        fragmentManager = getSupportFragmentManager();
     }
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new Homepage(), "Homepage");
-        adapter.addFragment(new MyWatchListFragment(), "My Watchlist");
+        toRefresh = new MyWatchListFragment();
+        adapter.addFragment(toRefresh, "My Watchlist");
         adapter.addFragment(new WatchedListFragment(), "Watched");
         viewPager.setAdapter(adapter);
     }

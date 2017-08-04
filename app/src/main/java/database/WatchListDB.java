@@ -201,19 +201,22 @@ public class WatchListDB {
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
-        this.closeDB();
+
 
         if(cursor == null || cursor.getCount() == 0){
             cursor.close();
+            this.closeDB();
             return 0;
         }
         else{
             try{
                 int watched = cursor.getInt(FILM_WATCHED_COL);
                 cursor.close();
+                this.closeDB();
                 return watched;
             }
             catch (Exception e){
+                this.closeDB();
                 return 0;
             }
         }
