@@ -172,16 +172,17 @@ public class WatchListDB {
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
-        this.closeDB();
 
         if(cursor == null || cursor.getCount() == 0){
             cursor.close();
+            this.closeDB();
             return null;
         }
         else{
             try{
                 String url = cursor.getString(FILM_IMG_URL_COL);
                 cursor.close();
+                this.closeDB();
                 return url;
                 //In questo punto si poteva anche fare direttamente return cursor.getString(FILM_IMG_URL_COL), ma così non si lascerebbe aperto il cursore
                 //Accetto suggerimenti su come poterr ottimizzare questo passaggio
@@ -201,16 +202,17 @@ public class WatchListDB {
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
-        this.closeDB();
 
         if(cursor == null || cursor.getCount() == 0){
             cursor.close();
+            this.closeDB();
             return 0;
         }
         else{
             try{
                 int watched = cursor.getInt(FILM_WATCHED_COL);
                 cursor.close();
+                this.closeDB();
                 return watched;
             }
             catch (Exception e){
