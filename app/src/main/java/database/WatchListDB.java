@@ -126,10 +126,11 @@ public class WatchListDB {
     public ArrayList<FilmDescriptionDB> getAll(){
         this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT * FROM " + FILM_TABLE, null);
-
-        cursor.moveToFirst();
-
         ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
+
+        //cursor.moveToFirst();
+
+
 
         while(cursor.moveToNext()){
             films.add(getFilmFromCursor(cursor));
