@@ -40,6 +40,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
         pDialog.show();
+
     }
 
 
