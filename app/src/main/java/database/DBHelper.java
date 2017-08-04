@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import database.WatchListDB;
 import static database.WatchListDB.CREATE_FILM_TABLE;
-
+import static database.WatchListDB.DROP_FILM_TABLE;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -18,6 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_FILM_TABLE);
+        //db.execSQL(DROP_FILM_TABLE);
     }
 
     @Override

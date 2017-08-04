@@ -83,7 +83,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     String TAG_TITLE = film.getString("original_title");
                     String TAG_OVERVIEW = film.getString("overview");
                     int TAG_ID = film.getInt("id");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
                     Double TAG_RATING = film.getDouble("vote_average");
 
 
@@ -104,7 +104,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     String TAG_NAME = tv_serie.getString("name");
                     String TAG_OVERVIEW = tv_serie.getString("overview");
                     int TAG_ID = tv_serie.getInt("id");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + tv_serie.getString("poster_path");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + tv_serie.getString("poster_path");
                     Double TAG_RATING = tv_serie.getDouble("vote_average");
 
                     //General information of film

@@ -38,9 +38,10 @@ public class MyWatchListFragment extends Fragment {
 
         WatchListDB watchListDB = new WatchListDB(getContext());
         final ArrayList<FilmDescriptionDB> films = watchListDB.getAll();
-
-        watchlistAdapter = new WatchlistAdapter(getContext(), films);
-        gridView.setAdapter(watchlistAdapter);
+        if(films != null){
+            watchlistAdapter = new WatchlistAdapter(getContext(), films);
+            gridView.setAdapter(watchlistAdapter);
+        }
 
 
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

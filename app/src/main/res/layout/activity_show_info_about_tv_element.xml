@@ -10,12 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/Really_Really_Dark_Gray"
-        tools:context="com.example.simone.whatwatch.ShowInfoAboutListElement">
+        tools:context="com.example.simone.whatwatch.ShowInfoAboutListElement"
+        android:id="@+id/tv_series_layout">
 
         <ImageView
             android:id="@+id/poster"
-            android:layout_width="300dp"
-            android:layout_height="500dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/creators"
             android:layout_marginStart="23dp"
@@ -62,21 +63,22 @@
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_alignStart="@+id/year"
             android:layout_alignTop="@+id/poster"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="139dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginTop="100dp"
             android:text="rating"
             android:textSize="36sp" />
 
-        <ListView
+        <!--<ListView
             android:id="@+id/season_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:isScrollContainer="false"
-            android:layout_alignStart="@id/genres"
             android:layout_alignParentBottom="true"
+            android:layout_alignStart="@id/genres"
+            android:layout_below="@+id/Overview"
             android:layout_marginTop="68dp"
-            android:layout_below="@+id/Overview" />
+            android:isScrollContainer="false" />-->
 
         <TextView
             android:id="@+id/genres"
@@ -103,22 +105,21 @@
             android:id="@+id/year"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignBaseline="@+id/rating"
-            android:layout_alignBottom="@+id/rating"
-            android:layout_alignStart="@+id/youtube"
+            android:layout_marginBottom="11dp"
             android:text="TextView"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:layout_above="@+id/scale"
+            android:layout_toEndOf="@+id/poster"
+            android:layout_marginStart="38dp" />
 
         <Button
             android:id="@+id/youtube"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@id/seen"
-            android:layout_marginStart="46dp"
-            android:layout_marginTop="21dp"
-            android:layout_toEndOf="@id/creators"
-            android:text="Go to Youtube" />
+            android:text="Go to Youtube"
+            android:layout_alignBottom="@+id/poster"
+            android:layout_alignStart="@+id/runtime" />
 
         <CheckBox
             android:id="@+id/seen"
@@ -134,12 +135,11 @@
             android:id="@+id/runtime"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignBottom="@+id/year"
-            android:layout_marginStart="24dp"
-            android:layout_toEndOf="@+id/year"
             android:text="TextView"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:layout_below="@+id/rating"
+            android:layout_alignStart="@+id/rating" />
 
         <TextView
             android:id="@+id/scale"

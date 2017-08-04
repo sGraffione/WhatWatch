@@ -58,7 +58,9 @@ public class WatchlistAdapter extends BaseAdapter {
         ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
         TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
         FilmDescriptionDB film = films.get(position);
-        nameTextView.setText(film.getName());
+        if(film != null){
+            nameTextView.setText(film.getName());
+        }
         //Picasso.with(mContext).load(films.getImg()).into(imageView);
 
 
