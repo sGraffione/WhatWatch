@@ -229,7 +229,7 @@ public class WatchListDB {
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
-        if(cursor == null){
+        if(cursor.getCount() == 0){
             flag = 0;
             this.closeDB();
             return flag;
