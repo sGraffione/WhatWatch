@@ -37,7 +37,7 @@ public class MyWatchListFragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridview);
 
         WatchListDB watchListDB = new WatchListDB(getContext());
-        final ArrayList<FilmDescriptionDB> films = watchListDB.getAll();
+        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);

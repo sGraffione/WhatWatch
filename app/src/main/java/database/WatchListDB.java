@@ -106,7 +106,7 @@ public class WatchListDB {
 
 
     //Get dei dati di un film in base al nome
-    public FilmDescriptionDB getFilm(String name){
+    public FilmDescriptionDB getFilmByName(String name){
         String where = FILM_NAME + "= ?";
         String[] whereArgs = {name};
 
@@ -129,6 +129,27 @@ public class WatchListDB {
         ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
 
         //cursor.moveToFirst();
+
+        while(cursor.moveToNext()){
+            films.add(getFilmFromCursor(cursor));
+        }
+
+        if (cursor != null){
+            cursor.close();
+        }
+        this.closeDB();
+
+        return films;
+    }
+
+
+    public ArrayList<FilmDescriptionDB> getFilms(int watched){
+        String where = FILM_WATCHED + "= ?";
+        String[] whereArgs = {Integer.toString(watched)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
+        ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
 
         while(cursor.moveToNext()){
             films.add(getFilmFromCursor(cursor));
