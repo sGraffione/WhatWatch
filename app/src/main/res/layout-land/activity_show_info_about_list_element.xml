@@ -156,12 +156,13 @@
             android:id="@+id/tag_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="55dp"
-            android:text="Rating"
-            android:textSize="36sp"
-            android:layout_marginEnd="64dp"
             android:layout_alignTop="@+id/poster"
-            android:layout_toStartOf="@+id/director" />
+            android:layout_marginEnd="64dp"
+            android:layout_marginTop="55dp"
+            android:layout_toStartOf="@+id/director"
+            android:text="Rating"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/tag_runtime"
@@ -172,6 +173,7 @@
             android:layout_marginStart="140dp"
             android:layout_toEndOf="@+id/rating"
             android:text="Runtime"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="36sp" />
 
         <TextView
@@ -182,6 +184,7 @@
             android:layout_marginStart="140dp"
             android:layout_toEndOf="@+id/tag_runtime"
             android:text="Year"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="36sp" />
 
     </RelativeLayout>
