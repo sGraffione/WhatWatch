@@ -46,7 +46,7 @@ public class WatchListDB {
 
 
     public static final String CREATE_FILM_TABLE =
-            "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
+            "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY UNIQUE, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
                     FILM_SEASON + " INTEGER, " + FILM_SEASON_MAX + " INTEGER, " + FILM_EP + " INTEGER, " + FILM_EP_MAX + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " +
                     FILM_IMG_URL + " TEXT);";
 
