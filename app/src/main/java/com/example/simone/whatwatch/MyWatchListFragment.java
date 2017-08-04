@@ -27,7 +27,7 @@ public class MyWatchListFragment extends Fragment {
 
     private GridView gridView;
 
-    private WatchlistAdapter watchlistAdapter;
+    private WatchlistAdapter watchlistAdapter = null;
 
     @Nullable
     @Override

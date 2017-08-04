@@ -202,21 +202,42 @@ public class WatchListDB {
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
-        this.closeDB();
+
 
         if(cursor == null || cursor.getCount() == 0){
-            cursor.close();
+            this.closeDB();
             return 0;
         }
         else{
             try{
                 int watched = cursor.getInt(FILM_WATCHED_COL);
                 cursor.close();
+                this.closeDB();
                 return watched;
             }
             catch (Exception e){
                 return 0;
             }
+        }
+    }
+
+
+    public int verifyId(int id){
+        int flag;
+        String where = FILM_ID + "= ?";
+        String[] whereArgs = {Integer.toString(id)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
+        if(cursor.getCount() == 0){
+            flag = 0;
+            this.closeDB();
+            return flag;
+        }else{
+            flag = 1;
+            cursor.close();
+            this.closeDB();
+            return flag;
         }
     }
 
