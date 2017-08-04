@@ -2,8 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Really_Really_Dark_Gray"
-    android:paddingBottom="20dp">
+    android:background="@color/Really_Really_Dark_Gray">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,8 +14,8 @@
 
         <ImageView
             android:id="@+id/poster"
-            android:layout_width="300dp"
-            android:layout_height="500dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/director"
             android:layout_marginStart="23dp"
@@ -129,7 +128,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/youtube"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="45dp"
             android:layout_toRightOf="@+id/youtube"
             android:text="Seen"
             android:textColor="@color/WhiteSmoke" />
@@ -139,7 +138,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/add_button"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="45dp"
             android:layout_toRightOf="@+id/add_button"
             android:text="Go to youtube" />
 
@@ -147,19 +146,20 @@
             android:id="@+id/scale"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="/10"
-            android:textColor="@color/WhiteSmoke"
-            android:textSize="30sp"
             android:layout_alignBaseline="@+id/rating"
             android:layout_alignBottom="@+id/rating"
-            android:layout_toEndOf="@+id/rating" />
+            android:layout_toEndOf="@+id/rating"
+            android:text="/10"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/tag_rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/director"
+            android:layout_marginLeft="30dp"
             android:layout_marginTop="130dp"
+            android:layout_toRightOf="@+id/poster"
             android:text="Rating"
             android:textColor="@color/WhiteSmoke"
             android:textSize="30sp" />
@@ -172,6 +172,7 @@
             android:layout_below="@+id/tag_rating"
             android:layout_marginTop="65dp"
             android:text="Year"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="30sp" />
 
         <TextView
@@ -182,6 +183,7 @@
             android:layout_below="@+id/tag_year"
             android:layout_marginTop="65dp"
             android:text="Duration"
+            android:textColor="@color/WhiteSmoke"
             android:textSize="30sp" />
 
     </RelativeLayout>
