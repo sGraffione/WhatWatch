@@ -31,15 +31,6 @@ public class Homepage extends Fragment {
 
     View view = null;
 
-    @Override
-    public void onCreate(Bundle b) {
-        super.onCreate(b);
-    }
-
-    private void downloadJson(View view) {
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

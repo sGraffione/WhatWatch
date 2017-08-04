@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private static Fragment toRefresh = null;
+    private static Fragment toRefreshWatched = null;
+    private static Fragment toRefreshHomepage = null;
     private static android.support.v4.app.FragmentManager fragmentManager = null;
 
     String typeSelected = "movie";
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     public static Fragment getToRefresh() {
         return toRefresh;
     }
+
+    public static Fragment getToRefreshWatched() {return toRefreshWatched;}
+
 
     public static  android.support.v4.app.FragmentTransaction getFragmentTransaction() {
         return fragmentManager.beginTransaction();
@@ -66,10 +71,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Homepage(), "Homepage");
+        toRefreshHomepage = new Homepage();
+        adapter.addFragment(toRefreshHomepage, "Homepage");
         toRefresh = new MyWatchListFragment();
+        toRefreshWatched = new WatchedListFragment();
         adapter.addFragment(toRefresh, "My Watchlist");
-        adapter.addFragment(new WatchedListFragment(), "Watched");
+        adapter.addFragment(toRefreshWatched, "Watched");
         viewPager.setAdapter(adapter);
     }
 
@@ -146,17 +153,10 @@ public class MainActivity extends AppCompatActivity {
         URLSelected = firstPart + typeSelected + secondPart;
         List<Fragment> allFragment = getSupportFragmentManager().getFragments();
         ((Homepage) allFragment.get(0)).refresh(URLSelected);
+
         return super.onOptionsItemSelected(item);
     }
 
-    public void refreshFragmentWhatchList(){
-        //List<Fragment> allFragment = getSupportFragmentManager().getFragments();
-        MyWatchListFragment myWatchListFragment = new MyWatchListFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.detach(myWatchListFragment);
-        fragmentTransaction.attach(myWatchListFragment);
-        fragmentTransaction.commit();
-    }
 
     public String getTypeSelected(){
         return typeSelected;

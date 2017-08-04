@@ -73,7 +73,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     String TAG_RATING = film.getString("vote_average");
                     String TAG_YEAR = film.getString("release_date");
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w780"+film.getString("poster_path");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
                     String TAG_RUNTIME = film.getString("runtime");
 
                     JSONObject jArrayCredits = film.getJSONObject("credits");
@@ -106,7 +106,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     String TAG_RATING = film.getString("vote_average");
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
                     JSONArray TAG_SEASONS = film.getJSONArray("seasons");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w780"+film.getString("poster_path");
+                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
                     String TAG_YEAR = film.getString("first_air_date");
                     JSONArray jArrayRuntime = film.getJSONArray("episode_run_time");
                     int TAG_RUNTIME = (int) jArrayRuntime.get(0);
