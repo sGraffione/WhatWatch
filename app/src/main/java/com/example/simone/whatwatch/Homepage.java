@@ -37,9 +37,7 @@ public class Homepage extends Fragment {
     }
 
     private void downloadJson(View view) {
-        filmInfo = new ArrayList<>();
-        lv = (ListView) view.findViewById(R.id.filmList);
-        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSearch()).execute(URLSelected);
+
     }
 
     @Nullable
@@ -47,7 +45,9 @@ public class Homepage extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-
+        filmInfo = new ArrayList<>();
+        lv = (ListView) view.findViewById(R.id.filmList);
+        new downloadJSONInfo(getActivity(), filmInfo, lv, ((MainActivity)getActivity()).getTypeSelected(), ((MainActivity)getActivity()).getTypeSearch()).execute(URLSelected);
 
 
 
