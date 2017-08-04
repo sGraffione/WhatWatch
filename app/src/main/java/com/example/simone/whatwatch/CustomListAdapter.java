@@ -41,6 +41,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
     Context context;
     int resource;
     String TAG_TITLENAME;
+    String type;
 
     public CustomListAdapter(Context context, int resource, ArrayList<HashMap<String, Object>> filmList, String TAG_TYPE) {
         super(context, resource, filmList);
@@ -52,6 +53,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         }else{
             TAG_TITLENAME = "name";
         }
+        this.type = TAG_TYPE;
     }
 
     @Override
@@ -90,7 +92,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME));
+                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME), type, (String) data.get("poster_path"));
                 WatchListDB watchListDB = new WatchListDB(getContext());
                 int res = watchListDB.verifyId((int) data.get("id"));
                 if(res==0) {

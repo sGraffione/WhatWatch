@@ -72,10 +72,22 @@ public class MyWatchListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+
                 int id_film = films.get(i).getId();
-                Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
-                appInfo.putExtra("id", id_film);
-                startActivity(appInfo);
+                String type = films.get(i).getType();
+                if(type.equals("movie")) {
+                    Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
+                    appInfo.putExtra("id", id_film);
+                    appInfo.putExtra("type", type);
+                    startActivity(appInfo);
+                } else{
+                    Intent appInfo = new Intent(getActivity(), ShowInfoAboutTvElement.class);
+                    appInfo.putExtra("id", id_film);
+                    appInfo.putExtra("type", type);
+                    startActivity(appInfo);
+                }
+
+
             }
         });
 

@@ -33,7 +33,7 @@ public class FilmDescriptionDB {
     public FilmDescriptionDB(int id, String name){
         this.id = id;
         this.name = name;
-        this.type = "Film";
+        this.type = "movie";
         this.season = 1;
         this.season_max = 1;
         this.episode = 1;
