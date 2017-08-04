@@ -47,17 +47,8 @@ public class MyWatchListFragment extends Fragment {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle("Alert");
-                alertDialog.setMessage("You selected a film number" + position);
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-
+                WatchListDB watchedListDB = new WatchListDB(view.getContext());
+                long row = watchedListDB.updateWatched(films.get(position).getId());
                 return true;
             }
         });
