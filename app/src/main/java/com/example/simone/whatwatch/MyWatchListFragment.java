@@ -47,8 +47,8 @@ public class MyWatchListFragment extends Fragment {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //WatchListDB watchedListDB = new WatchListDB(view.getContext());
-                //long row = watchedListDB.updateWatched(films.get(position).getId());
+                WatchListDB watchedListDB = new WatchListDB(view.getContext());
+                long row = watchedListDB.updateWatched(films.get(position).getId());
                 return true;
             }
         });

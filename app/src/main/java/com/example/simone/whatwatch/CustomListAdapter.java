@@ -93,12 +93,17 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME));
                 WatchListDB watchListDB = new WatchListDB(getContext());
                 long row = watchListDB.insertFilm(film);
-                Fragment toRefresh = MainActivity.getToRefresh();
-                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                if (toRefresh != null && ft != null) {
-                    ft.detach(toRefresh);
-                    ft.attach(toRefresh);
-                    ft.commitAllowingStateLoss();
+                if(row != -1){
+                    Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
+                    Fragment toRefresh = MainActivity.getToRefresh();
+                    android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                    if (toRefresh != null && ft != null) {
+                        ft.detach(toRefresh);
+                        ft.attach(toRefresh);
+                        ft.commitAllowingStateLoss();
+                    }
+                }else{
+                    Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
