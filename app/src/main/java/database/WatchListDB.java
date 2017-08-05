@@ -43,12 +43,15 @@ public class WatchListDB {
     public static String FILM_IMG_URL = "film_img_url";
     public static final int FILM_IMG_URL_COL = 8;
 
+    public static String FILM_ROW = "film_row";
+    public static final int FILM_ROW_COL = 9;
+
 
 
     public static final String CREATE_FILM_TABLE =
-            "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER PRIMARY KEY UNIQUE, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
+            "CREATE TABLE " + FILM_TABLE + " (" + FILM_ID + " INTEGER UNIQUE, " + FILM_NAME + " TEXT   NOT NULL UNIQUE, " + FILM_TYPE + " TEXT NOT NULL, " +
                     FILM_SEASON + " INTEGER, " + FILM_SEASON_MAX + " INTEGER, " + FILM_EP + " INTEGER, " + FILM_EP_MAX + " INTEGER, " + FILM_WATCHED + " INTEGER NOT NULL, " +
-                    FILM_IMG_URL + " TEXT);";
+                    FILM_IMG_URL + " TEXT, " + FILM_ROW + " INTEGER PRIMARY KEY);";
 
     public static final String DROP_FILM_TABLE =
             "DROP TABLE IF EXISTS " + FILM_TABLE;
@@ -105,23 +108,6 @@ public class WatchListDB {
     }
 
 
-    //Get dei dati di un film in base al nome
-    public FilmDescriptionDB getFilmByName(String name){
-        String where = FILM_NAME + "= ?";
-        String[] whereArgs = {name};
-
-        this.openReadableDB();
-        Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
-        cursor.moveToFirst();
-        FilmDescriptionDB film = getFilmFromCursor(cursor);
-        if(cursor != null)
-            cursor.close();
-        this.closeDB();
-
-        return film;
-    }
-
-
     //Get di tutti i dati
     public ArrayList<FilmDescriptionDB> getAll(){
         this.openReadableDB();
@@ -149,6 +135,35 @@ public class WatchListDB {
 
         this.openReadableDB();
         Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
+        ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
+
+        while(cursor.moveToNext()){
+            films.add(getFilmFromCursor(cursor));
+        }
+
+        if (cursor != null){
+            cursor.close();
+        }
+        this.closeDB();
+
+        return films;
+    }
+
+
+    public ArrayList<FilmDescriptionDB> getFilms(int watched, String order){
+        String where = FILM_WATCHED + "= ?";
+        String[] whereArgs = {Integer.toString(watched)};
+
+        this.openReadableDB();
+
+        Cursor cursor;
+
+        if(order.equals("Alphabetical")) {
+            cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
+        } else{
+            cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+        }
+
         ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
 
         while(cursor.moveToNext()){
