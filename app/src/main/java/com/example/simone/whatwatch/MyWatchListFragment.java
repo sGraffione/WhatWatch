@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ public class MyWatchListFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_my_watch_list, container, false);
         gridView = (GridView) view.findViewById(R.id.gridview);
+        gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         WatchListDB watchListDB = new WatchListDB(getContext());
         final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0);
