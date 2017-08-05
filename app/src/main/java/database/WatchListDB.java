@@ -150,7 +150,7 @@ public class WatchListDB {
     }
 
 
-    public ArrayList<FilmDescriptionDB> getFilms(int watched, String order){
+    public ArrayList<FilmDescriptionDB> getFilms(int watched, String type, String order){
         String where = FILM_WATCHED + "= ?";
         String[] whereArgs = {Integer.toString(watched)};
 
@@ -158,12 +158,26 @@ public class WatchListDB {
 
         Cursor cursor;
 
-        if(order.equals("Recent")) {
-            cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
-        } else{
-            cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
-        }
 
+        if(type.equals("Movie")) {
+            if (order.equals("Recent")) {
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+            } else {
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
+            }
+        } else if(type.equals("Tv_shows")){
+            if (order.equals("Recent")) {
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+            } else {
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
+            }
+        } else{
+            if (order.equals("Recent")) {
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+            } else {
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
+            }
+        }
         ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
 
         while(cursor.moveToNext()){
