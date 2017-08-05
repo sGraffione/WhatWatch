@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -25,6 +26,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
+
+import database.FilmDescriptionDB;
+import database.WatchListDB;
 
 
 public class ShowInfoAboutTvElement extends Activity {
@@ -50,9 +54,10 @@ public class ShowInfoAboutTvElement extends Activity {
 
 
 
-        int id_film;
+        int id_film = 0;
         filmInfo = new ArrayList<>();
         String type = "tv";
+
 
         Intent intent = getIntent();
         if(intent != null){
@@ -68,7 +73,7 @@ public class ShowInfoAboutTvElement extends Activity {
             }
         }
 
-        HashMap<String, Object> data = filmInfo.get(0);
+        final HashMap<String, Object> data = filmInfo.get(0);
         Title.setText((String) data.get("name"));
         Picasso.with(this).load((String) data.get("poster_path")).into(poster);
         overview.setText((String) data.get("overview"));
@@ -105,6 +110,19 @@ public class ShowInfoAboutTvElement extends Activity {
             }
         });
 
+        final int id = id_film;
+        add_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("name"));
+                WatchListDB watchListDB = new WatchListDB(view.getContext());
+                long row = watchListDB.insertFilm(film);
+                if(row!=-1)
+                    Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
