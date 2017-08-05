@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +20,7 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.WeakHashMap;
 
 import database.FilmDescriptionDB;
@@ -31,6 +33,12 @@ public class MyWatchListFragment extends Fragment {
     private GridView gridView;
 
     private WatchlistAdapter watchlistAdapter = null;
+
+    String typeSelected = "All";
+    String sortingType = "alphabetical";
+    int sortingTypeId = R.id.A_Z;
+    int typeSelectedId = R.id.All;
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -47,7 +55,7 @@ public class MyWatchListFragment extends Fragment {
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         WatchListDB watchListDB = new WatchListDB(getContext());
-        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0);
+        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, sortingType, typeSelected);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
@@ -102,5 +110,74 @@ public class MyWatchListFragment extends Fragment {
         });
         setHasOptionsMenu(true);
         return view;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        switch (typeSelectedId){
+            case R.id.All:
+                menu.findItem(R.id.All).setChecked(true);
+                break;
+            case R.id.Movies:
+                menu.findItem(R.id.Movies).setChecked(true);
+                break;
+            case R.id.Tv_shows:
+                menu.findItem(R.id.Tv_shows).setChecked(true);
+        }
+
+        switch (sortingTypeId){
+            case R.id.A_Z:
+                menu.findItem(R.id.A_Z).setChecked(true);
+                break;
+            case R.id.Recent:
+                menu.findItem(R.id.Recent).setChecked(true);
+                break;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        String URLSelected;
+        int id = item.getGroupId();
+        if(id == R.id.typeGroup){
+            switch(item.getItemId()){
+                case R.id.All:
+                    typeSelectedId = R.id.All;
+                    typeSelected = "All";
+                case R.id.Movies:
+                    typeSelectedId = R.id.Movies;
+                    typeSelected = "Movie";
+                    break;
+                case R.id.Tv_shows:
+                    typeSelectedId = R.id.Tv_shows;
+                    typeSelected = "Tv_shows";
+                    break;
+            }
+        }else{
+            switch (item.getItemId()){
+                case R.id.A_Z:
+                    sortingTypeId = R.id.A_Z;
+                    sortingType = "Alphabetical";
+                    break;
+                case R.id.Recent:
+                    sortingTypeId = R.id.Recent;
+                    sortingType = "Recent";
+                    break;
+            }
+        }
+
+        refresh();
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void refresh() {
+        WatchListDB watchListDB = new WatchListDB(getContext());
+        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, sortingType, typeSelected);
+        if(films != null){
+            watchlistAdapter = new WatchlistAdapter(getContext(), films);
+            gridView.setAdapter(watchlistAdapter);
+        }
     }
 }
