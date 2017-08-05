@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
@@ -114,13 +115,20 @@ public class ShowInfoAboutTvElement extends Activity {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("name"));
+                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("name"), "tv", (String) data.get("poster_path"));
                 WatchListDB watchListDB = new WatchListDB(view.getContext());
                 long row = watchListDB.insertFilm(film);
                 if(row!=-1)
                     Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+                Fragment toRefresh = MainActivity.getToRefresh();
+                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                if (toRefresh != null && ft != null) {
+                    ft.detach(toRefresh);
+                    ft.attach(toRefresh);
+                    ft.commitAllowingStateLoss();
+                }
             }
         });
 

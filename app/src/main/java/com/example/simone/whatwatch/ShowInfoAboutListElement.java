@@ -5,27 +5,24 @@ import android.app.Activity;
         import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-        import android.support.v4.content.ContextCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-        import android.widget.Button;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-        import org.json.JSONArray;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 import database.FilmDescriptionDB;
 import database.WatchListDB;
@@ -86,8 +83,8 @@ public class ShowInfoAboutListElement extends Activity {
         }
         rating.setText((String) data.get("vote_average"));
         year.setText((String) data.get("year"));
-        runtime.setText((String) data.get("runtime") + ("m"));
-        director.setText("Directed by " + (String) data.get("director"));
+        runtime.setText(data.get("runtime") + ("m"));
+        director.setText("Directed by " + data.get("director"));
         ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
         genres.setText((String) genre.get(0).get("name"));
         for(int i = 1; i < genre.size(); i++){
@@ -112,13 +109,20 @@ public class ShowInfoAboutListElement extends Activity {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("original_title"));
+                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("original_title"), "movie", (String) data.get("poster_path"));
                 WatchListDB watchListDB = new WatchListDB(view.getContext());
                 long row = watchListDB.insertFilm(film);
                 if(row!=-1)
                     Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+                Fragment toRefresh = MainActivity.getToRefresh();
+                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                if (toRefresh != null && ft != null) {
+                    ft.detach(toRefresh);
+                    ft.attach(toRefresh);
+                    ft.commitAllowingStateLoss();
+                }
             }
         });
     }
