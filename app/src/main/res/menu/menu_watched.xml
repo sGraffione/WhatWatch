@@ -1,0 +1,36 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/typeGroup">
+        <item
+            android:title="Choose"
+            android:enabled="false"
+            android:checkable="false"
+            android:orderInCategory="0"/>
+
+        <item
+            android:id="@+id/All"
+            android:orderInCategory="1"
+            android:title="All"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/Movies"
+            android:orderInCategory="2"
+            android:title="Movies"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/Tv_shows"
+            android:orderInCategory="3"
+            android:title="Tv shows"
+            app:showAsAction="never" />
+    </group>
+
+    <item android:id="@+id/search"
+        android:title="search"
+        android:icon="@drawable/ic_search"
+        app:showAsAction="collapseActionView|ifRoom"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+
+</menu>
