@@ -36,7 +36,7 @@
             android:orderInCategory="4"/>
 
         <item
-            android:id="@+id/A-Z"
+            android:id="@+id/A_Z"
             android:orderInCategory="5"
             android:title="Alphabetical"
             app:showAsAction="never" />

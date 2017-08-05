@@ -10,6 +10,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,6 +31,12 @@ public class MyWatchListFragment extends Fragment {
     private GridView gridView;
 
     private WatchlistAdapter watchlistAdapter = null;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_watchlist, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     @Nullable
     @Override
@@ -92,7 +100,7 @@ public class MyWatchListFragment extends Fragment {
 
             }
         });
-
+        setHasOptionsMenu(true);
         return view;
     }
 }

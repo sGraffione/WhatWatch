@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +24,12 @@ import database.WatchListDB;
 public class WatchedListFragment extends Fragment {
 
     private static final String TAG = "Watched";
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_watched, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
     @Nullable
     @Override
@@ -59,7 +67,7 @@ public class WatchedListFragment extends Fragment {
 
             }
         });
-
+        setHasOptionsMenu(true);
         return view;
     }
 
