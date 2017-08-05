@@ -155,16 +155,18 @@ public class WatchListDB {
         Cursor cursor;
 
         if(type.equals("Movie")) {
+            //String t = "movie";
             String where = FILM_WATCHED + "= ? AND " + FILM_TYPE + "= ?";
-            String[] whereArgs = {Integer.toString(watched), type};
+            String[] whereArgs = {Integer.toString(watched), "movie"};
             if (order.equals("Recent")) {
                 cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
             } else {
                 cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
             }
         } else if(type.equals("Tv_shows")){
+            //String t = "tv";
             String where = FILM_WATCHED + "= ? AND " + FILM_TYPE + "= ?";
-            String[] whereArgs = {Integer.toString(watched), type};
+            String[] whereArgs = {Integer.toString(watched), "tv"};
             if (order.equals("Recent")) {
                 cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
             } else {
