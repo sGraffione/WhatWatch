@@ -35,7 +35,7 @@ public class MyWatchListFragment extends Fragment {
     private WatchlistAdapter watchlistAdapter = null;
 
     String typeSelected = "All";
-    String sortingType = "alphabetical";
+    String sortingType = "Alphabetical";
     int sortingTypeId = R.id.A_Z;
     int typeSelectedId = R.id.All;
 
@@ -55,7 +55,7 @@ public class MyWatchListFragment extends Fragment {
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         WatchListDB watchListDB = new WatchListDB(getContext());
-        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, sortingType, typeSelected);
+        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, typeSelected, sortingType);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
@@ -145,6 +145,7 @@ public class MyWatchListFragment extends Fragment {
                 case R.id.All:
                     typeSelectedId = R.id.All;
                     typeSelected = "All";
+                    break;
                 case R.id.Movies:
                     typeSelectedId = R.id.Movies;
                     typeSelected = "Movie";
@@ -174,7 +175,7 @@ public class MyWatchListFragment extends Fragment {
 
     public void refresh() {
         WatchListDB watchListDB = new WatchListDB(getContext());
-        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, sortingType, typeSelected);
+        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, typeSelected, sortingType);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
