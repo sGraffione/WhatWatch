@@ -158,10 +158,10 @@ public class WatchListDB {
 
         Cursor cursor;
 
-        if(order.equals("Alphabetical")) {
-            cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
-        } else{
+        if(order.equals("Recent")) {
             cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+        } else{
+            cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
         }
 
         ArrayList<FilmDescriptionDB> films = new ArrayList<FilmDescriptionDB>();
