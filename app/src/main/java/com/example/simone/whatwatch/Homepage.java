@@ -1,6 +1,7 @@
 package com.example.simone.whatwatch;
 
 import android.app.SearchManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
