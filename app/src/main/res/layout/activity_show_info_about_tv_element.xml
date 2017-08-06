@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/poster"
-            android:layout_width="300dp"
-            android:layout_height="500dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/creators"
             android:layout_marginStart="23dp"
@@ -151,16 +151,6 @@
             android:text="/10"
             android:textColor="@color/WhiteSmoke"
             android:textSize="36sp" />
-
-        <TextView
-            android:id="@+id/ohBella"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/Overview"
-            android:textColor="@color/WhiteSmoke"
-            android:layout_alignStart="@id/Overview"
-            android:layout_marginTop="20dp"
-            android:text="Oh bella"/>
 
     </RelativeLayout>
 </ScrollView>

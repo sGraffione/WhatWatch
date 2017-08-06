@@ -7,7 +7,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -119,7 +121,7 @@ public class ShowInfoAboutTvElement extends Activity {
                 WatchListDB watchListDB = new WatchListDB(view.getContext());
                 long row = watchListDB.insertFilm(film);
                 if(row!=-1)
-                    Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                 Fragment toRefresh = MainActivity.getToRefresh();
@@ -144,59 +146,100 @@ public class ShowInfoAboutTvElement extends Activity {
 
         int id_prec_tv1 = 0;
         int id_prec_tv2 = 0;
+        int id_prec_btn = 0;
 
-        for(int i = 0; i < seasons.length(); i++){
+        int height = 20;
+
+        for(int i = 1; i < seasons.length(); i++){
             try {
                 RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                //RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                //RelativeLayout.LayoutParams params4 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
                 TextView tv1 = new TextView(this);
-                if(id_prec_tv1 != 0)
+                params1.addRule(RelativeLayout.ALIGN_START, R.id.Overview);
+                params1.setMargins(0,10 ,30,0);
+                if(id_prec_tv1 != 0) {
                     params1.addRule(RelativeLayout.BELOW, id_prec_tv1);
-                else
-                    params1.addRule(relativeLayout.BELOW, R.id.Overview);
+                }else{
+                    params1.addRule(RelativeLayout.BELOW, R.id.Overview);
+                }
                 tv1.setId(View.generateViewId());
-                tv1.setText("Season #" + seasons.getJSONObject(i).getString("season_number"));
+                tv1.setText("Season #" + seasons.getJSONObject(i).getInt("season_number"));
                 tv1.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                tv1.setHeight(height);
                 id_prec_tv1 = tv1.getId();
 
                 TextView tv2 = new TextView(this);
                 params2.addRule(RelativeLayout.RIGHT_OF, tv1.getId());
-                if(id_prec_tv2 != 0)
+                params2.setMargins(0,10,20,0);
+                if(id_prec_tv2 != 0) {
                     params2.addRule(RelativeLayout.BELOW, id_prec_tv2);
+                    params2.addRule(RelativeLayout.ALIGN_START, id_prec_tv2);
+                }else {
+                    params2.addRule(RelativeLayout.BELOW, R.id.Overview);
+                }
                 tv2.setId(View.generateViewId());
-                tv2.setText(seasons.getJSONObject(i).getString("episode_count") + "episodes");
+                tv2.setText(seasons.getJSONObject(i).getString("episode_count") + " episodes");
                 tv2.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                tv2.setHeight(height);
                 id_prec_tv2 = tv2.getId();
 
+                TextView btn_add = new TextView(this);
+                params3.addRule(RelativeLayout.RIGHT_OF, tv2.getId());
+                params3.addRule(RelativeLayout.ALIGN_BOTTOM, tv2.getId());
+                params3.addRule(RelativeLayout.ALIGN_TOP, tv2.getId());
+                if(id_prec_btn != 0){
+                    params3.addRule(RelativeLayout.BELOW, id_prec_btn);
+                    params3.addRule(RelativeLayout.ALIGN_START, id_prec_btn);
+                }else{
+                    params3.addRule(RelativeLayout.BELOW, R.id.Overview);
+                }
+                btn_add.setId(View.generateViewId());
+                btn_add.setText("+");
+                btn_add.setBackgroundResource(R.drawable.button_selector);
+                btn_add.setHeight(height);
+                btn_add.setWidth(height);
+                btn_add.setGravity(Gravity.CENTER);
+                //btn_add.setBackgroundColor(getResources().getColor(R.color.The_nicest_green_for_button_and_stuff));
+                //btn_add.setTextColor(getResources().getColor(R.color.green));
+                id_prec_btn = btn_add.getId();
+                final int index = i;
+                btn_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(), "You added the season number " + index + " to your Watchlist", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                /*TextView tv3 = new TextView(this);
-                params3.addRule(RelativeLayout.BELOW, tv1.getId());
-                tv3.setId(View.generateViewId());
-                tv3.setText("textView3");
-                tv3.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                /*Button btn_add = new Button(this);
+                params3.addRule(RelativeLayout.RIGHT_OF, tv2.getId());
+                params3.addRule(RelativeLayout.ALIGN_BOTTOM, tv2.getId());
+                params3.addRule(RelativeLayout.ALIGN_TOP, tv2.getId());
+                btn_add.setBackgroundResource(R.drawable.button_selector);
+                if(id_prec_btn != 0){
+                    params3.addRule(RelativeLayout.BELOW, id_prec_btn);
+                }else{
+                    params3.addRule(RelativeLayout.BELOW, R.id.Overview);
+                }
+                btn_add.setId(View.generateViewId());
+                btn_add.setText("Add");
+                id_prec_btn = btn_add.getId();
+                final int index = i;
+                btn_add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(), "You added the season number " + index + " to your Watchlist", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
 
-                TextView tv4 = new TextView(this);
-                params4.addRule(RelativeLayout.RIGHT_OF, tv3.getId());
-                params4.addRule(RelativeLayout.ALIGN_BOTTOM, tv3.getId());
-                tv4.setId(View.generateViewId());
-                tv4.setText("textView4");
-                tv4.setTextColor(getResources().getColor(R.color.WhiteSmoke));*/
-
-                layout.addView(tv1, params1);
-                layout.addView(tv2, params2);
-                //layout.addView(tv3, params3);
-                //layout.addView(tv4, params4);
+                relativeLayout.addView(tv1, params1);
+                relativeLayout.addView(tv2, params2);
+                relativeLayout.addView(btn_add, params3);
             }catch (JSONException e){
                 e.printStackTrace();
             }
-
         }
-
-
-        relativeLayout.addView(layout);
     }
 
     private ArrayList<HashMap<String, Object>> parsingJSONArray(JSONArray input) {
