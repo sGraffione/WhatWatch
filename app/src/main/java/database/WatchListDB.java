@@ -159,7 +159,7 @@ public class WatchListDB {
             String where = FILM_WATCHED + "= ? AND " + FILM_TYPE + "= ?";
             String[] whereArgs = {Integer.toString(watched), "movie"};
             if (order.equals("Recent")) {
-                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW + " DESC");
             } else {
                 cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
             }
@@ -168,7 +168,7 @@ public class WatchListDB {
             String where = FILM_WATCHED + "= ? AND " + FILM_TYPE + "= ?";
             String[] whereArgs = {Integer.toString(watched), "tv"};
             if (order.equals("Recent")) {
-                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW + " DESC");
             } else {
                 cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
             }
@@ -176,7 +176,7 @@ public class WatchListDB {
             String where = FILM_WATCHED + "= ?";
             String[] whereArgs = {Integer.toString(watched)};
             if (order.equals("Recent")) {
-                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW);
+                cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_ROW + " DESC");
             } else {
                 cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, FILM_NAME);
             }
