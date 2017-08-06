@@ -98,7 +98,14 @@ public class ShowInfoAboutListElement extends Activity {
             cast.append(", " + peopleOfIbiza.get(i).get("name"));
         }
 
-        int isSeen = new WatchListDB(this).getFilmById(id_film).getWatched();
+
+        FilmDescriptionDB film = new WatchListDB(this).getFilmById(id_film);
+        int isSeen;
+        if(film != null){
+            isSeen = film.getWatched();
+        }else{
+            isSeen = 0;
+        }
         if(isSeen == 1){
             seen.setChecked(true);
         }
