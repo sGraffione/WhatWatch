@@ -28,7 +28,6 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
     ArrayList<HashMap<String, Object>> filmList;
     Context context;
     int resource;
-    String TAG_TITLENAME;
     String type;
 
     public SearchAdapter(Context context, int resource, ArrayList<HashMap<String, Object>> filmList) {
@@ -52,11 +51,6 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         final View view = convertView;
         final HashMap<String, Object> data = filmList.get(position);
 
-        if(data.get("type").equals("movie"))
-            TAG_TITLENAME = "original_title";
-        else
-            TAG_TITLENAME = "name";
-
         type = (String) data.get("type");
 
         imageView = (ImageView) convertView.findViewById(R.id.photo);
@@ -65,7 +59,8 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
-        title.setText((String) data.get(TAG_TITLENAME));
+        String titletmp = (String) data.get("title");
+        title.setText(titletmp);
 
         TextView rating = (TextView) convertView.findViewById(R.id.rating);
         Double ratingValue = (Double) data.get("vote_average");
@@ -81,7 +76,7 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get(TAG_TITLENAME), type, (String) data.get("poster_path"));
+                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get("title"), type, (String) data.get("poster_path"));
                 WatchListDB watchListDB = new WatchListDB(getContext());
                 int res = watchListDB.verifyId((int) data.get("id"));
                 if(res==0) {
