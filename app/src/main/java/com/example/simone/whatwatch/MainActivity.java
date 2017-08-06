@@ -1,21 +1,17 @@
 package com.example.simone.whatwatch;
 
+import android.app.SearchManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.Toast;
-import android.app.SearchManager;
-import android.support.v7.widget.SearchView;
-import android.content.Context;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,5 +71,13 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.search_menu, menu);
+        SearchView search = (SearchView) MenuItemCompat.getActionView((menu.findItem(R.id.action_search)));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        search.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(this, SearchActivity.class)));
+        search.setQueryHint(getResources().getString(R.string.search_hint));
+        return true;
+    }
 }
