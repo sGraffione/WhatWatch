@@ -137,80 +137,66 @@ public class ShowInfoAboutTvElement extends Activity {
     }
 
     private void setEpisodeList(JSONArray seasons) {
-        TextView seasonView = new TextView(this);
-        seasonView.setLayoutParams(new TableLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.tv_series_layout);
+        RelativeLayout layout = new RelativeLayout(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layout.setLayoutParams(layoutParams);
 
-        seasonView.setText("Season #" + String.valueOf(1));
-        seasonView.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+        int id_prec_tv1 = 0;
+        int id_prec_tv2 = 0;
 
-        /*int nSeason=0;
-        int nEpisode=0;
-        TextView seasonView;
-        TextView episodeView;
-        for (int i=0;i< seasons.length();i++) {
+        for(int i = 0; i < seasons.length(); i++){
+            try {
+                RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                //RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                //RelativeLayout.LayoutParams params4 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-            RelativeLayout season_list = (RelativeLayout) findViewById(R.id.tv_series_layout);
+                TextView tv1 = new TextView(this);
+                if(id_prec_tv1 != 0)
+                    params1.addRule(RelativeLayout.BELOW, id_prec_tv1);
+                else
+                    params1.addRule(relativeLayout.BELOW, R.id.Overview);
+                tv1.setId(View.generateViewId());
+                tv1.setText("Season #" + seasons.getJSONObject(i).getString("season_number"));
+                tv1.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                id_prec_tv1 = tv1.getId();
 
-            LinearLayout lL = new LinearLayout(this);
-            lL.setOrientation(LinearLayout.VERTICAL);
-            LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lL.setLayoutParams(params1);
+                TextView tv2 = new TextView(this);
+                params2.addRule(RelativeLayout.RIGHT_OF, tv1.getId());
+                if(id_prec_tv2 != 0)
+                    params2.addRule(RelativeLayout.BELOW, id_prec_tv2);
+                tv2.setId(View.generateViewId());
+                tv2.setText(seasons.getJSONObject(i).getString("episode_count") + "episodes");
+                tv2.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                id_prec_tv2 = tv2.getId();
 
-                try{
-                    JSONObject season = seasons.getJSONObject(i);
-                    nSeason = season.getInt("season_number");
-                    nEpisode = season.getInt("episode_count");
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
-            seasonView = new TextView(this);
-            episodeView = new TextView(this);
 
-            seasonView.setLayoutParams(new TableLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
-            episodeView.setLayoutParams(new TableLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT, 1f));
+                /*TextView tv3 = new TextView(this);
+                params3.addRule(RelativeLayout.BELOW, tv1.getId());
+                tv3.setId(View.generateViewId());
+                tv3.setText("textView3");
+                tv3.setTextColor(getResources().getColor(R.color.WhiteSmoke));
 
-            seasonView.setText("Season #" + String.valueOf(nSeason));
-            seasonView.setTextColor(getResources().getColor(R.color.WhiteSmoke));
+                TextView tv4 = new TextView(this);
+                params4.addRule(RelativeLayout.RIGHT_OF, tv3.getId());
+                params4.addRule(RelativeLayout.ALIGN_BOTTOM, tv3.getId());
+                tv4.setId(View.generateViewId());
+                tv4.setText("textView4");
+                tv4.setTextColor(getResources().getColor(R.color.WhiteSmoke));*/
 
-            episodeView.setText("# of episode: " + String.valueOf(nEpisode));
-            episodeView.setTextColor(getResources().getColor(R.color.WhiteSmoke));
-
-            RelativeLayout.LayoutParams relativeParams =
-                    new RelativeLayout.LayoutParams(
-                            RelativeLayout.LayoutParams.MATCH_PARENT,
-                            RelativeLayout.LayoutParams.MATCH_PARENT);
-            relativeParams.addRule(RelativeLayout.BELOW);
-
-            season_list.addView(lL, relativeParams);
-        }*/
-        /*ArrayList<HashMap<String, Object>> seasonList = new ArrayList<>();
-        if (seasons != null) {
-            for (int i=0;i<seasons.length();i++){
-                HashMap<String, Object> seasonElement = new HashMap<>();
-                try{
-                    JSONObject season = seasons.getJSONObject(i);
-                    int nSeason = season.getInt("season_number");
-                    int nEpisode = season.getInt("episode_count");
-
-                    seasonElement.put("season_number", nSeason);
-                    seasonElement.put("episode_count", nEpisode);
-
-                    seasonList.add(seasonElement);
-                }catch (JSONException e){
-                    e.printStackTrace();
-                }
+                layout.addView(tv1, params1);
+                layout.addView(tv2, params2);
+                //layout.addView(tv3, params3);
+                //layout.addView(tv4, params4);
+            }catch (JSONException e){
+                e.printStackTrace();
             }
+
         }
-        ListView lv = (ListView) findViewById(R.id.season_list);
-        ListEpisodesAdapter listEpisodeAdapter = new ListEpisodesAdapter(this, R.layout.film_element, seasonList);
-        lv.setAdapter(listEpisodeAdapter);
-        lv.setBackgroundColor(ContextCompat.getColor(this, R.color.Really_Really_Dark_Gray));*/
+
+
+        relativeLayout.addView(layout);
     }
 
     private ArrayList<HashMap<String, Object>> parsingJSONArray(JSONArray input) {
