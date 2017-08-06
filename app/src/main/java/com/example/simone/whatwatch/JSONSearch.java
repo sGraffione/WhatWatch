@@ -18,15 +18,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 //caricamento del file json in background
-public class JSONSearch extends AsyncTask<String, Void, Void> {
+public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String, Object>>> {
 
 
     private ArrayList<HashMap<String, Object>> filmInfo;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public JSONSearch(ArrayList<HashMap<String, Object>> filmInfo)
+    public JSONSearch()
     {
-        this.filmInfo = filmInfo;
+        filmInfo = new ArrayList<>();
     }
 
 
@@ -36,7 +36,7 @@ public class JSONSearch extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(String... urlString){
+    protected ArrayList<HashMap<String, Object>> doInBackground(String... urlString){
         try {
             HttpURLConnection urlConnection;
             URL url = new URL(urlString[0]);
@@ -64,25 +64,52 @@ public class JSONSearch extends AsyncTask<String, Void, Void> {
                     JSONObject film = jArray.getJSONObject(i);
                     String TAG_TYPE = film.getString("media_type");
                     String TAG_TITLE;
-                    if(TAG_TYPE.equals("movie"))
-                        TAG_TITLE = film.getString("original_title");
-                    else
-                        TAG_TITLE = film.getString("name");
-                    int TAG_ID = film.getInt("id");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w185"+film.getString("poster_path");
-                    Double TAG_RATING = film.getDouble("vote_average");
+                    if (!TAG_TYPE.equals("person")) {
+                        if (TAG_TYPE.equals("movie"))
+                            TAG_TITLE = film.getString("original_title");
+                        else
+                            TAG_TITLE = film.getString("name");
+                        int TAG_ID = film.getInt("id");
+                        String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + film.getString("poster_path");
+                        Double TAG_RATING = film.getDouble("vote_average");
 
 
-                    //General information of film
-                    HashMap<String, Object> info = new HashMap<>();
-                    info.put("title", TAG_TITLE);
-                    info.put("type", TAG_TYPE);
-                    info.put("poster_path", TAG_PHOTO);
-                    info.put("vote_average", TAG_RATING);
-                    info.put("id", TAG_ID);
+                        //General information of film
+                        HashMap<String, Object> info = new HashMap<>();
+                        info.put("title", TAG_TITLE);
+                        info.put("type", TAG_TYPE);
+                        info.put("poster_path", TAG_PHOTO);
+                        info.put("vote_average", TAG_RATING);
+                        info.put("id", TAG_ID);
 
-                    filmInfo.add(info);
+                        filmInfo.add(info);
+                    }else{
+                        JSONArray jArrayPerson = film.getJSONArray("known_for");
+                        for(int j = 0; j < jArrayPerson.length(); j++) {
+                            JSONObject data = jArrayPerson.getJSONObject(j);
+                            TAG_TYPE = data.getString("media_type");
+                            if (TAG_TYPE.equals("movie"))
+                                TAG_TITLE = data.getString("original_title");
+                            else
+                                TAG_TITLE = data.getString("name");
+                            int TAG_ID = data.getInt("id");
+                            String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + data.getString("poster_path");
+                            Double TAG_RATING = data.getDouble("vote_average");
+
+
+                            //General information of film
+                            HashMap<String, Object> info = new HashMap<>();
+                            info.put("title", TAG_TITLE);
+                            info.put("type", TAG_TYPE);
+                            info.put("poster_path", TAG_PHOTO);
+                            info.put("vote_average", TAG_RATING);
+                            info.put("id", TAG_ID);
+
+                            filmInfo.add(info);
+                        }
+                    }
                 }
+                return filmInfo;
         }catch (IOException e){
             e.printStackTrace();
         }catch (JSONException e) {
@@ -93,7 +120,7 @@ public class JSONSearch extends AsyncTask<String, Void, Void> {
     }
 
     @Override
-    protected void onPostExecute(Void result){
+    protected void onPostExecute(ArrayList<HashMap<String, Object>> result){
         super.onPostExecute(result);
     }
 }
