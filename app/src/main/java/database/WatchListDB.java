@@ -230,10 +230,10 @@ public class WatchListDB {
     public int getWatched(int id){
         String where = FILM_ID + "= ?";
         String[] whereArgs = {Integer.toString(id)};
-        String[] column = {FILM_WATCHED};
+        //String[] column = {FILM_WATCHED};
 
         this.openReadableDB();
-        Cursor cursor = db.query(FILM_TABLE, column, where, whereArgs, null, null, null);
+        Cursor cursor = db.query(FILM_TABLE, null, where, whereArgs, null, null, null);
 
 
         if(cursor == null || cursor.getCount() == 0){
@@ -248,6 +248,7 @@ public class WatchListDB {
                 return watched;
             }
             catch (Exception e){
+                e.printStackTrace();
                 return 0;
             }
         }

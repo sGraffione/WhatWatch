@@ -98,6 +98,11 @@ public class ShowInfoAboutListElement extends Activity {
             cast.append(", " + peopleOfIbiza.get(i).get("name"));
         }
 
+        int isSeen = new WatchListDB(this).getFilmById(id_film).getWatched();
+        if(isSeen == 1){
+            seen.setChecked(true);
+        }
+
         final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
         ytBtn.setOnClickListener(new View.OnClickListener() {
             @Override
