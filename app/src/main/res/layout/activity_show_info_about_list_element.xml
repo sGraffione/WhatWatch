@@ -131,6 +131,7 @@
             android:layout_marginLeft="45dp"
             android:layout_toRightOf="@+id/youtube"
             android:text="Seen"
+            android:clickable="false"
             android:textColor="@color/WhiteSmoke" />
 
         <Button

@@ -109,6 +109,7 @@ public class MyWatchListFragment extends Fragment {
             }
         });
         setHasOptionsMenu(true);
+
         return view;
     }
 

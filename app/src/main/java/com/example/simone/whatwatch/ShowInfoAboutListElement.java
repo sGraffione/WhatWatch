@@ -85,16 +85,17 @@ public class ShowInfoAboutListElement extends Activity {
         year.setText((String) data.get("year"));
         runtime.setText(data.get("runtime") + ("m"));
         director.setText("Directed by " + data.get("director"));
+
         ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
         genres.setText((String) genre.get(0).get("name"));
         for(int i = 1; i < genre.size(); i++){
-            genres.append(", " + (String) genre.get(i).get("name"));
+            genres.append(", " + genre.get(i).get("name"));
         }
 
         ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
         cast.setText((String) peopleOfIbiza.get(0).get("name"));
         for(int i = 1; i < 5; i++){
-            cast.append(", " + (String) peopleOfIbiza.get(i).get("name"));
+            cast.append(", " + peopleOfIbiza.get(i).get("name"));
         }
 
         final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
@@ -125,6 +126,7 @@ public class ShowInfoAboutListElement extends Activity {
                 }
             }
         });
+
     }
 
     private ArrayList<HashMap<String, Object>> parsingJSONArray(JSONArray input) {
