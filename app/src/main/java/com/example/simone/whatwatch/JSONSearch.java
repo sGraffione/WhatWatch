@@ -70,7 +70,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                         else
                             TAG_TITLE = film.getString("name");
                         int TAG_ID = film.getInt("id");
-                        String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + film.getString("poster_path");
+                        String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + film.getString("poster_path");
                         Double TAG_RATING = film.getDouble("vote_average");
 
 
@@ -93,7 +93,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                             else
                                 TAG_TITLE = data.getString("name");
                             int TAG_ID = data.getInt("id");
-                            String TAG_PHOTO = "https://image.tmdb.org/t/p/w185" + data.getString("poster_path");
+                            String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + data.getString("poster_path");
                             Double TAG_RATING = data.getDouble("vote_average");
 
 
