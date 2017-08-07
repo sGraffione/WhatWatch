@@ -148,7 +148,7 @@ public class ShowInfoAboutTvElement extends Activity {
         int id_prec_tv2 = 0;
         int id_prec_btn = 0;
 
-        int height = 20;
+        int height = 60;
 
         for(int i = 1; i < seasons.length(); i++){
             try {

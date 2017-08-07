@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +25,10 @@ public class SearchActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        Intent intent = getIntent();
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            doSearch(query);
-        }
+        onNewIntent(getIntent());
     }
 
-    /*@Override
+    @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
         handleIntent(intent);
@@ -43,12 +40,12 @@ public class SearchActivity extends MainActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
             doSearch(query);
         }
-    }*/
+    }
 
     private void doSearch(String query){
         query = query.replace(" ", "%20");
 
-        String urlSearch = "https://api.themoviedb.org/3/search/multi?api_key=22dee1f565e5788c58062fdeaf490afc&language=it-IT&query="+query+"&page=1&include_adult=false\n";
+        String urlSearch = "https://api.themoviedb.org/3/search/multi?api_key=22dee1f565e5788c58062fdeaf490afc&language=en_US&query="+query+"&page=1&include_adult=false\n";
         ArrayList<HashMap<String, Object>> filmInfo = new ArrayList<>();
         try {
             filmInfo = new JSONSearch().execute(urlSearch).get();
@@ -57,11 +54,16 @@ public class SearchActivity extends MainActivity {
         }catch (ExecutionException e){
             e.printStackTrace();
         }
-
+        TextView noResult = (TextView) findViewById(R.id.noResults);
         ListView lv = (ListView) findViewById(R.id.searchList);
         SearchAdapter adapter = new SearchAdapter(this, R.layout.film_element, filmInfo);
+        if(filmInfo == null || filmInfo.size() == 0){
+            noResult.setVisibility(View.VISIBLE);
+        }
         lv.setAdapter(adapter);
         lv.setBackgroundColor(getResources().getColor(R.color.Really_Really_Dark_Gray));
+        View view = this.getWindow().getDecorView();
+        view.setBackgroundColor(getResources().getColor(R.color.Really_Really_Dark_Gray));
         final ArrayList<HashMap<String, Object>> data = filmInfo;
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

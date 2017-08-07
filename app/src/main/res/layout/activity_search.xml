@@ -3,6 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/noResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="No results...Try with other keywords"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="30sp"
+        android:visibility="invisible" />
+
     <ListView
         android:id="@+id/searchList"
         android:layout_width="match_parent"
