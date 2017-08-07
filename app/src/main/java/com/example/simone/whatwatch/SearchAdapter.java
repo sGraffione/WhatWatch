@@ -56,7 +56,10 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         imageView = (ImageView) convertView.findViewById(R.id.photo);
         Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
 
-        Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
+        if(data.get("poster_path").equals("null"))
+            Picasso.with(context).load(R.drawable.noavailable).into(imageView);
+        else
+            Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
         String titletmp = (String) data.get("title");

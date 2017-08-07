@@ -70,19 +70,40 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                 if(type.equals("movie")){
                     String TAG_TITLE = film.getString("original_title");
                     String TAG_OVERVIEW = film.getString("overview");
+                    if(TAG_OVERVIEW.equals("null"))
+                        TAG_OVERVIEW = "Overview not available";
                     String TAG_RATING = film.getString("vote_average");
                     String TAG_YEAR = film.getString("release_date");
+                    if(TAG_YEAR.equals("null"))
+                        TAG_YEAR = "Not available";
+                    else
+                        TAG_YEAR = TAG_YEAR.substring(0,4);
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
+                    if(TAG_GENRE.length()==0)
+                        TAG_GENRE.put("Genre not available");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+                    if(TAG_PHOTO.equals("https://image.tmdb.org/t/p/w500"))
+                        TAG_PHOTO = null;
                     String TAG_RUNTIME = film.getString("runtime");
+                    if(TAG_RUNTIME.equals("null"))
+                        TAG_RUNTIME = "Not available";
 
                     JSONObject jArrayCredits = film.getJSONObject("credits");
                     JSONArray jArrayCrew = jArrayCredits.getJSONArray("crew");
-                    String TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");
+                    String TAG_DIRECTOR;
+                    if(jArrayCrew.length() == 0)
+                        TAG_DIRECTOR = "not available";
+                    else
+                        TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");
+
                     JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
+                    if(TAG_CAST.length() == 0)
+                        TAG_CAST.put("Cast not available");
 
                     JSONObject jArrayVideos = film.getJSONObject("videos");
                     JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
+                    if(TAG_VIDEOS.length() == 0)
+                        TAG_VIDEOS.put("Videos not available");
 
 
 
@@ -93,7 +114,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     info.put("poster_path", TAG_PHOTO);
                     info.put("vote_average", TAG_RATING);
                     info.put("genres", TAG_GENRE);
-                    info.put("year", TAG_YEAR.substring(0,4));
+                    info.put("year", TAG_YEAR);
                     info.put("runtime", TAG_RUNTIME);
                     info.put("director", TAG_DIRECTOR);
                     info.put("cast", TAG_CAST);
@@ -103,23 +124,60 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                 }else{
                     String TAG_TITLE = film.getString("name");
                     String TAG_OVERVIEW = film.getString("overview");
+                    if(TAG_OVERVIEW.equals("null"))
+                        TAG_OVERVIEW = "Overview not available";
                     String TAG_RATING = film.getString("vote_average");
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
+                    if(TAG_GENRE.length()==0){
+                        JSONObject object = new JSONObject();
+                        object.put("name", "Genre not available");
+                        TAG_GENRE.put(object);
+                    }
                     JSONArray TAG_SEASONS = film.getJSONArray("seasons");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
+                    String gliominidellamadonna = film.getString("poster_path");
+                    String TAG_PHOTO = "null";
+                    if(!gliominidellamadonna.equals("null"))
+                        TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + gliominidellamadonna;
+
                     String TAG_YEAR = film.getString("first_air_date");
+                    if(TAG_YEAR.equals("null"))
+                        TAG_YEAR = "Release data not available";
+                    else
+                        TAG_YEAR = TAG_YEAR.substring(0,4);
                     JSONArray jArrayRuntime = film.getJSONArray("episode_run_time");
-                    int TAG_RUNTIME = (int) jArrayRuntime.get(0);
+                    int TAG_RUNTIME;
+                    if(jArrayRuntime.length()!=0)
+                        TAG_RUNTIME = (int) jArrayRuntime.get(0);
+                    else
+                        TAG_RUNTIME = 0;
 
                     JSONArray TAG_CREATOR = film.getJSONArray("created_by");
+                    if(TAG_CREATOR.length() == 0){
+                        JSONObject object = new JSONObject();
+                        object.put("name", "Creator not available");
+                        TAG_CREATOR.put(object);
+                    }
 
 
                     JSONObject jArrayCredits = film.getJSONObject("credits");
+                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
+
+                    if(TAG_CAST.length() == 0){
+                        JSONObject object = new JSONObject();
+                        object.put("cast", "Cast not available");
+                        TAG_CAST.put(object);
+                    }
 
                     JSONObject jArrayVideos = film.getJSONObject("videos");
                     JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
 
-                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
+                    if(TAG_VIDEOS.length() == 0){
+                        JSONObject object = new JSONObject();
+                        object.put("type", "Trailer");
+                        TAG_VIDEOS.put(object);
+                        object.put("key", "Video not available");
+                        TAG_VIDEOS.put(object);
+                    }
 
                     //General information of film
                     HashMap<String, Object> info = new HashMap<>();
@@ -133,7 +191,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     info.put("creator", TAG_CREATOR);
                     info.put("cast", TAG_CAST);
                     info.put("videos", TAG_VIDEOS);
-                    info.put("year", TAG_YEAR.substring(0,4));
+                    info.put("year", TAG_YEAR);
 
                     filmInfo.add(info);
                 }

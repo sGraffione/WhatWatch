@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -71,7 +72,12 @@ public class ShowInfoAboutListElement extends Activity {
         final HashMap<String, Object> data = filmInfo.get(0);
 
         Title.setText((String) data.get("original_title"));
-        Picasso.with(this).load((String) data.get("poster_path")).into(poster);
+        if(data.get("poster_path") == null){
+            Picasso.with(this).load(R.drawable.noavailable).into(poster);
+        }else{
+            Picasso.with(this).load((String) data.get("poster_path")).into(poster);
+        }
+
         overview.setText((String) data.get("overview"));
         Double ratingValue = Double.parseDouble((String) data.get("vote_average"));
         if( ratingValue < 6){
@@ -83,21 +89,26 @@ public class ShowInfoAboutListElement extends Activity {
         }
         rating.setText((String) data.get("vote_average"));
         year.setText((String) data.get("year"));
-        runtime.setText(data.get("runtime") + ("m"));
-        director.setText("Directed by " + data.get("director"));
-
-        ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
-        genres.setText((String) genre.get(0).get("name"));
-        for(int i = 1; i < genre.size(); i++){
-            genres.append(", " + genre.get(i).get("name"));
+        if (data.get("runtime").equals("Not available")) {
+            runtime.setText("Not available");
+        }else{
+            runtime.setText(data.get("runtime") + ("m"));
         }
 
-        ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
-        cast.setText((String) peopleOfIbiza.get(0).get("name"));
-        for(int i = 1; i < 5; i++){
-            cast.append(", " + peopleOfIbiza.get(i).get("name"));
-        }
+        String element = null;
+        director.setText((String) data.get("director"));
 
+            ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
+            genres.setText((String) genre.get(0).get("name"));
+            for(int i = 1; i < genre.size(); i++){
+                genres.append(", " + genre.get(i).get("name"));
+            }
+
+            ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
+            cast.setText((String) peopleOfIbiza.get(0).get("name"));
+            for(int i = 1; i < 5; i++){
+                cast.append(", " + peopleOfIbiza.get(i).get("name"));
+            }
 
         FilmDescriptionDB film = new WatchListDB(this).getFilmById(id_film);
         int isSeen;
@@ -110,13 +121,18 @@ public class ShowInfoAboutListElement extends Activity {
             seen.setChecked(true);
         }
 
-        final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
-        ytBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
-            }
-        });
+
+        if(data.get("videos").equals("Videos not available")){
+            ytBtn.setVisibility(View.INVISIBLE);
+        }else{
+            final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
+            ytBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
+                }
+            });
+        }
 
         final int id = id_film;
         add_button.setOnClickListener(new View.OnClickListener() {

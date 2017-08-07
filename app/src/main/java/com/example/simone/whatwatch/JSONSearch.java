@@ -70,7 +70,14 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                         else
                             TAG_TITLE = film.getString("name");
                         int TAG_ID = film.getInt("id");
-                        String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + film.getString("poster_path");
+
+                        String TAG_PHOTO;
+                        String str = film.getString("poster_path");
+                        if(film.get("poster_path").equals("null"))
+                            TAG_PHOTO = "null";
+                        else
+                            TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + str;
+
                         Double TAG_RATING = film.getDouble("vote_average");
 
 

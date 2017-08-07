@@ -56,86 +56,105 @@ public class ShowInfoAboutTvElement extends Activity {
         TextView runtime = (TextView) findViewById(R.id.runtime);
 
 
-
         int id_film = 0;
         filmInfo = new ArrayList<>();
         String type = "tv";
 
 
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             id_film = getIntent().getIntExtra("id", 0);
             type = getIntent().getStringExtra("type");
-            String url = "https://api.themoviedb.org/3/tv/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=it-IT&append_to_response=credits,videos\n";
-            try{
+            String url = "https://api.themoviedb.org/3/tv/" + id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
+            try {
                 filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
-            }catch (ExecutionException e){
+            } catch (ExecutionException e) {
                 e.printStackTrace();
-            }catch (InterruptedException e){
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
 
         final HashMap<String, Object> data = filmInfo.get(0);
         Title.setText((String) data.get("name"));
-        Picasso.with(this).load((String) data.get("poster_path")).into(poster);
+        if (data.get("poster_path").equals("null")) {
+            Uri uri = Uri.parse("android.resource://com.example.simone.whatwatch/drawable/noavailable.jpg");
+            Picasso.with(this).load(R.drawable.noavailable).into(poster);
+        } else {
+            Picasso.with(this).load((String) data.get("poster_path")).into(poster);
+        }
+
         overview.setText((String) data.get("overview"));
         Double ratingValue = Double.parseDouble((String) data.get("vote_average"));
-        if( ratingValue < 6){
+        if (ratingValue < 6) {
             rating.setTextColor(Color.RED);
-        }else if( ratingValue > 7.5){
+        } else if (ratingValue > 7.5) {
             rating.setTextColor(Color.GREEN);
-        }else{
+        } else {
             rating.setTextColor(ContextCompat.getColor(this, R.color.Orange));
         }
         rating.setText((String) data.get("vote_average"));
 
+        String element = null;
+
         ArrayList<HashMap<String, Object>> creator = parsingJSONArray((JSONArray) data.get("creator"));
         creators.setText((String) creator.get(0).get("name"));
-        for(int i = 1; i < creator.size(); i++){
-            creators.append(", " + (String) creator.get(i).get("name"));
+        for (int i = 1; i < creator.size(); i++) {
+            creators.append(", " + creator.get(i).get("name"));
         }
+
 
         ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
         genres.setText((String) genre.get(0).get("name"));
-        for(int i = 1; i < genre.size(); i++){
-            genres.append(", " + (String) genre.get(i).get("name"));
+        for (int i = 1; i < genre.size(); i++) {
+            genres.append(", " + genre.get(i).get("name"));
         }
 
-        year.setText((String) data.get("year"));
-        runtime.setText(String.valueOf(data.get("runtime"))+"m");
+            year.setText((String) data.get("year"));
 
-        final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
-        youtube.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
+            if ((int) data.get("runtime") == 0) {
+                runtime.setText("Not available");
+            } else {
+                runtime.setText(String.valueOf(data.get("runtime")) + "m");
             }
-        });
 
-        final int id = id_film;
-        add_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("name"), "tv", (String) data.get("poster_path"));
-                WatchListDB watchListDB = new WatchListDB(view.getContext());
-                long row = watchListDB.insertFilm(film);
-                if(row!=-1)
-                    Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
-                Fragment toRefresh = MainActivity.getToRefresh();
-                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                if (toRefresh != null && ft != null) {
-                    ft.detach(toRefresh);
-                    ft.attach(toRefresh);
-                    ft.commitAllowingStateLoss();
+            String result = parsingVideos((JSONArray) data.get("videos"));
+
+            if(result.equals("Video not available")) {
+                youtube.setVisibility(View.GONE);
+            }else {
+                final String ytLink = "https://www.youtube.com/watch?v=" + result;
+                youtube.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
+                    }
+                });
+            }
+
+            final int id = id_film;
+            add_button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("name"), "tv", (String) data.get("poster_path"));
+                    WatchListDB watchListDB = new WatchListDB(view.getContext());
+                    long row = watchListDB.insertFilm(film);
+                    if (row != -1)
+                        Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
+                    else
+                        Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+                    Fragment toRefresh = MainActivity.getToRefresh();
+                    android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                    if (toRefresh != null && ft != null) {
+                        ft.detach(toRefresh);
+                        ft.attach(toRefresh);
+                        ft.commitAllowingStateLoss();
+                    }
                 }
-            }
-        });
+            });
 
 
-        setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
+            setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
     }
 
     private void setEpisodeList(JSONArray seasons) {
@@ -211,27 +230,6 @@ public class ShowInfoAboutTvElement extends Activity {
                         Toast.makeText(v.getContext(), "You added the season number " + index + " to your Watchlist", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                /*Button btn_add = new Button(this);
-                params3.addRule(RelativeLayout.RIGHT_OF, tv2.getId());
-                params3.addRule(RelativeLayout.ALIGN_BOTTOM, tv2.getId());
-                params3.addRule(RelativeLayout.ALIGN_TOP, tv2.getId());
-                btn_add.setBackgroundResource(R.drawable.button_selector);
-                if(id_prec_btn != 0){
-                    params3.addRule(RelativeLayout.BELOW, id_prec_btn);
-                }else{
-                    params3.addRule(RelativeLayout.BELOW, R.id.Overview);
-                }
-                btn_add.setId(View.generateViewId());
-                btn_add.setText("Add");
-                id_prec_btn = btn_add.getId();
-                final int index = i;
-                btn_add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "You added the season number " + index + " to your Watchlist", Toast.LENGTH_SHORT).show();
-                    }
-                });*/
 
                 relativeLayout.addView(tv1, params1);
                 relativeLayout.addView(tv2, params2);
