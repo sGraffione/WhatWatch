@@ -3,10 +3,13 @@ package database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
-import database.WatchListDB;
+//import android.util.Log;
+//import database.WatchListDB;
+
+//import static database.Database.CREATE_FIL_TABLE;
+//import static database.Database.CREATE_TV_TABLE;
 import static database.WatchListDB.CREATE_FILM_TABLE;
-import static database.WatchListDB.DROP_FILM_TABLE;
+//import static database.WatchListDB.DROP_FILM_TABLE;
 
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -18,7 +21,9 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db){
         db.execSQL(CREATE_FILM_TABLE);
-        //db.execSQL(DROP_FILM_TABLE);
+        //db.execSQL(CREATE_FIL_TABLE);
+        //db.execSQL(CREATE_TV_TABLE);
+
     }
 
     @Override
