@@ -163,7 +163,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 JSONObject object = jArray.getJSONObject(i);
                 if((int) object.get("season_number") == 1){
                     info.put("id_season", object.get("id"));
-                    info.put("poster_path_season", object.get("poster_path"));
+                    info.put("poster_path_season", "https://image.tmdb.org/t/p/w500"+ object.getString("poster_path"));
                     info.put("episode_max_season", object.get("episode_count"));
                 }
             }

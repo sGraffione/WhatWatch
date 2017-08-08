@@ -69,7 +69,7 @@ public class WatchedAdapter extends BaseAdapter {
             if(tv != null){
                 nameTextView.setText(tv.getName());
             }
-            Picasso.with(mContext).load(tv.getImgUrlSeason()).into(imageView);
+            Picasso.with(mContext).load(tv.getImgUrlSeries()).into(imageView);
         }
 
         return convertView;
