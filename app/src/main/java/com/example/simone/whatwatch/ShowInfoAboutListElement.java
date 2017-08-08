@@ -25,8 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-import database.FilmDescriptionDB;
-import database.WatchListDB;
+import database.Film;
+import database.Database;
 
 
 public class ShowInfoAboutListElement extends Activity {
@@ -110,7 +110,7 @@ public class ShowInfoAboutListElement extends Activity {
                 cast.append(", " + peopleOfIbiza.get(i).get("name"));
             }
 
-        FilmDescriptionDB film = new WatchListDB(this).getFilmById(id_film);
+        Film film = new Database(this).getFilmById(id_film);
         int isSeen;
         if(film != null){
             isSeen = film.getWatched();
@@ -138,8 +138,8 @@ public class ShowInfoAboutListElement extends Activity {
         add_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("original_title"), "movie", (String) data.get("poster_path"));
-                WatchListDB watchListDB = new WatchListDB(view.getContext());
+                Film film = new Film(id, (String) data.get("original_title"), 0, (String) data.get("poster_path"));
+                Database watchListDB = new Database(view.getContext());
                 long row = watchListDB.insertFilm(film);
                 if(row!=-1)
                     Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();

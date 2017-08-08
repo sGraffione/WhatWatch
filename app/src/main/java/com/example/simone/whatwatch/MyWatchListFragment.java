@@ -1,14 +1,10 @@
 package com.example.simone.whatwatch;
 
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,15 +12,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.WeakHashMap;
-
-import database.FilmDescriptionDB;
-import database.WatchListDB;
+import database.Film;
+import database.Tv;
+import database. Database;
 
 
 public class MyWatchListFragment extends Fragment {
@@ -54,8 +46,8 @@ public class MyWatchListFragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
-        WatchListDB watchListDB = new WatchListDB(getContext());
-        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, typeSelected, sortingType);
+        Database database = new Database(getContext());
+        final ArrayList<Object> films = database.getFilter(0, typeSelected, sortingType);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
@@ -65,8 +57,12 @@ public class MyWatchListFragment extends Fragment {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                WatchListDB watchedListDB = new WatchListDB(view.getContext());
-                long row = watchedListDB.updateWatched(films.get(position).getId());
+                Database database = new Database(view.getContext());
+                if(films.get(position) instanceof Film){
+                    database.updateWatched(((Film) films.get(position)).getId());
+                }else{
+                    database.updateWatched(((Tv) films.get(position)).getIdSeries(), ((Tv) films.get(position)).getIdSeason());
+                }
 
                Fragment toRefreshWatched = MainActivity.getToRefreshWatched();
                 android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
@@ -90,22 +86,19 @@ public class MyWatchListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
-                int id_film = films.get(i).getId();
-                String type = films.get(i).getType();
-                if(type.equals("movie")) {
+                if(films.get(i) instanceof Film){
+                    int id_film = ((Film) films.get(i)).getId();
                     Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
                     appInfo.putExtra("id", id_film);
-                    appInfo.putExtra("type", type);
+                    appInfo.putExtra("type", "movie");
                     startActivity(appInfo);
-                } else{
+                }else{
+                    int id_tv = ((Tv) films.get(i)).getIdSeries();
                     Intent appInfo = new Intent(getActivity(), ShowInfoAboutTvElement.class);
-                    appInfo.putExtra("id", id_film);
-                    appInfo.putExtra("type", type);
+                    appInfo.putExtra("id", id_tv);
+                    appInfo.putExtra("type", "tv");
                     startActivity(appInfo);
                 }
-
-
             }
         });
         setHasOptionsMenu(true);
@@ -175,8 +168,8 @@ public class MyWatchListFragment extends Fragment {
     }
 
     public void refresh() {
-        WatchListDB watchListDB = new WatchListDB(getContext());
-        final ArrayList<FilmDescriptionDB> films = watchListDB.getFilms(0, typeSelected, sortingType);
+        Database database = new Database(getContext());
+        final ArrayList<Object> films = database.getFilter(0, typeSelected, sortingType);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
@@ -185,8 +178,12 @@ public class MyWatchListFragment extends Fragment {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                WatchListDB watchedListDB = new WatchListDB(view.getContext());
-                long row = watchedListDB.updateWatched(films.get(position).getId());
+                Database database = new Database(view.getContext());
+                if(films.get(position) instanceof Film){
+                    database.updateWatched(((Film) films.get(position)).getId());
+                }else{
+                    database.updateWatched(((Tv) films.get(position)).getIdSeries(), ((Tv) films.get(position)).getIdSeason());
+                }
 
                 Fragment toRefreshWatched = MainActivity.getToRefreshWatched();
                 android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
@@ -210,22 +207,19 @@ public class MyWatchListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
-                int id_film = films.get(i).getId();
-                String type = films.get(i).getType();
-                if(type.equals("movie")) {
+                if(films.get(i) instanceof Film){
+                    int id_film = ((Film) films.get(i)).getId();
                     Intent appInfo = new Intent(getActivity(), ShowInfoAboutListElement.class);
                     appInfo.putExtra("id", id_film);
-                    appInfo.putExtra("type", type);
+                    appInfo.putExtra("type", "movie");
                     startActivity(appInfo);
-                } else{
+                }else{
+                    int id_tv = ((Tv) films.get(i)).getIdSeries();
                     Intent appInfo = new Intent(getActivity(), ShowInfoAboutTvElement.class);
-                    appInfo.putExtra("id", id_film);
-                    appInfo.putExtra("type", type);
+                    appInfo.putExtra("id", id_tv);
+                    appInfo.putExtra("type", "tv");
                     startActivity(appInfo);
                 }
-
-
             }
         });
     }

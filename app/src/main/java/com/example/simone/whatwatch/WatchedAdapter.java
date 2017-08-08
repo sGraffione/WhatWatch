@@ -1,7 +1,7 @@
 package com.example.simone.whatwatch;
 
-import database.FilmDescriptionDB;
-import database.WatchListDB;
+import database.Film;
+import database.Tv;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -18,10 +18,10 @@ import java.util.ArrayList;
 public class WatchedAdapter extends BaseAdapter {
 
     private final Context mContext;
-    private final ArrayList<FilmDescriptionDB> films;
+    private final ArrayList<Object> films;
 
     // 1
-    public WatchedAdapter(Context context, ArrayList<FilmDescriptionDB> films) {
+    public WatchedAdapter(Context context, ArrayList<Object> films) {
         this.mContext = context;
         this.films = films;
     }
@@ -54,14 +54,23 @@ public class WatchedAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.layoutfilm, null);
         }
 
-        // 3
         ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
         TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
-        FilmDescriptionDB film = films.get(position);
-        if(film != null){
-            nameTextView.setText(film.getName());
+
+        Object object = films.get(position);
+        if(object instanceof Film){
+            Film film = (Film) films.get(position);
+            if(film != null){
+                nameTextView.setText(film.getName());
+            }
+            Picasso.with(mContext).load(film.getImgUrl()).into(imageView);
+        }else{
+            Tv tv = (Tv) films.get(position);
+            if(tv != null){
+                nameTextView.setText(tv.getName());
+            }
+            Picasso.with(mContext).load(tv.getImgUrlSeason()).into(imageView);
         }
-        Picasso.with(mContext).load(films.get(position).getImg()).into(imageView);
 
         return convertView;
     }

@@ -65,10 +65,12 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                     String TAG_TYPE = film.getString("media_type");
                     String TAG_TITLE;
                     if (!TAG_TYPE.equals("person")) {
-                        if (TAG_TYPE.equals("movie"))
+                        if (TAG_TYPE.equals("movie")) {
                             TAG_TITLE = film.getString("original_title");
-                        else
+                        }else {
                             TAG_TITLE = film.getString("name");
+
+                        }
                         int TAG_ID = film.getInt("id");
 
                         String TAG_PHOTO;
@@ -83,6 +85,9 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
 
                         //General information of film
                         HashMap<String, Object> info = new HashMap<>();
+                        if(TAG_TYPE.equals("tv"))
+                            getExtraInfos(TAG_ID, info);
+
                         info.put("title", TAG_TITLE);
                         info.put("type", TAG_TYPE);
                         info.put("poster_path", TAG_PHOTO);
@@ -106,6 +111,9 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
 
                             //General information of film
                             HashMap<String, Object> info = new HashMap<>();
+                            if(TAG_TYPE.equals("tv"))
+                                getExtraInfos(TAG_ID, info);
+
                             info.put("title", TAG_TITLE);
                             info.put("type", TAG_TYPE);
                             info.put("poster_path", TAG_PHOTO);
@@ -124,6 +132,49 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
         }
 
         return null;
+    }
+
+    protected void getExtraInfos(int id, HashMap<String, Object> info){
+        String urlString = "https://api.themoviedb.org/3/tv/"+id+"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
+        try {
+            HttpURLConnection urlConnection;
+            URL url = new URL(urlString);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setReadTimeout(10000 /* milliseconds */);
+            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setDoOutput(true);
+            urlConnection.connect();
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+            StringBuilder sb = new StringBuilder();
+
+            String line;
+            while ((line = br.readLine()) != null) {
+                String lineToAppend = line + "\n";
+                sb.append(lineToAppend);
+            }
+            br.close();
+
+            String jsonString = sb.toString();
+            JSONObject JSONData = new JSONObject(jsonString);
+            JSONArray jArray = JSONData.getJSONArray("seasons");
+
+            info.put("number_of_seasons", JSONData.get("number_of_seasons"));
+
+            for(int i = 0; i < jArray.length(); i++){
+                JSONObject object = jArray.getJSONObject(i);
+                if((int) object.get("season_number") == 1){
+                    info.put("id_season", object.get("id"));
+                    info.put("poster_path_season", object.get("poster_path"));
+                    info.put("episode_max_season", object.get("episode_count"));
+                }
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

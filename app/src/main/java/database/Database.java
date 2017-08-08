@@ -86,8 +86,8 @@ public class Database {
 
     public static final String CREATE_TV_TABLE =
             "CREATE TABLE " + TV_TABLE + " (" + TV_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TV_ID_SERIES + " INTEGER NOT NULL, " +
-                    TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " + TV_EPISODE_MAX + " INTEGER NOT NULL, " +
-                    TV_ID_SEASON + "INTEGER NOT NULL UNIQUE, " + TV_SEASON_CURRENT + " INTEGER NOT NULL, " +
+                    TV_ID_SEASON + " INTEGER NOT NULL, "+ TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " +
+                    TV_EPISODE_MAX + " INTEGER NOT NULL, " + TV_SEASON_CURRENT + " INTEGER NOT NULL, " +
                     TV_SEASON_MAX + " INTEGER NOT NULL, " + TV_WATCHED + " INTEGER NOT NULL, " + TV_IMG_URL_SERIES + " STRING, " +
                     TV_IMG_URL_SEASON + " STRING);";
 
@@ -244,13 +244,14 @@ public class Database {
             }
         } else{
             String where = FILM_WATCHED + "= ?";
+            String whereTv = TV_WATCHED + "= ?";
             String[] whereArgs = {Integer.toString(watched)};
             if (order.equals("Recent")) {
                 cursorFilm = db.query(FIL_TABLE, null, where, whereArgs, null, null, FILM_ROW + " DESC");
-                cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, TV_ROW + " DESC");
+                cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_ROW + " DESC");
             } else {
                 cursorFilm = db.query(FIL_TABLE, null, where, whereArgs, null, null, FILM_NAME);
-                cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, FILM_NAME);
+                cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_NAME);
             }
         }
 

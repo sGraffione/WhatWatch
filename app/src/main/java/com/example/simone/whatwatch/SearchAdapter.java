@@ -20,8 +20,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import database.FilmDescriptionDB;
-import database.WatchListDB;
+import database.Film;
+import database.Tv;
+import database.Database;
 
 public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
@@ -79,12 +80,14 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FilmDescriptionDB film = new FilmDescriptionDB((int) data.get("id"), (String) data.get("title"), type, (String) data.get("poster_path"));
-                WatchListDB watchListDB = new WatchListDB(getContext());
-                int res = watchListDB.verifyId((int) data.get("id"));
-                if(res==0) {
-                    long row = watchListDB.insertFilm(film);
-                    if (row != -1) {
+                Film film = null;
+                Tv tv = null;
+                Database database = new Database(getContext());
+                if(type.equals("movie")) {
+                    if(database.verifyId((int) data.get("id")) == 0) {
+                        film = new Film((int) data.get("id"), (String) data.get("title"), 0, (String) data.get("poster_path"));
+                        database.insertFilm(film);
+
                         Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
                         Fragment toRefresh = MainActivity.getToRefresh();
                         android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
@@ -93,11 +96,30 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
                             ft.attach(toRefresh);
                             ft.commitAllowingStateLoss();
                         }
-                    } else {
+
+                    }else{
                         Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }
-                }else{
-                    Toast.makeText(view.getContext(), "It's already in your Watchlist! (DATABASE CHECK)", Toast.LENGTH_SHORT).show();
+                }else {
+                    if(database.verifyId((int) data.get("id"), 0) == 0) {
+                        tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"),
+                                (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"),
+                                (String) data.get("poster_path_season"));
+
+                        database.insertSeries(tv);
+
+                        Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
+                        Fragment toRefresh = MainActivity.getToRefresh();
+                        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                        if (toRefresh != null && ft != null) {
+                            ft.detach(toRefresh);
+                            ft.attach(toRefresh);
+                            ft.commitAllowingStateLoss();
+                        }
+
+                    }else{
+                        Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

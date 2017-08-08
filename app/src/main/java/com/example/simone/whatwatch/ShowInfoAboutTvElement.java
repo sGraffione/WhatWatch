@@ -30,8 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-import database.FilmDescriptionDB;
-import database.WatchListDB;
+import database.Tv;
+import database.Database;
 
 
 public class ShowInfoAboutTvElement extends Activity {
@@ -136,9 +136,10 @@ public class ShowInfoAboutTvElement extends Activity {
             add_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    FilmDescriptionDB film = new FilmDescriptionDB(id, (String) data.get("name"), "tv", (String) data.get("poster_path"));
-                    WatchListDB watchListDB = new WatchListDB(view.getContext());
-                    long row = watchListDB.insertFilm(film);
+                    Tv tv = new Tv(id, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
+                            0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
+                    Database database = new Database(view.getContext());
+                    long row = database.insertSeries(tv);
                     if (row != -1)
                         Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
                     else
