@@ -222,11 +222,10 @@ public class Database {
 
     public ArrayList<Object> getFilter(int watched, String type, String order){
         this.openReadableDB();
-        Cursor cursorFilm = null;
-        Cursor cursorSeries = null;
         ArrayList<Object> elements = new ArrayList<Object>();
 
         if(type.equals("Movie")) {
+            Cursor cursorFilm = null;
             String where = FILM_WATCHED + "= ?";
             String[] whereArgs = {Integer.toString(watched)};
             if (order.equals("Recent")) {
@@ -234,7 +233,14 @@ public class Database {
             } else {
                 cursorFilm = db.query(FIL_TABLE, null, where, whereArgs, null, null, FILM_NAME);
             }
+            while (cursorFilm.moveToNext()) {
+                elements.add(getFilmFromCursor(cursorFilm));
+            }
+            if (cursorFilm != null){
+                cursorFilm.close();
+            }
         } else if(type.equals("Tv_shows")){
+            Cursor cursorSeries = null;
             String where = TV_WATCHED + "= ?";
             String[] whereArgs = {Integer.toString(watched)};
             if (order.equals("Recent")) {
@@ -242,7 +248,15 @@ public class Database {
             } else {
                 cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, TV_NAME);
             }
+            while (cursorSeries.moveToNext()) {
+                elements.add(getTvFromCursor(cursorSeries));
+            }
+            if (cursorSeries != null){
+                cursorSeries.close();
+            }
         } else{
+            Cursor cursorFilm = null;
+            Cursor cursorSeries = null;
             String where = FILM_WATCHED + "= ?";
             String whereTv = TV_WATCHED + "= ?";
             String[] whereArgs = {Integer.toString(watched)};
@@ -253,10 +267,20 @@ public class Database {
                 cursorFilm = db.query(FIL_TABLE, null, where, whereArgs, null, null, FILM_NAME);
                 cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_NAME);
             }
+            while (cursorFilm.moveToNext()) {
+                elements.add(getFilmFromCursor(cursorFilm));
+            }
+            while (cursorSeries.moveToNext()) {
+                elements.add(getTvFromCursor(cursorSeries));
+            }
+            if (cursorFilm != null || cursorSeries != null){
+                cursorFilm.close();
+                cursorSeries.close();
+            }
         }
 
 
-        if (type.equals("Movie")) {
+        /*if (type.equals("Movie")) {
             while (cursorFilm.moveToNext()) {
                 elements.add(getFilmFromCursor(cursorFilm));
             }
@@ -276,7 +300,8 @@ public class Database {
         if (cursorFilm != null || cursorSeries != null){
             cursorFilm.close();
             cursorSeries.close();
-        }
+        }*/
+
         this.closeDB();
 
         return elements;
