@@ -79,8 +79,11 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     else
                         TAG_YEAR = TAG_YEAR.substring(0,4);
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
-                    if(TAG_GENRE.length()==0)
-                        TAG_GENRE.put("Genre not available");
+                    if(TAG_GENRE.length()==0){
+                        JSONObject object = new JSONObject();
+                        object.put("name", "Genre not available");
+                        TAG_GENRE.put(object);
+                    }
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500"+film.getString("poster_path");
                     if(TAG_PHOTO.equals("https://image.tmdb.org/t/p/w500"))
                         TAG_PHOTO = null;

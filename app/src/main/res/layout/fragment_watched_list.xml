@@ -12,7 +12,6 @@
         android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
-        android:stretchMode="spacingWidthUniform"
-        android:verticalSpacing="24dp" />
+        android:verticalSpacing="10dp" />
 
 </FrameLayout>

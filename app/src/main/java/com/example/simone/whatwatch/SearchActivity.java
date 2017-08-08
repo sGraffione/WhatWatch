@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -84,5 +86,12 @@ public class SearchActivity extends MainActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d("ONPAUSE", "ON PAUSSSSSSSE");
+
     }
 }

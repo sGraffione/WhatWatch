@@ -11,6 +11,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +60,26 @@ public class MainActivity extends AppCompatActivity {
 
         fragmentManager = getSupportFragmentManager();
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d("ONRESUME", "MAIN ACTIVITY");
+    }
+
+    /*@Override
+    public void onPause(){
+        super.onPause();
+        Log.d("ONPAUSE MAIN", "MAIN ACTIVITY");
+        Fragment toRefresh = getToRefresh();
+        android.support.v4.app.FragmentTransaction ft = getFragmentTransaction();
+        if (toRefresh != null && ft != null) {
+            Log.d("ONPAUSE", "MAIN ACTIVITY REFRESH");
+            ft.detach(toRefresh);
+            ft.attach(toRefresh);
+            ft.commitNowAllowingStateLoss();
+        }
+    }*/
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
