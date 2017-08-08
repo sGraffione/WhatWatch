@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/poster"
-            android:layout_width="300dp"
-            android:layout_height="500dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/creators"
             android:layout_marginStart="23dp"
@@ -51,10 +51,10 @@
             android:id="@+id/add_button"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_above="@+id/Overview"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="74dp"
-            android:layout_marginEnd="25dp"
+            android:layout_alignParentEnd="false"
+            android:layout_alignStart="@+id/tag_runtime"
+            android:layout_below="@+id/tag_runtime"
+            android:layout_marginTop="150dp"
             android:background="@drawable/button_selector"
             android:text="+"
             android:textSize="30sp" />
@@ -62,23 +62,14 @@
         <TextView
             android:id="@+id/rating"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignStart="@+id/year"
-            android:layout_alignTop="@+id/poster"
-            android:layout_marginBottom="18dp"
-            android:layout_marginTop="100dp"
-            android:text="rating"
-            android:textSize="36sp" />
-
-        <!--<ListView
-            android:id="@+id/season_list"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@id/genres"
-            android:layout_below="@+id/Overview"
-            android:layout_marginTop="68dp"
-            android:isScrollContainer="false" />-->
+            android:layout_alignBaseline="@+id/tag_rating"
+            android:layout_alignBottom="@+id/tag_rating"
+            android:layout_marginLeft="140dp"
+            android:layout_toRightOf="@+id/tag_rating"
+            android:text="rating"
+            android:textSize="30sp" />
+
 
         <TextView
             android:id="@+id/genres"
@@ -104,30 +95,30 @@
         <TextView
             android:id="@+id/year"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_marginBottom="11dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/rating"
+            android:layout_below="@+id/rating"
+            android:layout_marginTop="65dp"
             android:text="TextView"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="36sp"
-            android:layout_above="@+id/scale"
-            android:layout_toEndOf="@+id/poster"
-            android:layout_marginStart="38dp" />
+            android:textSize="30sp" />
 
         <Button
             android:id="@+id/youtube"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Go to Youtube"
-            android:layout_alignBottom="@+id/poster"
-            android:layout_alignStart="@+id/runtime" />
+            android:layout_alignBottom="@+id/add_button"
+            android:layout_marginLeft="45dp"
+            android:layout_toRightOf="@+id/add_button"
+            android:text="Go to youtube" />
 
         <CheckBox
             android:id="@+id/seen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/add_button"
-            android:layout_alignEnd="@+id/add_button"
-            android:layout_marginBottom="80dp"
+            android:layout_alignBottom="@+id/youtube"
+            android:layout_marginLeft="45dp"
+            android:layout_toRightOf="@+id/youtube"
             android:text="Seen"
             android:clickable="false"
             android:textColor="@color/WhiteSmoke" />
@@ -135,22 +126,57 @@
         <TextView
             android:id="@+id/runtime"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="TextView"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/year"
+            android:layout_below="@+id/year"
+            android:layout_marginTop="65dp"
+            android:text="textView"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="36sp"
-            android:layout_below="@+id/rating"
-            android:layout_alignStart="@+id/rating" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/scale"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/rating"
             android:layout_alignBottom="@+id/rating"
             android:layout_toEndOf="@+id/rating"
             android:text="/10"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="36sp" />
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tag_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="130dp"
+            android:layout_toRightOf="@+id/poster"
+            android:text="Rating"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tag_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tag_rating"
+            android:layout_below="@+id/tag_rating"
+            android:layout_marginTop="65dp"
+            android:text="Year"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/tag_runtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/tag_year"
+            android:layout_below="@+id/tag_year"
+            android:layout_marginTop="65dp"
+            android:text="Duration"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="30sp" />
 
     </RelativeLayout>
 </ScrollView>
