@@ -61,7 +61,7 @@ public class ShowInfoAboutListElement extends Activity {
             type = getIntent().getStringExtra("type");
             String url = "https://api.themoviedb.org/3/" + type + "/"+ id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
             try{
-                filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
+                filmInfo = new ParsingInfoFilm(this, type, 1).execute(url).get();
             }catch (ExecutionException e){
                 e.printStackTrace();
             }catch (InterruptedException e){
@@ -104,11 +104,13 @@ public class ShowInfoAboutListElement extends Activity {
                 genres.append(", " + genre.get(i).get("name"));
             }
 
-            ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
+        ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
             cast.setText((String) peopleOfIbiza.get(0).get("name"));
-            for(int i = 1; i < 5; i++){
+        if(peopleOfIbiza.size() != 1) {
+            for (int i = 1; i < 5; i++) {
                 cast.append(", " + peopleOfIbiza.get(i).get("name"));
             }
+        }
 
         Film film = new Database(this).getFilmById(id_film);
         int isSeen;

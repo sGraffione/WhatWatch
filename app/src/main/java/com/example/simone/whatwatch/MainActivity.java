@@ -24,10 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
-    private static Fragment toRefresh = null;
-    private static Fragment toRefreshWatched = null;
-    private static Fragment toRefreshHomepage = null;
-    private static android.support.v4.app.FragmentManager fragmentManager = null;
+    public static Fragment toRefresh = null;
+    public static Fragment toRefreshWatched = null;
+    public static Fragment toRefreshHomepage = null;
+    public static android.support.v4.app.FragmentManager fragmentManager = null;
 
 
 
@@ -66,20 +66,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Log.d("ONRESUME", "MAIN ACTIVITY");
     }
-
-    /*@Override
-    public void onPause(){
-        super.onPause();
-        Log.d("ONPAUSE MAIN", "MAIN ACTIVITY");
-        Fragment toRefresh = getToRefresh();
-        android.support.v4.app.FragmentTransaction ft = getFragmentTransaction();
-        if (toRefresh != null && ft != null) {
-            Log.d("ONPAUSE", "MAIN ACTIVITY REFRESH");
-            ft.detach(toRefresh);
-            ft.attach(toRefresh);
-            ft.commitNowAllowingStateLoss();
-        }
-    }*/
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());

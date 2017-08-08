@@ -37,6 +37,9 @@ import database.Database;
 public class ShowInfoAboutTvElement extends Activity {
 
     ArrayList<HashMap<String, Object>> filmInfo;
+    int id_film;
+    String url;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class ShowInfoAboutTvElement extends Activity {
         TextView runtime = (TextView) findViewById(R.id.runtime);
 
 
-        int id_film = 0;
+        id_film = 0;
         filmInfo = new ArrayList<>();
         String type = "tv";
 
@@ -65,9 +68,9 @@ public class ShowInfoAboutTvElement extends Activity {
         if (intent != null) {
             id_film = getIntent().getIntExtra("id", 0);
             type = getIntent().getStringExtra("type");
-            String url = "https://api.themoviedb.org/3/tv/" + id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
+            url = "https://api.themoviedb.org/3/tv/" + id_film + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
             try {
-                filmInfo = new ParsingInfoFilm(this, type).execute(url).get();
+                filmInfo = new ParsingInfoFilm(this, type, 1).execute(url).get();
             } catch (ExecutionException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
@@ -119,7 +122,7 @@ public class ShowInfoAboutTvElement extends Activity {
             }
 
             String result = parsingVideos((JSONArray) data.get("videos"));
-
+        if(result != null) {
             if(result.equals("Video not available")) {
                 youtube.setVisibility(View.GONE);
             }else {
@@ -131,6 +134,9 @@ public class ShowInfoAboutTvElement extends Activity {
                     }
                 });
             }
+        }else{
+            youtube.setVisibility(View.GONE);
+        }
 
             final int id = id_film;
             add_button.setOnClickListener(new View.OnClickListener() {
@@ -169,9 +175,18 @@ public class ShowInfoAboutTvElement extends Activity {
         int id_prec_btn = 0;
 
         int height = 60;
-
-        for(int i = 1; i < seasons.length(); i++){
+        int start = 0;
+        try {
+            JSONObject object = seasons.getJSONObject(0);
+            if(object.getInt("season_number") == 0){
+                start = 1;
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+        }
+        for(int i = start; i < seasons.length(); i++){
             try {
+
                 RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -224,10 +239,18 @@ public class ShowInfoAboutTvElement extends Activity {
                 //btn_add.setBackgroundColor(getResources().getColor(R.color.The_nicest_green_for_button_and_stuff));
                 //btn_add.setTextColor(getResources().getColor(R.color.green));
                 id_prec_btn = btn_add.getId();
-                final int index = i;
+                int j = 0;
+                if(start==0){
+                    j = start+1;
+                }else{
+                    j = start;
+                }
+                final int index = j;
+                start++;
                 btn_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        add_season(index, v);
                         Toast.makeText(v.getContext(), "You added the season number " + index + " to your Watchlist", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -238,6 +261,32 @@ public class ShowInfoAboutTvElement extends Activity {
             }catch (JSONException e){
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void add_season(int i, View view){
+        try{
+            filmInfo = new ParsingInfoFilm(this, "tv", i).execute(url).get();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
+        HashMap<String, Object> data = filmInfo.get(0);
+        Tv tv = new Tv(id_film, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
+                0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
+        Database database = new Database(view.getContext());
+        long row = database.insertSeries(tv);
+        if (row != -1)
+            Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+        Fragment toRefresh = MainActivity.getToRefresh();
+        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+        if (toRefresh != null && ft != null) {
+            ft.detach(toRefresh);
+            ft.attach(toRefresh);
+            ft.commitAllowingStateLoss();
         }
     }
 

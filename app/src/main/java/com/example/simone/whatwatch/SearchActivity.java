@@ -2,6 +2,7 @@ package com.example.simone.whatwatch;
 
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
-public class SearchActivity extends MainActivity {
+public class SearchActivity extends Activity {
 
     private ProgressDialog pDialog;
 
@@ -92,6 +93,7 @@ public class SearchActivity extends MainActivity {
     public void onPause(){
         super.onPause();
         Log.d("ONPAUSE", "ON PAUSSSSSSSE");
+
 
     }
 }

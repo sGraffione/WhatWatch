@@ -22,12 +22,14 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
     private ProgressDialog pDialog;
     private ArrayList<HashMap<String, Object>> filmInfo;
     private String type;
+    private int index;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public ParsingInfoFilm(Context context, String type)
+    public ParsingInfoFilm(Context context, String type, int index)
     {
         filmInfo = new ArrayList<>();
         this.type = type;
+        this.index = index;
         pDialog = new ProgressDialog(context);
         pDialog.setMessage("Retrieving information...");
         pDialog.setCancelable(false);
@@ -102,13 +104,21 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                         TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");
 
                     JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
-                    if(TAG_CAST.length() == 0)
-                        TAG_CAST.put("Cast not available");
+                    if(TAG_CAST.length() == 0){
+                        JSONObject object = new JSONObject();
+                        object.put("cast", "Cast not available");
+                        TAG_CAST.put(object);
+                    }
 
                     JSONObject jArrayVideos = film.getJSONObject("videos");
                     JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
-                    if(TAG_VIDEOS.length() == 0)
-                        TAG_VIDEOS.put("Videos not available");
+                    if(TAG_VIDEOS.length() == 0){
+                        JSONObject object = new JSONObject();
+                        object.put("type", "Trailer");
+                        TAG_VIDEOS.put(object);
+                        object.put("key", "Video not available");
+                        TAG_VIDEOS.put(object);
+                    }
 
 
 
@@ -242,9 +252,9 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
             for(int i = 0; i < jArray.length(); i++){
                 JSONObject object = jArray.getJSONObject(i);
-                if((int) object.get("season_number") == 1){
+                if((int) object.get("season_number") == index){
                     info.put("id_season", object.get("id"));
-                    info.put("poster_path_season", object.get("poster_path"));
+                    info.put("poster_path_season", "https://image.tmdb.org/t/p/w500" + object.getString("poster_path"));
                     info.put("episode_max_season", object.get("episode_count"));
                 }
             }

@@ -89,33 +89,31 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
                         database.insertFilm(film);
 
                         Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
-                        Fragment toRefresh = MainActivity.getToRefresh();
+                        /*Fragment toRefresh = MainActivity.getToRefresh();
                         android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
                         if (toRefresh != null && ft != null) {
                             ft.detach(toRefresh);
                             ft.attach(toRefresh);
                             ft.commitAllowingStateLoss();
-                        }
+                        }*/
 
                     }else{
                         Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    if(database.verifyId((int) data.get("id"), 0) == 0) {
-                        tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"),
-                                (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"),
-                                (String) data.get("poster_path_season"));
+                    if(database.verifyId((int) data.get("id"), (int) data.get("id_season")) == 0) {
+                        tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
 
                         database.insertSeries(tv);
 
                         Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
-                        Fragment toRefresh = MainActivity.getToRefresh();
+                        /*Fragment toRefresh = MainActivity.getToRefresh();
                         android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
                         if (toRefresh != null && ft != null) {
                             ft.detach(toRefresh);
                             ft.attach(toRefresh);
                             ft.commitAllowingStateLoss();
-                        }
+                        }*/
 
                     }else{
                         Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
