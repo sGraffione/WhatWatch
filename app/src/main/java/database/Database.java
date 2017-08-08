@@ -86,7 +86,7 @@ public class Database {
 
     public static final String CREATE_TV_TABLE =
             "CREATE TABLE " + TV_TABLE + " (" + TV_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TV_ID_SERIES + " INTEGER NOT NULL, " +
-                    TV_ID_SEASON + " INTEGER NOT NULL, "+ TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " +
+                    TV_ID_SEASON + " INTEGER NOT NULL, " + TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " +
                     TV_EPISODE_MAX + " INTEGER NOT NULL, " + TV_SEASON_CURRENT + " INTEGER NOT NULL, " +
                     TV_SEASON_MAX + " INTEGER NOT NULL, " + TV_WATCHED + " INTEGER NOT NULL, " + TV_IMG_URL_SERIES + " STRING, " +
                     TV_IMG_URL_SEASON + " STRING);";
@@ -425,7 +425,8 @@ public class Database {
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
 
         this.openReadableDB();
-        Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
+        //Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
         if(cursor.getCount() == 0){
             flag = 0;
             this.closeDB();
