@@ -72,13 +72,14 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 sb.append(lineToAppend);
             }
             br.close();
+            urlConnection.disconnect();
 
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
             JSONArray jArray = JSONData.getJSONArray("results");
             if(type.equals("movie")){
 
-                for (int i = 0; i < jArray.length(); i++) {
+                for (int i = 0; i < jArray.length() - 10; i++) {
                     JSONObject film = jArray.getJSONObject(i);
                     String TAG_TITLE = film.getString("original_title");
                     String TAG_OVERVIEW = film.getString("overview");
@@ -99,7 +100,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 }
             }else if(type.equals("tv")) {
 
-                for (int i = 0; i < jArray.length(); i++) {
+                for (int i = 0; i < jArray.length() - 10; i++) {
                     JSONObject tv_serie = jArray.getJSONObject(i);
                     String TAG_NAME = tv_serie.getString("name");
                     String TAG_OVERVIEW = tv_serie.getString("overview");
@@ -152,6 +153,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 sb.append(lineToAppend);
             }
             br.close();
+            urlConnection.disconnect();
 
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);

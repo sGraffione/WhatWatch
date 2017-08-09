@@ -107,8 +107,14 @@ public class ShowInfoAboutListElement extends Activity {
         ArrayList<HashMap<String, Object>> peopleOfIbiza = parsingJSONArray((JSONArray) data.get("cast"));
             cast.setText((String) peopleOfIbiza.get(0).get("name"));
         if(peopleOfIbiza.size() != 1) {
-            for (int i = 1; i < 5; i++) {
-                cast.append(", " + peopleOfIbiza.get(i).get("name"));
+            if(peopleOfIbiza.size() < 5){
+                for (int i = 1; i < peopleOfIbiza.size(); i++) {
+                    cast.append(", " + peopleOfIbiza.get(i).get("name"));
+                }
+            }else{
+                for (int i = 1; i < 5; i++) {
+                    cast.append(", " + peopleOfIbiza.get(i).get("name"));
+                }
             }
         }
 

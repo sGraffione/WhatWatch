@@ -60,7 +60,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
             JSONArray jArray = JSONData.getJSONArray("results");
-                for (int i = 0; i < jArray.length(); i++) {
+                for (int i = 0; i < jArray.length() - 10; i++) {
                     JSONObject film = jArray.getJSONObject(i);
                     String TAG_TYPE = film.getString("media_type");
                     String TAG_TITLE;
@@ -75,7 +75,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
 
                         String TAG_PHOTO;
                         String str = film.getString("poster_path");
-                        if(film.get("poster_path").equals("null"))
+                        if(str.equals("null"))
                             TAG_PHOTO = "null";
                         else
                             TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + str;
@@ -97,7 +97,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                         filmInfo.add(info);
                     }else{
                         JSONArray jArrayPerson = film.getJSONArray("known_for");
-                        for(int j = 0; j < jArrayPerson.length(); j++) {
+                        for(int j = 0; j < jArrayPerson.length() - 10; j++) {
                             JSONObject data = jArrayPerson.getJSONObject(j);
                             TAG_TYPE = data.getString("media_type");
                             if (TAG_TYPE.equals("movie"))

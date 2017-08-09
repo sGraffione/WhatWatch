@@ -81,7 +81,6 @@ public class ShowInfoAboutTvElement extends Activity {
         final HashMap<String, Object> data = filmInfo.get(0);
         Title.setText((String) data.get("name"));
         if (data.get("poster_path").equals("null")) {
-            Uri uri = Uri.parse("android.resource://com.example.simone.whatwatch/drawable/noavailable.jpg");
             Picasso.with(this).load(R.drawable.noavailable).into(poster);
         } else {
             Picasso.with(this).load((String) data.get("poster_path")).into(poster);
@@ -142,8 +141,14 @@ public class ShowInfoAboutTvElement extends Activity {
             add_button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    String poster_path_season = null;
+                    if(data.get("poster_path_season").equals("null") || data.get("poster_path_season").equals("")) {
+                        poster_path_season = "null";
+                    }else{
+                        poster_path_season = (String) data.get("poster_path_season");
+                    }
                     Tv tv = new Tv(id, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
-                            0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
+                            0, (String) data.get("poster_path"), poster_path_season);
                     Database database = new Database(view.getContext());
                     long row = database.insertSeries(tv);
                     if (row != -1)

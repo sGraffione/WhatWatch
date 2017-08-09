@@ -39,7 +39,7 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ImageView imageView;
 
@@ -57,10 +57,11 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         imageView = (ImageView) convertView.findViewById(R.id.photo);
         Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
 
-        if(data.get("poster_path").equals("null"))
+        if(data.get("poster_path").equals("null") || data.get("poster_path").equals("")) {
             Picasso.with(context).load(R.drawable.noavailable).into(imageView);
-        else
+        }else{
             Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
+        }
 
         TextView title = (TextView) convertView.findViewById(R.id.Title);
         String titletmp = (String) data.get("title");
@@ -87,34 +88,21 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
                     if(database.verifyId((int) data.get("id")) == 0) {
                         film = new Film((int) data.get("id"), (String) data.get("title"), 0, (String) data.get("poster_path"));
                         database.insertFilm(film);
-
                         Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
-                        /*Fragment toRefresh = MainActivity.getToRefresh();
-                        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                        if (toRefresh != null && ft != null) {
-                            ft.detach(toRefresh);
-                            ft.attach(toRefresh);
-                            ft.commitAllowingStateLoss();
-                        }*/
-
                     }else{
                         Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     if(database.verifyId((int) data.get("id"), (int) data.get("id_season")) == 0) {
-                        tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
-
+                        String poster_path_season = null;
+                        if(data.get("poster_path_season").equals("null") || data.get("poster_path_season").equals("")) {
+                            poster_path_season = "null";
+                        }else{
+                            poster_path_season = (String) data.get("poster_path_season");
+                        }
+                        tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"), poster_path_season);
                         database.insertSeries(tv);
-
                         Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
-                        /*Fragment toRefresh = MainActivity.getToRefresh();
-                        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                        if (toRefresh != null && ft != null) {
-                            ft.detach(toRefresh);
-                            ft.attach(toRefresh);
-                            ft.commitAllowingStateLoss();
-                        }*/
-
                     }else{
                         Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }

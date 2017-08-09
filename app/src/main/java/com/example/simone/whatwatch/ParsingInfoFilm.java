@@ -30,10 +30,6 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
         filmInfo = new ArrayList<>();
         this.type = type;
         this.index = index;
-        pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Retrieving information...");
-        pDialog.setCancelable(false);
-        pDialog.show();
     }
 
 
@@ -140,7 +136,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     String TAG_TITLE = film.getString("name");
                     int TAG_ID = film.getInt("id");
                     String TAG_OVERVIEW = film.getString("overview");
-                    if(TAG_OVERVIEW.equals("null"))
+                    if(TAG_OVERVIEW.equals("null") || TAG_OVERVIEW.equals(""))
                         TAG_OVERVIEW = "Overview not available";
                     String TAG_RATING = film.getString("vote_average");
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
@@ -268,8 +264,6 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
     @Override
     protected void onPostExecute(ArrayList<HashMap<String, Object>> result){
         super.onPostExecute(result);
-        if(pDialog.isShowing())
-            pDialog.dismiss();
 
     }
 }

@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.simone.whatwatch.Homepage"
-    android:tag="@+id/homepage_fragment">
+    android:background="@color/Really_Really_Dark_Gray"
+    android:tag="@+id/homepage_fragment"
+    tools:context="com.example.simone.whatwatch.Homepage">
 
     <ListView
         android:id="@+id/filmList"

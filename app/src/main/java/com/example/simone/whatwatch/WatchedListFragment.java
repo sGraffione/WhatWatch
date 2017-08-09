@@ -28,7 +28,7 @@ public class WatchedListFragment extends Fragment {
 
     private GridView gridView;
 
-    private WatchlistAdapter watchlistAdapter = null;
+    private WatchedAdapter watchedAdapter = null;
 
     String typeSelected = "All";
     String sortingType = "Alphabetical";
@@ -45,7 +45,7 @@ public class WatchedListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_watched_list, container, false);
-        GridView gridView = (GridView) view.findViewById(R.id.gridview);
+        gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         Database database = new Database(getContext());
@@ -113,39 +113,11 @@ public class WatchedListFragment extends Fragment {
 
     public void refresh() {
         Database database = new Database(getContext());
-        final ArrayList<Object> films = database.getFilter(0, typeSelected, sortingType);
+        final ArrayList<Object> films = database.getFilter(1, typeSelected, sortingType);
         if(films != null){
-            watchlistAdapter = new WatchlistAdapter(getContext(), films);
-            gridView.setAdapter(watchlistAdapter);
+            watchedAdapter = new WatchedAdapter(getContext(), films);
+            gridView.setAdapter(watchedAdapter);
         }
-
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Database database = new Database(view.getContext());
-                if(films.get(position) instanceof Film){
-                    database.updateWatched(((Film) films.get(position)).getId());
-                }else{
-                    database.updateWatched(((Tv) films.get(position)).getIdSeries(), ((Tv) films.get(position)).getIdSeason());
-                }
-
-                Fragment toRefreshWatched = MainActivity.getToRefreshWatched();
-                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                if (toRefreshWatched != null && ft != null) {
-                    ft.detach(toRefreshWatched);
-                    ft.attach(toRefreshWatched);
-                    ft.commitAllowingStateLoss();
-                }
-                Fragment toRefresh = MainActivity.getToRefresh();
-                android.support.v4.app.FragmentTransaction ft2 = MainActivity.getFragmentTransaction();
-                if (toRefresh != null && ft2 != null) {
-                    ft2.detach(toRefresh);
-                    ft2.attach(toRefresh);
-                    ft2.commitAllowingStateLoss();
-                }
-                return true;
-            }
-        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

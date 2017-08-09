@@ -1,5 +1,6 @@
 package com.example.simone.whatwatch;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -32,7 +34,7 @@ public class Homepage extends Fragment {
     ArrayList<HashMap<String, Object>> filmInfo;
     ListView lv;
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
-    Button btnAddElement;
+    CustomListAdapter adapter;
 
     View view = null;
 
@@ -43,21 +45,33 @@ public class Homepage extends Fragment {
     int homepageSearchSelected = R.id.Popularity;
     int getHomepageSearchTypeSelected = R.id.Movies;
 
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    @Override
+    public void onCreate(Bundle savedInstance){
+        super.onCreate(savedInstance);
+        Log.d("HOMEPAGE", "Entrato nell'onCreate");
+
+        filmInfo = MainActivity.getFilmInfo();
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.d("HOMEPAGE", "Entrato in onCreateView");
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
-        filmInfo = new ArrayList<>();
         lv = (ListView) view.findViewById(R.id.filmList);
-        new downloadJSONInfo(getActivity(), filmInfo, lv, getTypeSelected(), getTypeSearch()).execute(URLSelected);
+        //new downloadJSONInfo(getActivity(), filmInfo, lv, getTypeSelected(), getTypeSearch()).execute(URLSelected);
 
+        adapter = new CustomListAdapter(getContext(), R.layout.film_element, filmInfo, typeSelected);
+        lv.setAdapter(adapter);
 
 
         if(getTypeSelected().equals("movie")){
@@ -160,6 +174,9 @@ public class Homepage extends Fragment {
                     typeSelected = "tv";
                     break;
             }
+            Log.d("HOMEPAGE", "Refresh ");
+            URLSelected = firstPart + typeSelected + secondPart;
+            refresh(URLSelected);
         }else{
             switch (item.getItemId()){
                 case R.id.Popularity:
@@ -173,10 +190,9 @@ public class Homepage extends Fragment {
                     searchTypeSelected = "vote";
                     break;
             }
+            URLSelected = firstPart + typeSelected + secondPart;
+            refresh(URLSelected);
         }
-
-        URLSelected = firstPart + typeSelected + secondPart;
-        refresh(URLSelected);
 
         return super.onOptionsItemSelected(item);
     }

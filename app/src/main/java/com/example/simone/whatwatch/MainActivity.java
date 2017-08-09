@@ -3,6 +3,7 @@ package com.example.simone.whatwatch;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -14,6 +15,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -24,13 +28,15 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
 
+    public static ArrayList<HashMap<String, Object>> filmInfo = new ArrayList<>();
+
     public static Fragment toRefresh = null;
     public static Fragment toRefreshWatched = null;
     public static Fragment toRefreshHomepage = null;
     public static android.support.v4.app.FragmentManager fragmentManager = null;
 
 
-
+    public static ArrayList<HashMap<String, Object>> getFilmInfo(){return filmInfo;}
 
     public static Fragment getToRefresh() {
         return toRefresh;
@@ -59,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         fragmentManager = getSupportFragmentManager();
+
+        Log.d("MAIN ACTIVITY", "Preso filmInfo");
+        filmInfo = (ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra("INFO");
     }
 
     @Override

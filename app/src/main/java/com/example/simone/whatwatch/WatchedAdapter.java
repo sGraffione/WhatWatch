@@ -61,13 +61,13 @@ public class WatchedAdapter extends BaseAdapter {
         if(object instanceof Film){
             Film film = (Film) films.get(position);
             if(film != null){
-                nameTextView.setText(film.getName());
+                //nameTextView.setText(film.getName());
             }
             Picasso.with(mContext).load(film.getImgUrl()).into(imageView);
         }else{
             Tv tv = (Tv) films.get(position);
             if(tv != null){
-                nameTextView.setText(tv.getName());
+               // nameTextView.setText(tv.getName());
             }
             Picasso.with(mContext).load(tv.getImgUrlSeries()).into(imageView);
         }
