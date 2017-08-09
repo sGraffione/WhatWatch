@@ -279,29 +279,6 @@ public class Database {
             }
         }
 
-
-        /*if (type.equals("Movie")) {
-            while (cursorFilm.moveToNext()) {
-                elements.add(getFilmFromCursor(cursorFilm));
-            }
-        } else if(type.equals("Tv_shows")){
-            while (cursorSeries.moveToNext()) {
-                elements.add(getTvFromCursor(cursorSeries));
-            }
-        } else{
-            while (cursorFilm.moveToNext()) {
-                elements.add(getFilmFromCursor(cursorFilm));
-            }
-            while (cursorSeries.moveToNext()) {
-                elements.add(getTvFromCursor(cursorSeries));
-            }
-        }
-
-        if (cursorFilm != null || cursorSeries != null){
-            cursorFilm.close();
-            cursorSeries.close();
-        }*/
-
         this.closeDB();
 
         return elements;
@@ -461,6 +438,23 @@ public class Database {
             cursor.close();
             this.closeDB();
             return flag;
+        }
+    }
+
+
+    public boolean verifySeasonWatched(int idSeries){
+        int watched = 0;
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(watched)};
+
+        this.openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
+        if(cursor.getCount() != 0){
+            cursor.close();
+            this.closeDB();
+            return false;
+        }else{
+            this.closeDB();
+            return true;
         }
     }
 
