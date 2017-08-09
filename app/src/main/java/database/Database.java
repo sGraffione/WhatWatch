@@ -650,7 +650,7 @@ public class Database {
     }
 
 
-    public int deleteSeries(int idSeries, int idSeason){
+    public int deleteSeason(int idSeries, int idSeason){
         String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
 
