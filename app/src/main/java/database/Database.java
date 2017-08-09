@@ -434,11 +434,9 @@ public class Database {
 
     public int verifyId(int idSeries, int idSeason){
         int flag;
-        String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
 
         this.openReadableDB();
-        //Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
         Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
         if(cursor.getCount() == 0){
             flag = 0;
@@ -453,17 +451,36 @@ public class Database {
     }
 
 
-    public boolean verifySeasonWatched(int idSeries, int idSeason){
-        int watched = 0;
-        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason), Integer.toString(watched)};
+    public boolean verifyIdSeries(int idSeries){
+        String[] whereArgs = {Integer.toString(idSeries)};
 
         this.openReadableDB();
-        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
-        if(cursor.getCount() != 0){
+        //Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ?", whereArgs);
+        if(cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
             return false;
         }else{
+            cursor.close();
+            this.closeDB();
+            return true;
+        }
+    }
+
+
+    public boolean verifySeasonWatched(int idSeries, int idSeason){
+        int watched = 1;
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason), Integer.toString(watched)};
+
+        this.openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
+        if(cursor.getCount() == 0){
+            cursor.close();
+            this.closeDB();
+            return false;
+        }else{
+            cursor.close();
             this.closeDB();
             return true;
         }
