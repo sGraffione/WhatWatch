@@ -32,9 +32,6 @@ public class Database {
     public static String FILM_IMG_URL = "film_img_url";
     public static final int FILM_IMG_URL_COL = 4;
 
-    //public static String TIME_TAG = "time";
-    //public static final int TIME_TAG_COL = 5;
-
 
     //Costanti tabella Tv
     public static final String TV_TABLE = "tv_data";
@@ -71,9 +68,6 @@ public class Database {
 
     public static String TV_IMG_URL_SEASON = "tv_img_url_season";
     public static int TV_IMG_URL_SEASON_COL = 10;
-
-   // public static String TIME = "time";
-    //public static final int TIME_COL = 11;
 
 
     //Query di creazione e drop delle due tabelle
@@ -244,9 +238,18 @@ public class Database {
             String where = TV_WATCHED + "= ?";
             String[] whereArgs = {Integer.toString(watched)};
             if (order.equals("Recent")) {
-                cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, TV_ROW + " DESC");
+                if(watched == 1){
+                    cursorSeries = db.query(TV_TABLE, null, where, whereArgs, TV_ID_SERIES, null, TV_ROW + " DESC");
+                }
+                else{
+                    cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, TV_ROW + " DESC");
+                }
             } else {
-                cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, TV_NAME);
+                if(watched == 1){
+                    cursorSeries = db.query(TV_TABLE, null, where, whereArgs, TV_ID_SERIES, null, TV_NAME);
+                }else{
+                    cursorSeries = db.query(TV_TABLE, null, where, whereArgs, null, null, TV_NAME);
+                }
             }
             while (cursorSeries.moveToNext()) {
                 elements.add(getTvFromCursor(cursorSeries));
@@ -262,10 +265,18 @@ public class Database {
             String[] whereArgs = {Integer.toString(watched)};
             if (order.equals("Recent")) {
                 cursorFilm = db.query(FIL_TABLE, null, where, whereArgs, null, null, FILM_ROW + " DESC");
-                cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_ROW + " DESC");
+                if(watched == 1){
+                    cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, TV_ID_SERIES, null, TV_ROW + " DESC");
+                }else{
+                    cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_ROW + " DESC");
+                }
             } else {
                 cursorFilm = db.query(FIL_TABLE, null, where, whereArgs, null, null, FILM_NAME);
-                cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_NAME);
+                if(watched == 1){
+                    cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, TV_ID_SERIES, null, TV_NAME);
+                }else{
+                    cursorSeries = db.query(TV_TABLE, null, whereTv, whereArgs, null, null, TV_NAME);
+                }
             }
             while (cursorFilm.moveToNext()) {
                 elements.add(getFilmFromCursor(cursorFilm));
