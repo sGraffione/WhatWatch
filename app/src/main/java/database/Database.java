@@ -453,12 +453,12 @@ public class Database {
     }
 
 
-    public boolean verifySeasonWatched(int idSeries){
+    public boolean verifySeasonWatched(int idSeries, int idSeason){
         int watched = 0;
-        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(watched)};
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason), Integer.toString(watched)};
 
         this.openReadableDB();
-        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
         if(cursor.getCount() != 0){
             cursor.close();
             this.closeDB();
