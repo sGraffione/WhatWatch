@@ -456,7 +456,7 @@ public class Database {
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(watched)};
 
         this.openReadableDB();
-        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND watched = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
         if(cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
