@@ -452,11 +452,11 @@ public class Database {
 
 
     public boolean verifyIdSeries(int idSeries){
-        String[] whereArgs = {Integer.toString(idSeries)};
+        int watched = 0;
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(watched)};
 
         this.openReadableDB();
-        //Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
-        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND watched = ?", whereArgs);
         if(cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
