@@ -98,15 +98,7 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
                         String poster_path_season = data.get("poster_path_season").toString();
                         if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("")) {
                             poster_path_season = (String) data.get("poster_path");
-                        }/*else{
-                            try {
-
-                            }
-                            catch (ClassCastException e) {
-                                Log.w("SearchAdapter", e);
-                                poster_path_season = "";
-                            }
-                        }*/
+                        }
                         tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"), poster_path_season);
                         database.insertSeries(tv);
                         Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();

@@ -90,7 +90,7 @@ public class ShowInfoAboutListElement extends Activity {
         rating.setText((String) data.get("vote_average"));
         year.setText((String) data.get("year"));
         if (data.get("runtime").equals("Not available")) {
-            runtime.setText("Not available");
+            runtime.setText("Not Found");
         }else{
             runtime.setText(data.get("runtime") + ("m"));
         }
@@ -129,8 +129,8 @@ public class ShowInfoAboutListElement extends Activity {
             seen.setChecked(true);
         }
 
-
-        if(data.get("videos").equals("Videos not available")){
+        String url = parsingVideos((JSONArray) data.get("videos"));
+        if(url.equals("Video not available")){
             ytBtn.setVisibility(View.INVISIBLE);
         }else{
             final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));

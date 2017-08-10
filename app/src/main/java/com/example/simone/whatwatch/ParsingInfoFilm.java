@@ -73,8 +73,8 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                         TAG_OVERVIEW = "Overview not available";
                     String TAG_RATING = film.getString("vote_average");
                     String TAG_YEAR = film.getString("release_date");
-                    if(TAG_YEAR.equals("null"))
-                        TAG_YEAR = "Not available";
+                    if(TAG_YEAR.equals("null") || TAG_YEAR.equals(""))
+                        TAG_YEAR = "Not found";
                     else
                         TAG_YEAR = TAG_YEAR.substring(0,4);
                     JSONArray TAG_GENRE = film.getJSONArray("genres");
@@ -102,7 +102,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
                     if(TAG_CAST.length() == 0){
                         JSONObject object = new JSONObject();
-                        object.put("cast", "Cast not available");
+                        object.put("name", "Cast not available");
                         TAG_CAST.put(object);
                     }
 
@@ -154,7 +154,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                         String TAG_YEAR = film.getString("first_air_date");
                         if (TAG_YEAR.equals("null"))
-                            TAG_YEAR = "Release data not available";
+                            TAG_YEAR = "Not found";
                         else
                             TAG_YEAR = TAG_YEAR.substring(0, 4);
                         JSONArray jArrayRuntime = film.getJSONArray("episode_run_time");
@@ -177,7 +177,7 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                         if (TAG_CAST.length() == 0) {
                             JSONObject object = new JSONObject();
-                            object.put("cast", "Cast not available");
+                            object.put("name", "Cast not available");
                             TAG_CAST.put(object);
                         }
 
