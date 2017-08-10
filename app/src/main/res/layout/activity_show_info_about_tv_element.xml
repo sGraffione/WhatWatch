@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/Really_Really_Dark_Gray"
-        tools:context="com.example.simone.whatwatch.ShowInfoAboutListElement"
+        tools:context="com.example.simone.whatwatch.Classes.ShowInfoAboutListElement"
         android:id="@+id/tv_series_layout">
 
         <ImageView

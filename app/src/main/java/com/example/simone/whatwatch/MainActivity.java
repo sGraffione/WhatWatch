@@ -3,7 +3,6 @@ package com.example.simone.whatwatch;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -14,6 +13,12 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+
+import com.example.simone.whatwatch.Adapter.SectionsPageAdapter;
+import com.example.simone.whatwatch.Classes.SearchActivity;
+import com.example.simone.whatwatch.FragmentClasses.Homepage;
+import com.example.simone.whatwatch.FragmentClasses.MyWatchListFragment;
+import com.example.simone.whatwatch.FragmentClasses.WatchedListFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;

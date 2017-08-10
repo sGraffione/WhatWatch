@@ -1,4 +1,4 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.Classes;
 
 import android.app.Application;
 import android.content.Context;

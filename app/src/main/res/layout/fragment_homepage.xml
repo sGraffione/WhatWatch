@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@color/Really_Really_Dark_Gray"
     android:tag="@+id/homepage_fragment"
-    tools:context="com.example.simone.whatwatch.Homepage">
+    tools:context="com.example.simone.whatwatch.FragmentClasses.Homepage">
 
     <ListView
         android:id="@+id/filmList"

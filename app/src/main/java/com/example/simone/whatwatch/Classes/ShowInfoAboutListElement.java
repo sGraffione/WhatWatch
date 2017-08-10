@@ -1,4 +1,4 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.Classes;
 
 import android.app.Activity;
         import android.content.Intent;
@@ -14,13 +14,15 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.simone.whatwatch.JSONParsingClasses.ParsingInfoFilm;
+import com.example.simone.whatwatch.MainActivity;
+import com.example.simone.whatwatch.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;

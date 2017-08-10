@@ -1,19 +1,20 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.Classes;
 
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.simone.whatwatch.Adapter.SearchAdapter;
+import com.example.simone.whatwatch.JSONParsingClasses.JSONSearch;
+import com.example.simone.whatwatch.R;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -69,7 +70,8 @@ public class SearchActivity extends Activity {
         if(filmInfo == null || filmInfo.size() == 0){
             noResult.setVisibility(View.VISIBLE);
         }
-        lv.setAdapter(adapter);
+        if(adapter !=  null)
+            lv.setAdapter(adapter);
         lv.setBackgroundColor(getResources().getColor(R.color.Really_Really_Dark_Gray));
         View view = this.getWindow().getDecorView();
         view.setBackgroundColor(getResources().getColor(R.color.Really_Really_Dark_Gray));

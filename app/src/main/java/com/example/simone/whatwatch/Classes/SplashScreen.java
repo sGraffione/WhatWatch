@@ -1,12 +1,9 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.Classes;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +17,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.os.Handler;
+
+import com.example.simone.whatwatch.MainActivity;
+import com.example.simone.whatwatch.R;
 
 
 public class SplashScreen extends Activity{

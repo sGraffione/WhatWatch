@@ -1,9 +1,12 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.JSONParsingClasses;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.ListView;
+
+import com.example.simone.whatwatch.Adapter.CustomListAdapter;
+import com.example.simone.whatwatch.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,9 +1,8 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.FragmentClasses;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -18,10 +17,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import java.lang.reflect.Array;
+import com.example.simone.whatwatch.Adapter.WatchlistAdapter;
+import com.example.simone.whatwatch.JSONParsingClasses.ParsingInfoFilm;
+import com.example.simone.whatwatch.MainActivity;
+import com.example.simone.whatwatch.R;
+import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
+import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
+
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import database.Film;
@@ -113,12 +117,13 @@ public class MyWatchListFragment extends Fragment {
                                     int id_series = ((Tv) films.get(j)).getIdSeries();
                                     int id_season = ((Tv) films.get(j)).getIdSeason();
                                     int next_season = ((Tv) films.get(j)).getSeasonCurrent() + 1;
-                                    int trueNextSeason = checkNextSeason(id_series, next_season - 1, next_season, database);
+                                    int max_season = ((Tv) films.get(j)).getEpisodeMax();
+                                    int trueNextSeason = checkNextSeason(id_series, next_season - 1, max_season, database);
                                     if(trueNextSeason != -1) {
                                         database.updateWatched(id_series, id_season);
                                         String url = "https://api.themoviedb.org/3/tv/"+ id_series + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
                                         try{
-                                            ArrayList<HashMap<String, Object>> newSeason = new ParsingInfoFilm(view.getContext(), "tv", next_season).execute(url).get();
+                                            ArrayList<HashMap<String, Object>> newSeason = new ParsingInfoFilm(view.getContext(), "tv", trueNextSeason).execute(url).get();
                                             String poster_path_season;
                                             HashMap<String, Object> data = newSeason.get(0);
                                             if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("") || data.get("poster_path_season") == null){

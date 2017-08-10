@@ -3,22 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/Really_Really_Dark_Gray"
-    tools:context="com.example.simone.whatwatch.WatchedListFragment">
+    tools:context="com.example.simone.whatwatch.FragmentClasses.WatchedListFragment">
 
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:clickable="true"
-        android:columnWidth="250dp"
-        android:drawSelectorOnTop="true"
-        android:focusable="true"
+        android:layout_height="match_parent"
+        android:columnWidth="200dp"
         android:gravity="center"
-        android:numColumns="auto_fit"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp" />
+        android:layout_below="@+id/tag_minutes_count"
+        android:layout_marginTop="50dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="3"
+        android:verticalSpacing="10dp" />
 
     <TextView
         android:id="@+id/stats"

@@ -1,8 +1,7 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.FragmentClasses;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -16,8 +15,14 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.example.simone.whatwatch.Adapter.WatchedAdapter;
+import com.example.simone.whatwatch.R;
+import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
+import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
+
 import java.util.ArrayList;
 
+import database.AndroidDatabaseManager;
 import database.Film;
 import database.Tv;
 import database.Database;
@@ -60,7 +65,7 @@ public class WatchedListFragment extends Fragment {
         film_count.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Intent dbmanager = new Intent(getActivity(),AndroidDatabaseManager.class);
+                Intent dbmanager = new Intent(getActivity(), AndroidDatabaseManager.class);
                 startActivity(dbmanager);
             }
         });

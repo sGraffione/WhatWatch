@@ -1,4 +1,4 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.JSONParsingClasses;
 
 import android.app.ProgressDialog;
 import android.content.Context;

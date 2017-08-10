@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.simone.whatwatch.MyWatchListFragment"
+    tools:context="com.example.simone.whatwatch.FragmentClasses.MyWatchListFragment"
+    android:background="@color/Really_Really_Dark_Gray"
     android:tag="@+id/watchlist_fragment" >
 
 

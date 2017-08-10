@@ -1,15 +1,10 @@
-package com.example.simone.whatwatch;
+package com.example.simone.whatwatch.FragmentClasses;
 
-import android.app.ProgressDialog;
-import android.app.SearchManager;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,13 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
+
+import com.example.simone.whatwatch.Adapter.CustomListAdapter;
+import com.example.simone.whatwatch.JSONParsingClasses.downloadJSONInfo;
+import com.example.simone.whatwatch.MainActivity;
+import com.example.simone.whatwatch.R;
+import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
+import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class Homepage extends Fragment {
