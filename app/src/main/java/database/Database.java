@@ -89,8 +89,6 @@ public class Database {
     public static String SERIES_TIME = "series_time";
     public static int SERIES_TIME_COL = 4;
 
-    public static String TOTAL_TIME = "total_time";
-    public static int TOTALS_TIME_COL = 5;
 
     //Query di creazione e drop delle due tabelle
     public static final String CREATE_FIL_TABLE =
@@ -112,8 +110,7 @@ public class Database {
 
     public static final String CREATE_PERSONAL_TABLE =
             "CREATE TABLE " + PERSONAL_TABLE + " (" + PERSONAL_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILMS_SEEN + " INTEGER NOT NULL, " +
-                    SERIES_SEEN + " INTEGER NOT NULL, " + FILMS_TIME + " INTEGER NOT NULL, " + SERIES_TIME + " INTEGER NOT NULL, " +
-                    TOTAL_TIME + " INTEGER NOT NULL);";
+                    SERIES_SEEN + " INTEGER NOT NULL, " + FILMS_TIME + " INTEGER NOT NULL, " + SERIES_TIME + " INTEGER NOT NULL);";
 
     //database and database helper objects
     private SQLiteDatabase db;
@@ -831,7 +828,6 @@ public class Database {
         db.update(PERSONAL_TABLE, up, null, null);
         timeCursor.close();
         db.close();
-        updateTotalTime();
         return time;
     }
 
@@ -846,23 +842,47 @@ public class Database {
         db.update(PERSONAL_TABLE, up, null, null);
         timeCursor.close();
         db.close();
-        updateTotalTime();
         return time;
     }
 
 
-    private int updateTotalTime(){
-        this.openWriteableDB();
-        Cursor timeCursor = db.rawQuery("SELECT films_time, series_time FROM personal_data", null);
-        int timeFilms = timeCursor.getInt(FILMS_TIME_COL);
-        int timeSeries = timeCursor.getInt(SERIES_TIME_COL);
-        int totalTime = timeFilms + timeSeries;
-        ContentValues up = new ContentValues();
-        up.put(TOTAL_TIME, totalTime);
-        db.update(PERSONAL_TABLE, up, null, null);
-        timeCursor.close();
+    public int getFilmsSeen(){
+        openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT films_seen FROM personal_data", null);
+        int time = cursor.getInt(FILMS_SEEN_COL);
+        cursor.close();
         db.close();
-        return totalTime;
+        return time;
+    }
+
+
+    public int getSeriesSeen(){
+        openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT series_seen FROM personal_data", null);
+        int time = cursor.getInt(SERIES_SEEN_COL);
+        cursor.close();
+        db.close();
+        return time;
+    }
+
+
+    public int getFilmsTime(){
+        openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT films_time FROM personal_data", null);
+        int time = cursor.getInt(FILMS_TIME_COL);
+        cursor.close();
+        db.close();
+        return time;
+    }
+
+
+    public int getSeriesTime(){
+        openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT series_time FROM personal_data", null);
+        int time = cursor.getInt(SERIES_TIME_COL);
+        cursor.close();
+        db.close();
+        return time;
     }
 
 }

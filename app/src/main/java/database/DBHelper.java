@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_FIL_TABLE);
         db.execSQL(CREATE_TV_TABLE);
         db.execSQL(CREATE_PERSONAL_TABLE);
-        db.execSQL("INSERT INTO personal_data VALUES (0, 0, 0, 0, 0, 0)");
+        db.execSQL("INSERT INTO personal_data VALUES (0, 0, 0, 0, 0)");
 
     }
 
