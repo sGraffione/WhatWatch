@@ -591,16 +591,16 @@ public class Database {
 
     public int updateEpisode(int idSeries, int idSeason){
         String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
-        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason), Integer.toString(0)};
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(0)};
         String[] column = {TV_EPISODE_CURRENT, TV_EPISODE_MAX};
         ContentValues ep = new ContentValues();
         int current_ep = 0;
-        int max_ep = 0;
+        int max_ep = 5;
 
 
         this.openWriteableDB();
 
-        Cursor cursor = db.rawQuery("SELECT tv_episode_current, tv_episode_max FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT tv_episode_current FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
         if(cursor == null || cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
