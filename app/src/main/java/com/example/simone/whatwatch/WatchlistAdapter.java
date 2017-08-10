@@ -66,7 +66,12 @@ public class WatchlistAdapter extends BaseAdapter {
                 if(tv != null){
                    // nameTextView.setText(tv.getName());
                 }
-                Picasso.with(mContext).load(tv.getImgUrlSeason()).into(imageView);
+
+                if(tv.getImgUrlSeason() == "" || tv.getImgUrlSeason() == null || tv.getImgUrlSeason().isEmpty()){
+                    Picasso.with(mContext).load(R.drawable.noavailable).into(imageView);
+                }else{
+                    Picasso.with(mContext).load(tv.getImgUrlSeason()).into(imageView);
+                }
             }
 
 

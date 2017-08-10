@@ -118,7 +118,6 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                         tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get(TAG_TITLENAME),
                                 (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"),
                                 (String) data.get("poster_path_season"));
-
                         database.insertSeries(tv);
 
                         Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();

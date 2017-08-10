@@ -1,10 +1,12 @@
 package com.example.simone.whatwatch;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -46,7 +48,7 @@ public class MyWatchListFragment extends Fragment {
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
-        Database database = new Database(getContext());
+        final Database database = new Database(getContext());
         final ArrayList<Object> films = database.getFilter(0, typeSelected, sortingType);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
@@ -57,27 +59,54 @@ public class MyWatchListFragment extends Fragment {
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Database database = new Database(view.getContext());
+                final Database database = new Database(view.getContext());
+                final int j = position;
                 if(films.get(position) instanceof Film){
-                    database.updateWatched(((Film) films.get(position)).getId());
-                }else{
-                    database.updateWatched(((Tv) films.get(position)).getIdSeries(), ((Tv) films.get(position)).getIdSeason());
-                }
 
-               Fragment toRefreshWatched = MainActivity.getToRefreshWatched();
-                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                if (toRefreshWatched != null && ft != null) {
-                    ft.detach(toRefreshWatched);
-                    ft.attach(toRefreshWatched);
-                    ft.commitAllowingStateLoss();
+                    final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+                    alertDialog.setTitle("Choose...");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "...", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            database.updateWatched(((Film) films.get(j)).getId());
+                            refreshWatchedWatchlist();
+                        }
+                    });
+                    alertDialog.show();
+
+                }else{
+                    final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+                    alertDialog.setTitle("Choose...");
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Go to the next episode", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //database.updateEpisode(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
+                            database.updateWatched(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
+                            refreshWatchedWatchlist();
+                        }
+                    });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "I don't like it (delete now)", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            database.deleteSeason(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
+                            refreshWatchedWatchlist();
+                        }
+                    });
+                    alertDialog.show();
                 }
-                Fragment toRefresh = MainActivity.getToRefresh();
-                android.support.v4.app.FragmentTransaction ft2 = MainActivity.getFragmentTransaction();
-                if (toRefresh != null && ft2 != null) {
-                    ft2.detach(toRefresh);
-                    ft2.attach(toRefresh);
-                    ft2.commitAllowingStateLoss();
-                }
+                refreshWatchedWatchlist();
                 return true;
             }
         });
@@ -104,6 +133,23 @@ public class MyWatchListFragment extends Fragment {
         setHasOptionsMenu(true);
 
         return view;
+    }
+
+    public void refreshWatchedWatchlist(){
+        Fragment toRefreshWatched = MainActivity.getToRefreshWatched();
+        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+        if (toRefreshWatched != null && ft != null) {
+            ft.detach(toRefreshWatched);
+            ft.attach(toRefreshWatched);
+            ft.commitAllowingStateLoss();
+        }
+        Fragment toRefresh = MainActivity.getToRefresh();
+        android.support.v4.app.FragmentTransaction ft2 = MainActivity.getFragmentTransaction();
+        if (toRefresh != null && ft2 != null) {
+            ft2.detach(toRefresh);
+            ft2.attach(toRefresh);
+            ft2.commitAllowingStateLoss();
+        }
     }
 
     @Override

@@ -133,80 +133,81 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
                     filmInfo.add(info);
                 }else{
-                    String TAG_TITLE = film.getString("name");
-                    int TAG_ID = film.getInt("id");
-                    String TAG_OVERVIEW = film.getString("overview");
-                    if(TAG_OVERVIEW.equals("null") || TAG_OVERVIEW.equals(""))
-                        TAG_OVERVIEW = "Overview not available";
-                    String TAG_RATING = film.getString("vote_average");
-                    JSONArray TAG_GENRE = film.getJSONArray("genres");
-                    if(TAG_GENRE.length()==0){
-                        JSONObject object = new JSONObject();
-                        object.put("name", "Genre not available");
-                        TAG_GENRE.put(object);
-                    }
-                    JSONArray TAG_SEASONS = film.getJSONArray("seasons");
-                    String gliominidellamadonna = film.getString("poster_path");
-                    String TAG_PHOTO = "null";
-                    if(!gliominidellamadonna.equals("null"))
-                        TAG_PHOTO = "https://image.tmdb.org/t/p/w780" + gliominidellamadonna;
+                        JSONArray TAG_SEASONS = film.getJSONArray("seasons");
+                        String TAG_TITLE = film.getString("name");
+                        int TAG_ID = film.getInt("id");
+                        String TAG_OVERVIEW = film.getString("overview");
+                        if (TAG_OVERVIEW.equals("null") || TAG_OVERVIEW.equals(""))
+                            TAG_OVERVIEW = "Overview not available";
+                        String TAG_RATING = film.getString("vote_average");
+                        JSONArray TAG_GENRE = film.getJSONArray("genres");
+                        if (TAG_GENRE.length() == 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("name", "Genre not available");
+                            TAG_GENRE.put(object);
+                        }
+                        String gliominidellamadonna = film.getString("poster_path");
+                        String TAG_PHOTO = "null";
+                        if (!gliominidellamadonna.equals("null")) {
+                            TAG_PHOTO = "https://image.tmdb.org/t/p/w780" + gliominidellamadonna;
+                        }
 
-                    String TAG_YEAR = film.getString("first_air_date");
-                    if(TAG_YEAR.equals("null"))
-                        TAG_YEAR = "Release data not available";
-                    else
-                        TAG_YEAR = TAG_YEAR.substring(0,4);
-                    JSONArray jArrayRuntime = film.getJSONArray("episode_run_time");
-                    int TAG_RUNTIME;
-                    if(jArrayRuntime.length()!=0)
-                        TAG_RUNTIME = (int) jArrayRuntime.get(0);
-                    else
-                        TAG_RUNTIME = 0;
+                        String TAG_YEAR = film.getString("first_air_date");
+                        if (TAG_YEAR.equals("null"))
+                            TAG_YEAR = "Release data not available";
+                        else
+                            TAG_YEAR = TAG_YEAR.substring(0, 4);
+                        JSONArray jArrayRuntime = film.getJSONArray("episode_run_time");
+                        int TAG_RUNTIME;
+                        if (jArrayRuntime.length() != 0)
+                            TAG_RUNTIME = (int) jArrayRuntime.get(0);
+                        else
+                            TAG_RUNTIME = 0;
 
-                    JSONArray TAG_CREATOR = film.getJSONArray("created_by");
-                    if(TAG_CREATOR.length() == 0){
-                        JSONObject object = new JSONObject();
-                        object.put("name", "Creator not available");
-                        TAG_CREATOR.put(object);
-                    }
+                        JSONArray TAG_CREATOR = film.getJSONArray("created_by");
+                        if (TAG_CREATOR.length() == 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("name", "Creator not available");
+                            TAG_CREATOR.put(object);
+                        }
 
 
-                    JSONObject jArrayCredits = film.getJSONObject("credits");
-                    JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
+                        JSONObject jArrayCredits = film.getJSONObject("credits");
+                        JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
 
-                    if(TAG_CAST.length() == 0){
-                        JSONObject object = new JSONObject();
-                        object.put("cast", "Cast not available");
-                        TAG_CAST.put(object);
-                    }
+                        if (TAG_CAST.length() == 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("cast", "Cast not available");
+                            TAG_CAST.put(object);
+                        }
 
-                    JSONObject jArrayVideos = film.getJSONObject("videos");
-                    JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
+                        JSONObject jArrayVideos = film.getJSONObject("videos");
+                        JSONArray TAG_VIDEOS = jArrayVideos.getJSONArray("results");
 
-                    if(TAG_VIDEOS.length() == 0){
-                        JSONObject object = new JSONObject();
-                        object.put("type", "Trailer");
-                        TAG_VIDEOS.put(object);
-                        object.put("key", "Video not available");
-                        TAG_VIDEOS.put(object);
-                    }
+                        if (TAG_VIDEOS.length() == 0) {
+                            JSONObject object = new JSONObject();
+                            object.put("type", "Trailer");
+                            TAG_VIDEOS.put(object);
+                            object.put("key", "Video not available");
+                            TAG_VIDEOS.put(object);
+                        }
 
-                    //General information of film
-                    HashMap<String, Object> info = new HashMap<>();
-                    getExtraInfos(TAG_ID, info);
-                    info.put("name", TAG_TITLE);
-                    info.put("overview", TAG_OVERVIEW);
-                    info.put("poster_path", TAG_PHOTO);
-                    info.put("vote_average", TAG_RATING);
-                    info.put("genres", TAG_GENRE);
-                    info.put("seasons", TAG_SEASONS);
-                    info.put("runtime", TAG_RUNTIME);
-                    info.put("creator", TAG_CREATOR);
-                    info.put("cast", TAG_CAST);
-                    info.put("videos", TAG_VIDEOS);
-                    info.put("year", TAG_YEAR);
+                        //General information of film
+                        HashMap<String, Object> info = new HashMap<>();
+                        getExtraInfos(TAG_ID, info);
+                        info.put("name", TAG_TITLE);
+                        info.put("overview", TAG_OVERVIEW);
+                        info.put("poster_path", TAG_PHOTO);
+                        info.put("vote_average", TAG_RATING);
+                        info.put("genres", TAG_GENRE);
+                        info.put("seasons", TAG_SEASONS);
+                        info.put("runtime", TAG_RUNTIME);
+                        info.put("creator", TAG_CREATOR);
+                        info.put("cast", TAG_CAST);
+                        info.put("videos", TAG_VIDEOS);
+                        info.put("year", TAG_YEAR);
 
-                    filmInfo.add(info);
+                        filmInfo.add(info);
                 }
 
         }catch (IOException e){
@@ -250,7 +251,11 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                 JSONObject object = jArray.getJSONObject(i);
                 if((int) object.get("season_number") == index){
                     info.put("id_season", object.get("id"));
-                    info.put("poster_path_season", "https://image.tmdb.org/t/p/w500" + object.getString("poster_path"));
+                    if((object.getString("poster_path")).equals("null")){
+                        info.put("poster_path_season", "null");
+                    }else{
+                        info.put("poster_path_season", "https://image.tmdb.org/t/p/w500" + object.getString("poster_path"));
+                    }
                     info.put("episode_max_season", object.get("episode_count"));
                 }
             }
