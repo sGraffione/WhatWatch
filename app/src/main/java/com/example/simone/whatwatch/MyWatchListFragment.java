@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -94,8 +95,9 @@ public class MyWatchListFragment extends Fragment {
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Go to the next episode", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            //database.updateEpisode(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
-                            database.updateWatched(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
+                            int var = database.updateEpisode(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
+                            Log.d("WATCHLIST", String.valueOf(var));
+                            //database.updateWatched(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
                             refreshWatchedWatchlist();
                         }
                     });

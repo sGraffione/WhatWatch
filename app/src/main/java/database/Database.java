@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -571,7 +573,7 @@ public class Database {
         up.put(TV_ID_SEASON, update.getIdSeason());
         up.put(TV_NAME, update.getName());
         up.put(TV_EPISODE_CURRENT, update.getEpisodeCurrent());
-        up.put(TV_EPISODE_MAX, update.getEpisodeCurrent());
+        up.put(TV_EPISODE_MAX, update.getEpisodeMax());
         up.put(TV_SEASON_CURRENT, update.getSeasonCurrent());
         up.put(TV_SEASON_MAX, update.getSeasonMax());
         up.put(TV_WATCHED, update.getWatched());
@@ -619,7 +621,8 @@ public class Database {
                 db.update(TV_TABLE, ep, where, whereArgs);
             }
             catch (Exception e){
-                return 0;
+                //return 0;
+                e.printStackTrace();
             }
         }
 
