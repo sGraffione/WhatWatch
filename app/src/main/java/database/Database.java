@@ -885,4 +885,15 @@ public class Database {
         return time;
     }
 
+
+    public int getSeasonCurrent(int idSeries, int idSeason){
+        this.openReadableDB();
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
+        Cursor cursor = db.rawQuery("SELECT tv_season_current FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
+        int season = cursor.getInt(TV_EPISODE_CURRENT_COL);
+        cursor.close();
+        db.close();
+        return season;
+    }
+
 }
