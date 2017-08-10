@@ -519,10 +519,26 @@ public class Database {
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
         this.openReadableDB();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
         cursor.moveToFirst();
         int current = cursor.getInt(TV_EPISODE_CURRENT_COL);
         int max = cursor.getInt(TV_EPISODE_MAX_COL);
+
+        cursor.close();
+        db.close();
+
+        return (current == max);
+    }
+
+
+    public boolean verifySeasonMax(int idSeries, int idSeason){
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
+        this.openReadableDB();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
+        cursor.moveToFirst();
+        int current = cursor.getInt(TV_SEASON_CURRENT_COL);
+        int max = cursor.getInt(TV_SEASON_MAX_COL);
 
         cursor.close();
         db.close();
