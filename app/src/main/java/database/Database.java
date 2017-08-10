@@ -600,7 +600,7 @@ public class Database {
 
         this.openWriteableDB();
 
-        Cursor cursor = db.rawQuery("SELECT tv_episode_current FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
         if(cursor == null || cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
