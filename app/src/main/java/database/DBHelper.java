@@ -19,18 +19,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db){
-        //db.execSQL(CREATE_FILM_TABLE);
         db.execSQL(CREATE_FIL_TABLE);
         db.execSQL(CREATE_TV_TABLE);
-        //db.execSQL(CREATE_PERSONAL_TABLE);
+        db.execSQL(CREATE_PERSONAL_TABLE);
+        db.execSQL("INSERT INTO personal_data VALUES (0, 0, 0, 0, 0, 0)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldversion, int newVersion){
-        /*Log.d("Film Table", "Upgrading db from version" + oldversion + " to " + newVersion);
-        db.execSQL(WatchListDB.DROP_FILM_TABLE);
-        onCreate(db);*/
+
     }
 
 }
