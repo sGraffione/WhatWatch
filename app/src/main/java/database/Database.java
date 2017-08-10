@@ -598,7 +598,7 @@ public class Database {
 
         this.openWriteableDB();
 
-        Cursor cursor = db.query(TV_TABLE, column, where, whereArgs, null, null, null);
+        Cursor cursor = db.rawQuery("SELECT tv_episode_current, tv_episode_max FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
         int current_ep = cursor.getInt(TV_EPISODE_CURRENT_COL);
         int max_ep = cursor.getInt(TV_EPISODE_MAX_COL);
         cursor.close();
