@@ -532,7 +532,7 @@ public class Database {
         in.put(TV_ID_SEASON, series.getIdSeason());
         in.put(TV_NAME, series.getName());
         in.put(TV_EPISODE_CURRENT, series.getEpisodeCurrent());
-        in.put(TV_EPISODE_MAX, series.getEpisodeCurrent());
+        in.put(TV_EPISODE_MAX, series.getEpisodeMax());
         in.put(TV_SEASON_CURRENT, series.getSeasonCurrent());
         in.put(TV_SEASON_MAX, series.getSeasonMax());
         in.put(TV_WATCHED, series.getWatched());
@@ -591,7 +591,7 @@ public class Database {
 
     public int updateEpisode(int idSeries, int idSeason){
         String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
-        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason), Integer.toString(0)};
         String[] column = {TV_EPISODE_CURRENT, TV_EPISODE_MAX};
         ContentValues ep = new ContentValues();
         int current_ep = 0;
@@ -600,7 +600,7 @@ public class Database {
 
         this.openWriteableDB();
 
-        Cursor cursor = db.rawQuery("SELECT tv_episode_current, tv_episode_max FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
+        Cursor cursor = db.rawQuery("SELECT tv_episode_current, tv_episode_max FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
         if(cursor == null || cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
@@ -860,7 +860,7 @@ public class Database {
 
 
     public int getFilmsSeen(){
-        openReadableDB();
+        this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT films_seen FROM personal_data", null);
         int time = cursor.getInt(FILMS_SEEN_COL);
         cursor.close();
@@ -870,7 +870,7 @@ public class Database {
 
 
     public int getSeriesSeen(){
-        openReadableDB();
+        this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT series_seen FROM personal_data", null);
         int time = cursor.getInt(SERIES_SEEN_COL);
         cursor.close();
@@ -880,7 +880,7 @@ public class Database {
 
 
     public int getFilmsTime(){
-        openReadableDB();
+        this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT films_time FROM personal_data", null);
         int time = cursor.getInt(FILMS_TIME_COL);
         cursor.close();
@@ -890,7 +890,7 @@ public class Database {
 
 
     public int getSeriesTime(){
-        openReadableDB();
+        this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT series_time FROM personal_data", null);
         int time = cursor.getInt(SERIES_TIME_COL);
         cursor.close();
@@ -898,15 +898,5 @@ public class Database {
         return time;
     }
 
-
-    public int getSeasonCurrent(int idSeries, int idSeason){
-        this.openReadableDB();
-        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
-        Cursor cursor = db.rawQuery("SELECT tv_season_current FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
-        int season = cursor.getInt(TV_EPISODE_CURRENT_COL);
-        cursor.close();
-        db.close();
-        return season;
-    }
 
 }
