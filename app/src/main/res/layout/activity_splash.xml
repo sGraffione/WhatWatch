@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Really_Really_Dark_Gray"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/intro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="false"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:text="What Watch"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="80sp" />
+
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/intro"
+        android:layout_alignRight="@+id/intro"
+        android:layout_below="@+id/intro"
+        android:text="your personal watchlist"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="40sp" />
+</RelativeLayout>

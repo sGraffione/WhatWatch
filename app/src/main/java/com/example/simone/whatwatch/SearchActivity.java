@@ -15,6 +15,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
@@ -46,7 +48,11 @@ public class SearchActivity extends Activity {
     }
 
     private void doSearch(String query){
-        query = query.replace(" ", "%20");
+        try{
+            query = URLEncoder.encode(query, "utf-8");
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
 
         String urlSearch = "https://api.themoviedb.org/3/search/multi?api_key=22dee1f565e5788c58062fdeaf490afc&language=en_US&query="+query+"&page=1&include_adult=false\n";
         ArrayList<HashMap<String, Object>> filmInfo = new ArrayList<>();

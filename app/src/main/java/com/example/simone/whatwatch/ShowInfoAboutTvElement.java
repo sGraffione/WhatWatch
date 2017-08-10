@@ -115,7 +115,7 @@ public class ShowInfoAboutTvElement extends Activity {
             year.setText((String) data.get("year"));
 
             if ((int) data.get("runtime") == 0) {
-                runtime.setText("Not available");
+                runtime.setText("Not found");
             } else {
                 runtime.setText(String.valueOf(data.get("runtime")) + "m");
             }
@@ -123,7 +123,7 @@ public class ShowInfoAboutTvElement extends Activity {
             String result = parsingVideos((JSONArray) data.get("videos"));
         if(result != null) {
             if(result.equals("Video not available")) {
-                youtube.setVisibility(View.GONE);
+                youtube.setVisibility(View.INVISIBLE);
             }else {
                 final String ytLink = "https://www.youtube.com/watch?v=" + result;
                 youtube.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +134,7 @@ public class ShowInfoAboutTvElement extends Activity {
                 });
             }
         }else{
-            youtube.setVisibility(View.GONE);
+            youtube.setVisibility(View.INVISIBLE);
         }
 
             final int id = id_film;
