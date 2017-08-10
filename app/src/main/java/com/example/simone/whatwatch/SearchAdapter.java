@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +85,7 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 Film film = null;
                 Tv tv = null;
                 Database database = new Database(getContext());
-                if(type.equals("movie")) {
+                if(data.get("type").equals("movie")) {
                     if(database.verifyId((int) data.get("id")) == 0) {
                         film = new Film((int) data.get("id"), (String) data.get("title"), 0, (String) data.get("poster_path"));
                         database.insertFilm(film);
@@ -94,18 +95,31 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
                     }
                 }else {
                     if(database.verifyId((int) data.get("id"), (int) data.get("id_season")) == 0) {
-                        String poster_path_season = null;
-                        if(data.get("poster_path_season").equals("null") || data.get("poster_path_season").equals("")) {
-                            poster_path_season = "null";
-                        }else{
-                            poster_path_season = (String) data.get("poster_path_season");
-                        }
+                        String poster_path_season = data.get("poster_path_season").toString();
+                        if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("")) {
+                            poster_path_season = (String) data.get("poster_path");
+                        }/*else{
+                            try {
+
+                            }
+                            catch (ClassCastException e) {
+                                Log.w("SearchAdapter", e);
+                                poster_path_season = "";
+                            }
+                        }*/
                         tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get("title"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"), poster_path_season);
                         database.insertSeries(tv);
                         Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }
+                }
+                Fragment toRefresh = MainActivity.getToRefresh();
+                android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                if (toRefresh != null && ft != null) {
+                    ft.detach(toRefresh);
+                    ft.attach(toRefresh);
+                    ft.commitAllowingStateLoss();
                 }
             }
         });

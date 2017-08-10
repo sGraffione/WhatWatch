@@ -142,19 +142,30 @@ public class ShowInfoAboutTvElement extends Activity {
                 @Override
                 public void onClick(View view) {
                     String poster_path_season = null;
-                    if(data.get("poster_path_season").equals("null") || data.get("poster_path_season").equals("")) {
-                        poster_path_season = "null";
+                    if(data.get("poster_path_season") == null || data.get("poster_path_season").equals("null") || data.get("poster_path_season").equals("")) {
+                        poster_path_season = data.get("poster_path").toString();
                     }else{
                         poster_path_season = (String) data.get("poster_path_season");
                     }
-                    Tv tv = new Tv(id, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
-                            0, (String) data.get("poster_path"), poster_path_season);
+                    Tv tv = null;
+                    try{
+                        tv = new Tv(id, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
+                                0, (String) data.get("poster_path"), poster_path_season);
+                    }catch (NullPointerException e){
+                        e.printStackTrace();
+                    }
                     Database database = new Database(view.getContext());
-                    long row = database.insertSeries(tv);
-                    if (row != -1)
-                        Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
-                    else
-                        Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+
+                    if (!database.verifySeasonWatched(id, (int) data.get("id_season"))) {
+                        if(database.verifyId(id, (int) data.get("id_season")) == 0){
+                            database.insertSeries(tv);
+                            Toast.makeText(view.getContext(), "Season 1 added to your Watchlist", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(view.getContext(), "You have already a season in your watchlist", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(view.getContext(), "You have already watched this season", Toast.LENGTH_SHORT).show();
+                    }
                     Fragment toRefresh = MainActivity.getToRefresh();
                     android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
                     if (toRefresh != null && ft != null) {
@@ -189,6 +200,7 @@ public class ShowInfoAboutTvElement extends Activity {
         } catch(JSONException e){
             e.printStackTrace();
         }
+        int j = 0;
         for(int i = start; i < seasons.length(); i++){
             try {
 
@@ -241,22 +253,18 @@ public class ShowInfoAboutTvElement extends Activity {
                 btn_add.setHeight(height);
                 btn_add.setWidth(height);
                 btn_add.setGravity(Gravity.CENTER);
-                //btn_add.setBackgroundColor(getResources().getColor(R.color.The_nicest_green_for_button_and_stuff));
-                //btn_add.setTextColor(getResources().getColor(R.color.green));
                 id_prec_btn = btn_add.getId();
-                int j = 0;
-                if(start==0){
-                    j = start+1;
+
+                if(start == 0){
+                    j = i+1;
                 }else{
-                    j = start;
+                    j = i;
                 }
                 final int index = j;
-                start++;
                 btn_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         add_season(index, v);
-                        Toast.makeText(v.getContext(), "You added the season number " + index + " to your Watchlist", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -277,15 +285,26 @@ public class ShowInfoAboutTvElement extends Activity {
         }catch (ExecutionException e){
             e.printStackTrace();
         }
+        String poster_path_season;
         HashMap<String, Object> data = filmInfo.get(0);
+        if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("") || data.get("poster_path_season") == null){
+            poster_path_season = data.get("poster_path").toString();
+        }else{
+            poster_path_season = data.get("poster_path_season").toString();
+        }
         Tv tv = new Tv(id_film, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
-                0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
+                0, (String) data.get("poster_path"), poster_path_season);
         Database database = new Database(view.getContext());
-        long row = database.insertSeries(tv);
-        if (row != -1)
-            Toast.makeText(view.getContext(), "Tv Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
-        else
-            Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
+        if (!database.verifySeasonWatched(id_film, (int) data.get("id_season"))) {
+            if(!database.verifyIdSeries(id_film)){
+                database.insertSeries(tv);
+                Toast.makeText(view.getContext(), "You added the season number " + i + " to your Watchlist", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(view.getContext(), "You have already a season of this serie", Toast.LENGTH_SHORT).show();
+            }
+        }else {
+            Toast.makeText(view.getContext(), "You have already watched this season", Toast.LENGTH_SHORT).show();
+        }
         Fragment toRefresh = MainActivity.getToRefresh();
         android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
         if (toRefresh != null && ft != null) {

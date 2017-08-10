@@ -73,28 +73,26 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                         }
                         int TAG_ID = film.getInt("id");
 
-                        String TAG_PHOTO;
                         String str = film.getString("poster_path");
-                        if(str.equals("null"))
-                            TAG_PHOTO = "null";
-                        else
-                            TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + str;
+                        if(!str.equals("null")) {
 
-                        Double TAG_RATING = film.getDouble("vote_average");
+                            String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + film.getString("poster_path");
+                            Double TAG_RATING = film.getDouble("vote_average");
 
 
-                        //General information of film
-                        HashMap<String, Object> info = new HashMap<>();
-                        if(TAG_TYPE.equals("tv"))
-                            getExtraInfos(TAG_ID, info, TAG_PHOTO);
+                            //General information of film
+                            HashMap<String, Object> info = new HashMap<>();
+                            if (TAG_TYPE.equals("tv"))
+                                getExtraInfos(TAG_ID, info, TAG_PHOTO);
 
-                        info.put("title", TAG_TITLE);
-                        info.put("type", TAG_TYPE);
-                        info.put("poster_path", TAG_PHOTO);
-                        info.put("vote_average", TAG_RATING);
-                        info.put("id", TAG_ID);
+                            info.put("title", TAG_TITLE);
+                            info.put("type", TAG_TYPE);
+                            info.put("poster_path", TAG_PHOTO);
+                            info.put("vote_average", TAG_RATING);
+                            info.put("id", TAG_ID);
 
-                        filmInfo.add(info);
+                            filmInfo.add(info);
+                        }
                     }else{
                         JSONArray jArrayPerson = film.getJSONArray("known_for");
                         for(int j = 0; j < jArrayPerson.length() - 10; j++) {
@@ -106,21 +104,25 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                                 TAG_TITLE = data.getString("name");
                             int TAG_ID = data.getInt("id");
                             String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + data.getString("poster_path");
-                            Double TAG_RATING = data.getDouble("vote_average");
+
+                            if(!data.getString("poster_path").equals("null")) {
+
+                                Double TAG_RATING = data.getDouble("vote_average");
 
 
-                            //General information of film
-                            HashMap<String, Object> info = new HashMap<>();
-                            if(TAG_TYPE.equals("tv"))
-                                getExtraInfos(TAG_ID, info, TAG_PHOTO);
+                                //General information of film
+                                HashMap<String, Object> info = new HashMap<>();
+                                if (TAG_TYPE.equals("tv"))
+                                    getExtraInfos(TAG_ID, info, TAG_PHOTO);
 
-                            info.put("title", TAG_TITLE);
-                            info.put("type", TAG_TYPE);
-                            info.put("poster_path", TAG_PHOTO);
-                            info.put("vote_average", TAG_RATING);
-                            info.put("id", TAG_ID);
+                                info.put("title", TAG_TITLE);
+                                info.put("type", TAG_TYPE);
+                                info.put("poster_path", TAG_PHOTO);
+                                info.put("vote_average", TAG_RATING);
+                                info.put("id", TAG_ID);
 
-                            filmInfo.add(info);
+                                filmInfo.add(info);
+                            }
                         }
                     }
                 }
