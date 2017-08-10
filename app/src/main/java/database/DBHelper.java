@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 //import database.WatchListDB;
 
 import static database.Database.CREATE_FIL_TABLE;
+import static database.Database.CREATE_PERSONAL_TABLE;
 import static database.Database.CREATE_TV_TABLE;
 
 
@@ -21,6 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //db.execSQL(CREATE_FILM_TABLE);
         db.execSQL(CREATE_FIL_TABLE);
         db.execSQL(CREATE_TV_TABLE);
+        //db.execSQL(CREATE_PERSONAL_TABLE);
 
     }
 
