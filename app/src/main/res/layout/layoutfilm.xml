@@ -9,20 +9,32 @@
         android:layout_width="250dp"
         android:layout_height="375dp" />
 
-    <!--<ImageView
-        android:id="@+id/preview"
+    <TextView
+        android:id="@+id/season"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" />
+        android:layout_alignLeft="@+id/preview"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignRight="@+id/preview"
+        android:layout_marginTop="50dp"
+        android:textAlignment="center"
+        android:textColor="@color/A_fucking_transparent_white"
+        android:textSize="100sp"
+        android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/episode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
--->
+        android:layout_alignBottom="@+id/preview"
+        android:layout_alignLeft="@+id/preview"
+        android:layout_alignRight="@+id/preview"
+        android:layout_centerHorizontal="false"
+        android:layout_marginBottom="50dp"
+        android:textAlignment="center"
+        android:textColor="@color/A_fucking_transparent_white"
+        android:textSize="100sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

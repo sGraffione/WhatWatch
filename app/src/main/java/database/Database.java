@@ -714,7 +714,6 @@ public class Database {
                 Film film = new Film(
                         cursor.getInt(FILM_ID_COL),
                         cursor.getString(FILM_NAME_COL),
-                        //cursor.getString(FILM_TYPE_COL),
                         cursor.getInt(FILM_WATCHED_COL),
                         cursor.getString(FILM_IMG_URL_COL)
                 );
@@ -737,9 +736,9 @@ public class Database {
                         cursor.getInt(TV_ID_SERIES_COL),
                         cursor.getInt(TV_ID_SEASON_COL),
                         cursor.getString(TV_NAME_COL),
-                        //cursor.getInt(TV_EPISODE_CURRENT_COL),
+                        cursor.getInt(TV_EPISODE_CURRENT_COL),
                         cursor.getInt(TV_EPISODE_MAX_COL),
-                        //cursor.getInt(TV_SEASON_CURRENT_COL),
+                        cursor.getInt(TV_SEASON_CURRENT_COL),
                         cursor.getInt(TV_SEASON_MAX_COL),
                         cursor.getInt(TV_WATCHED_COL),
                         cursor.getString(TV_IMG_URL_SERIES_COL),

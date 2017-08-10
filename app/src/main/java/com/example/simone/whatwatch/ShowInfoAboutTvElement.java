@@ -292,7 +292,7 @@ public class ShowInfoAboutTvElement extends Activity {
         }else{
             poster_path_season = data.get("poster_path_season").toString();
         }
-        Tv tv = new Tv(id_film, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"),
+        Tv tv = new Tv(id_film, (int) data.get("id_season"), (String) data.get("name"), (int) data.get("episode_max_season"), 5, (int) data.get("number_of_seasons"),
                 0, (String) data.get("poster_path"), poster_path_season);
         Database database = new Database(view.getContext());
         if (!database.verifySeasonWatched(id_film, (int) data.get("id_season"))) {
