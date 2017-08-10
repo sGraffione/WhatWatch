@@ -51,6 +51,22 @@ public class Tv {
     }
 
 
+    public Tv(int id_series, int id_season, String name,
+              int episode_max, int season_current, int season_max, int watched,
+              String img_url_series, String img_url_season){
+        this.id_series = id_series;
+        this.id_season = id_season;
+        this.name = name;
+        this.episode_current = 1;
+        this.episode_max = episode_max;
+        this.season_current = season_current;
+        this.season_max = season_max;
+        this.watched = watched;
+        this.img_url_series = img_url_series;
+        this.img_url_season = img_url_season;
+    }
+
+
     public int getIdSeries() {
         return id_series;
     }
