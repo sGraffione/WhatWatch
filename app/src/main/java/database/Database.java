@@ -515,6 +515,22 @@ public class Database {
     }
 
 
+    public boolean verifyEpisodeMax(int idSeries, int idSeason){
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
+        this.openReadableDB();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ?", whereArgs);
+        cursor.moveToFirst();
+        int current = cursor.getInt(TV_EPISODE_CURRENT_COL);
+        int max = cursor.getInt(TV_EPISODE_MAX_COL);
+
+        cursor.close();
+        db.close();
+
+        return (current == max);
+    }
+
+
     public long insertFilm(Film film){
         ContentValues in = new ContentValues();
         in.put(FILM_ID, film.getId());
