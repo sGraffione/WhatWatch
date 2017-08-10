@@ -24,7 +24,7 @@ import com.example.simone.whatwatch.R;
 
 public class SplashScreen extends Activity{
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 2000;
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
 
     @Override
@@ -87,10 +87,11 @@ public class SplashScreen extends Activity{
 
                 String jsonString = sb.toString();
                 JSONObject JSONData = new JSONObject(jsonString);
+                int pageMax = JSONData.getInt("total_pages");
                 JSONArray jArray = JSONData.getJSONArray("results");
                 if(type.equals("movie")){
 
-                    for (int i = 0; i < jArray.length() - 10; i++) {
+                    for (int i = 0; i < jArray.length(); i++) {
                         JSONObject film = jArray.getJSONObject(i);
                         String TAG_TITLE = film.getString("original_title");
                         String TAG_OVERVIEW = film.getString("overview");
@@ -106,12 +107,13 @@ public class SplashScreen extends Activity{
                         info.put("poster_path", TAG_PHOTO);
                         info.put("vote_average", TAG_RATING);
                         info.put("id", TAG_ID);
+                        info.put("total_pages", pageMax);
 
                         filmInfo.add(info);
                     }
                 }else if(type.equals("tv")) {
 
-                    for (int i = 0; i < jArray.length() - 10; i++) {
+                    for (int i = 0; i < jArray.length(); i++) {
                         JSONObject tv_serie = jArray.getJSONObject(i);
                         String TAG_NAME = tv_serie.getString("name");
                         String TAG_OVERVIEW = tv_serie.getString("overview");
@@ -129,6 +131,7 @@ public class SplashScreen extends Activity{
                         info.put("poster_path", TAG_PHOTO);
                         info.put("vote_average", TAG_RATING);
                         info.put("id", TAG_ID);
+                        info.put("total_pages", pageMax);
 
                         filmInfo.add(info);
                     }

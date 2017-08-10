@@ -79,10 +79,11 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
 
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
+            int pageMax = JSONData.getInt("total_pages");
             JSONArray jArray = JSONData.getJSONArray("results");
             if(type.equals("movie")){
 
-                for (int i = 0; i < jArray.length() - 10; i++) {
+                for (int i = 0; i < jArray.length(); i++) {
                     JSONObject film = jArray.getJSONObject(i);
                     String TAG_TITLE = film.getString("original_title");
                     String TAG_OVERVIEW = film.getString("overview");
@@ -98,12 +99,13 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     info.put("poster_path", TAG_PHOTO);
                     info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
+                    info.put("total_pages", pageMax);
 
                     filmInfo.add(info);
                 }
             }else if(type.equals("tv")) {
 
-                for (int i = 0; i < jArray.length() - 10; i++) {
+                for (int i = 0; i < jArray.length(); i++) {
                     JSONObject tv_serie = jArray.getJSONObject(i);
                     String TAG_NAME = tv_serie.getString("name");
                     String TAG_OVERVIEW = tv_serie.getString("overview");
@@ -121,6 +123,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     info.put("poster_path", TAG_PHOTO);
                     info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
+                    info.put("total_pages", pageMax);
 
                     filmInfo.add(info);
                 }

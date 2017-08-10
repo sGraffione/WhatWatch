@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.simone.whatwatch.Adapter.CustomListAdapter;
@@ -34,13 +35,17 @@ public class Homepage extends Fragment {
     ListView lv;
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
     CustomListAdapter adapter;
+    Button forward;
+    Button back;
 
     View view = null;
 
+    int page = 1;
+    int pagMax;
     String typeSelected = "movie";
     String searchTypeSelected = "popularity";
     String firstPart = "https://api.themoviedb.org/3/discover/";
-    String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
+    String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=";
     int homepageSearchSelected = R.id.Popularity;
     int getHomepageSearchTypeSelected = R.id.Movies;
 
@@ -67,7 +72,9 @@ public class Homepage extends Fragment {
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
         lv = (ListView) view.findViewById(R.id.filmList);
-        //new downloadJSONInfo(getActivity(), filmInfo, lv, getTypeSelected(), getTypeSearch()).execute(URLSelected);
+
+        forward = (Button) view.findViewById(R.id.forward);
+        back = (Button) view.findViewById(R.id.back);
 
         adapter = new CustomListAdapter(getContext(), R.layout.film_element, filmInfo, typeSelected);
         lv.setAdapter(adapter);
@@ -98,6 +105,39 @@ public class Homepage extends Fragment {
                 }
             });
         }
+
+        pagMax = (int) filmInfo.get(0).get("total_pages");
+
+        if(page == 1){
+            back.setVisibility(view.INVISIBLE);
+        }else{
+            back.setVisibility(view.VISIBLE);
+        }
+        if(page == pagMax){
+            forward.setVisibility(view.INVISIBLE);
+        }else{
+            forward.setVisibility(view.VISIBLE);
+        }
+
+        back.setText("<< Page " + String.valueOf(page-1));
+        forward.setText("Page " + String.valueOf(page+1) + " >>");
+
+        forward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                page += 1;
+                String url = firstPart + typeSelected + secondPart + page + "\n";
+                refresh(url);
+            }
+        });
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                page -= 1;
+                String url = firstPart + typeSelected + secondPart + page + "\n";
+                refresh(url);
+            }
+        });
 
         lv.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
@@ -134,6 +174,23 @@ public class Homepage extends Fragment {
                 }
             });
         }
+
+        //pagMax = (int) filmInfo.get(0).get("total_pages");
+
+        if(page == 1){
+            back.setVisibility(view.INVISIBLE);
+        }else{
+            back.setVisibility(view.VISIBLE);
+        }
+        if(page == pagMax){
+            forward.setVisibility(view.INVISIBLE);
+        }else{
+            forward.setVisibility(view.VISIBLE);
+        }
+
+        back.setText("<< Page " + String.valueOf(page-1));
+        forward.setText("Page " + String.valueOf(page+1) + " >>");
+
     }
 
     @Override
@@ -174,22 +231,22 @@ public class Homepage extends Fragment {
                     break;
             }
             Log.d("HOMEPAGE", "Refresh ");
-            URLSelected = firstPart + typeSelected + secondPart;
+            URLSelected = firstPart + typeSelected + secondPart + page + "\n";
             refresh(URLSelected);
         }else{
             switch (item.getItemId()){
                 case R.id.Popularity:
                     homepageSearchSelected = R.id.Popularity;
-                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
+                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=";
                     searchTypeSelected = "popularity";
                     break;
                 case R.id.Most_Voted:
                     homepageSearchSelected = R.id.Most_Voted;
-                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=1\n";
+                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=vote_count.desc&include_adult=false&include_video=false&page=";
                     searchTypeSelected = "vote";
                     break;
             }
-            URLSelected = firstPart + typeSelected + secondPart;
+            URLSelected = firstPart + typeSelected + secondPart + page + "\n";
             refresh(URLSelected);
         }
 
