@@ -70,6 +70,28 @@ public class Database {
     public static int TV_IMG_URL_SEASON_COL = 10;
 
 
+    //Costanti tabella personal data
+
+    public static String PERSONAL_TABLE = "personal_data";
+
+    public static String PERSONAL_ROW = "personal_row";
+    public static int PERSONAL_ROW_COL = 0;
+
+    public static String FILMS_SEEN = "films_seen";
+    public static int FILMS_SEEN_COL = 1;
+
+    public static String SERIES_SEEN = "series_seen";
+    public static int SERIES_SEEN_COL = 2;
+
+    public static String FILMS_TIME = "films_time";
+    public static int FILMS_TIME_COL = 3;
+
+    public static String SERIES_TIME = "series_time";
+    public static int SERIES_TIME_COL = 4;
+
+    public static String TOTAL_TIME = "total_time";
+    public static int TOTALS_TIME_COL = 5;
+
     //Query di creazione e drop delle due tabelle
     public static final String CREATE_FIL_TABLE =
             "CREATE TABLE " + FIL_TABLE + " (" + FILM_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILM_ID + " INTEGER NOT NULL UNIQUE, " +
@@ -87,6 +109,11 @@ public class Database {
 
     public static final String DROP_TV_TABLE = "DROP TABLE IF EXISTS " + TV_TABLE;
 
+
+    public static final String CREATE_PERSONAL_TABLE =
+            "CREATE TABLE " + PERSONAL_TABLE + " (" + PERSONAL_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILMS_SEEN + " INTEGER NOT NULL, " +
+                    SERIES_SEEN + " INTEGER NOT NULL, " + FILMS_TIME + " INTEGER NOT NULL, " + SERIES_TIME + " INTEGER NOT NULL, " +
+                    TOTAL_TIME + " INTEGER NOT NULL);";
 
     //database and database helper objects
     private SQLiteDatabase db;
@@ -493,7 +520,6 @@ public class Database {
         in.put(FILM_NAME, film.getName());
         in.put(FILM_WATCHED, film.getWatched());
         in.put(FILM_IMG_URL, film.getImgUrl());
-        //in.put(TIME_TAG, System.currentTimeMillis()/1000);
 
         this.openWriteableDB();
         long rowID = db.insert(FIL_TABLE, null, in);
@@ -515,7 +541,6 @@ public class Database {
         in.put(TV_WATCHED, series.getWatched());
         in.put(TV_IMG_URL_SERIES, series.getImgUrlSeries());
         in.put(TV_IMG_URL_SEASON, series.getImgUrlSeason());
-        //in.put(TIME, System.currentTimeMillis()/1000);
 
         this.openWriteableDB();
         long rowID = db.insert(TV_TABLE, null, in);
@@ -730,4 +755,114 @@ public class Database {
             }
         }
     }
+
+
+    //                              //
+    //METODI PER LA TABELLA PERSONAL//
+    //                              //
+
+    public int updateFilmsSeen(){
+        int watched = 1;
+        String[] whereArgs = {Integer.toString(watched)};
+
+        this.openWriteableDB();
+        Cursor cursor = db.rawQuery("SELECT * FROM film_data WHERE film_watched = ?", whereArgs);
+        int seen = cursor.getCount();
+        cursor.close();
+
+        ContentValues up = new ContentValues();
+        up.put(FILMS_SEEN, seen);
+        db.update(PERSONAL_TABLE, up, null, null);
+        this.closeDB();
+        return seen;
+    }
+
+
+    public int updateSeriesSeen(){
+        int watched = 1;
+        String[] whereArgs = {Integer.toString(watched)};
+        int count;
+        int max;
+        int seen = 0;
+
+        this.openWriteableDB();
+        //TODO testare con un solo cursore
+        Cursor cursor = db.rawQuery("SELECT count(*) FROM tv_data WHERE tv_watched = ? GROUP BY tv_id_series", whereArgs);
+        Cursor seasonMax = db.rawQuery("SELECT tv_season_max FROM tv_data WHERE tv_watched = ? GROUP BY tv_id_series", whereArgs);
+
+        if(cursor == null || cursor.getCount() == 0 || seasonMax == null || seasonMax.getCount() == 0){
+            cursor.close();
+            this.closeDB();
+            return 0;
+        }
+        else{
+            try{
+                while(cursor.moveToNext() || seasonMax.moveToNext()){
+                   count = cursor.getInt(cursor.getColumnIndex("count(*)"));
+                   max = seasonMax.getInt(TV_SEASON_MAX_COL);
+                   if(count == max){
+                       seen += 1;
+                   }
+                }
+
+                cursor.close();
+                seasonMax.close();
+            }
+            catch (Exception e){
+                return 0;
+            }
+        }
+
+        ContentValues up = new ContentValues();
+        up.put(SERIES_SEEN, seen);
+        db.update(PERSONAL_TABLE, up, null, null);
+        db.close();
+        return seen;
+    }
+
+
+    public int updateFilmTime(int duration){
+        this.openWriteableDB();
+        Cursor timeCursor = db.rawQuery("SELECT films_time FROM personal_data", null);
+        int time = timeCursor.getInt(FILMS_TIME_COL);
+        time += duration;
+        ContentValues up = new ContentValues();
+        up.put(FILMS_TIME, time);
+        db.update(PERSONAL_TABLE, up, null, null);
+        timeCursor.close();
+        db.close();
+        updateTotalTime();
+        return time;
+    }
+
+
+    public int updateSeriesTime(int duration){
+        this.openWriteableDB();
+        Cursor timeCursor = db.rawQuery("SELECT series_time FROM personal_data", null);
+        int time = timeCursor.getInt(SERIES_TIME_COL);
+        time += duration;
+        ContentValues up = new ContentValues();
+        up.put(SERIES_TIME, time);
+        db.update(PERSONAL_TABLE, up, null, null);
+        timeCursor.close();
+        db.close();
+        updateTotalTime();
+        return time;
+    }
+
+
+    private int updateTotalTime(){
+        this.openWriteableDB();
+        Cursor timeCursor = db.rawQuery("SELECT films_time, series_time FROM personal_data", null);
+        int timeFilms = timeCursor.getInt(FILMS_TIME_COL);
+        int timeSeries = timeCursor.getInt(SERIES_TIME_COL);
+        int totalTime = timeFilms + timeSeries;
+        ContentValues up = new ContentValues();
+        up.put(TOTAL_TIME, totalTime);
+        db.update(PERSONAL_TABLE, up, null, null);
+        timeCursor.close();
+        db.close();
+        return totalTime;
+    }
+
 }
