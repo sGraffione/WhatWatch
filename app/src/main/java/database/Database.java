@@ -440,6 +440,22 @@ public class Database {
     }
 
 
+    public ArrayList<Integer> getSeasonsWatched(int idSeries){
+        int watched = 1;
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(watched)};
+        this.openReadableDB();
+        Cursor cursor = null;
+        cursor = db.rawQuery("SELECT tv_season_current FROM tv_data WHERE tv_id_series = ? AND tv_watched = ? ORDER BY tv_season_current ASC", whereArgs);
+        ArrayList<Integer> seasons = new ArrayList<Integer>();
+        while(cursor.moveToNext()){
+            seasons.add(cursor.getInt(cursor.getColumnIndex(TV_SEASON_CURRENT)));
+        }
+        cursor.close();
+        db.close();
+        return seasons;
+    }
+
+
     public int verifyId(int id){
         int flag;
         String where = FILM_ID + "= ?";
