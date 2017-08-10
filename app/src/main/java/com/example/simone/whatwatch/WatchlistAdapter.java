@@ -52,20 +52,18 @@ public class WatchlistAdapter extends BaseAdapter {
         }
 
         ImageView imageView = (ImageView)convertView.findViewById(R.id.preview);
-        TextView nameTextView = (TextView)convertView.findViewById(R.id.title);
+        TextView season = (TextView)convertView.findViewById(R.id.season);
+        TextView episode = (TextView)convertView.findViewById(R.id.episode);
 
             Object object = films.get(position);
             if(object instanceof Film){
                 Film film = (Film) films.get(position);
-                if(film != null){
-                    //nameTextView.setText(film.getName());
-                }
                 Picasso.with(mContext).load(film.getImgUrl()).into(imageView);
             }else{
                 Tv tv = (Tv) films.get(position);
-                if(tv != null){
-                   // nameTextView.setText(tv.getName());
-                }
+
+                season.setText("S " + tv.getSeasonCurrent());
+                episode.setText("E " + tv.getEpisodeCurrent());
 
                 if(tv.getImgUrlSeason() == "" || tv.getImgUrlSeason() == null || tv.getImgUrlSeason().isEmpty()){
                     Picasso.with(mContext).load(R.drawable.noavailable).into(imageView);
