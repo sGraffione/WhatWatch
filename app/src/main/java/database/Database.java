@@ -591,7 +591,7 @@ public class Database {
     }
 
 
-    public int updateEpisode(int idSeries, int idSeason){
+    /*public int updateEpisode(int idSeries, int idSeason){
         String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(0)};
         String[] column = {TV_EPISODE_CURRENT, TV_EPISODE_MAX};
@@ -630,6 +630,34 @@ public class Database {
         this.closeDB();
 
         return current_ep;
+    }*/
+
+
+    public int updateEpisode(int idSeries, int idSeason){
+        int watched = 0;
+        int currentEp;
+        String where = TV_ID_SERIES + " = ? AND " + TV_ID_SEASON + " = ?";
+        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason), Integer.toString(watched)};
+        this.openWriteableDB();
+        Cursor cursor;
+        cursor = db.rawQuery("SELECT tv_episode_current, tv_episode_max FROM personal_data WHERE tv_id_series = ? AND tv_id_season = ? AND tv_watched = ? ", whereArgs);
+        try{
+            currentEp = cursor.getInt(TV_EPISODE_CURRENT_COL);
+            int maxEp = cursor.getInt(TV_SEASON_MAX_COL);
+            if(currentEp < maxEp){
+                currentEp = currentEp + 1;
+            }
+        }catch (Exception e){
+            return 0;
+        }
+
+        ContentValues up = new ContentValues();
+        up.put(TV_EPISODE_CURRENT, currentEp);
+        db.update(PERSONAL_TABLE, up, where, whereArgs);
+        cursor.close();
+        db.close();
+        return currentEp;
+
     }
 
 
@@ -864,7 +892,7 @@ public class Database {
 
     public int getFilmsSeen(){
         this.openReadableDB();
-        Cursor cursor = db.rawQuery("SELECT films_seen FROM personal_data", null);
+        Cursor cursor = db.rawQuery("SELECT films_seen, FROM personal_data", null);
         int time = cursor.getInt(FILMS_SEEN_COL);
         cursor.close();
         db.close();
