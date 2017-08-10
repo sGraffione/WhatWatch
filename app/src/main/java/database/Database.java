@@ -594,22 +594,36 @@ public class Database {
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
         String[] column = {TV_EPISODE_CURRENT, TV_EPISODE_MAX};
         ContentValues ep = new ContentValues();
+        int current_ep = 0;
+        int max_ep = 0;
 
 
         this.openWriteableDB();
 
         Cursor cursor = db.rawQuery("SELECT tv_episode_current, tv_episode_max FROM tv_data WHERE tv_id_series = ? AND tv_id_season = ?", whereArgs);
-        int current_ep = cursor.getInt(TV_EPISODE_CURRENT_COL);
-        int max_ep = cursor.getInt(TV_EPISODE_MAX_COL);
-        cursor.close();
+        if(cursor == null || cursor.getCount() == 0){
+            cursor.close();
+            this.closeDB();
+            return 0;
+        }
+        else{
+            try{
+                current_ep = cursor.getInt(TV_EPISODE_CURRENT_COL);
+                max_ep = cursor.getInt(TV_EPISODE_MAX_COL);
 
-        if (current_ep < max_ep){
-            current_ep += 1;
+                if (current_ep < max_ep){
+                    current_ep += 1;
+                }
+
+                ep.put(TV_EPISODE_CURRENT, current_ep);
+                db.update(TV_TABLE, ep, where, whereArgs);
+            }
+            catch (Exception e){
+                return 0;
+            }
         }
 
-        ep.put(TV_EPISODE_CURRENT, current_ep);
-        db.update(TV_TABLE, ep, where, whereArgs);
-
+        cursor.close();
         this.closeDB();
 
         return current_ep;
