@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -49,9 +50,16 @@ public class WatchedListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_watched_list, container, false);
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
+        TextView film_count = (TextView) view.findViewById(R.id.film_count);
+        TextView series_count = (TextView) view.findViewById(R.id.series_count);
+        TextView minutes_count = (TextView) view.findViewById(R.id.minutes_count);
 
         Database database = new Database(getContext());
         final ArrayList<Object> films = database.getFilter(1, typeSelected, sortingType);
+
+        film_count.setText(database.getFilmsSeen());
+        series_count.setText(database.getSeriesSeen());
+        minutes_count.setText(database.getFilmsTime()+database.getSeriesTime());
 
         WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), films);
         gridView.setAdapter(watchedAdapter);

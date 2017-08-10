@@ -26,29 +26,24 @@ public class WatchedAdapter extends BaseAdapter {
         this.films = films;
     }
 
-    // 2
     @Override
     public int getCount() {
         return films.size();
     }
 
-    // 3
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
-    // 4
     @Override
     public Object getItem(int position) {
         return null;
     }
 
-    // 5
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        // 2
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             convertView = layoutInflater.inflate(R.layout.layoutfilm, null);
