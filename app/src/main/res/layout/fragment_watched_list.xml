@@ -1,4 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -20,5 +20,84 @@
         android:stretchMode="columnWidth"
         android:verticalSpacing="5dp" />
 
+    <TextView
+        android:id="@+id/stats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_marginTop="11dp"
+        android:text="Stats"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="30sp" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tag_film_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stats"
+        android:layout_marginEnd="59dp"
+        android:layout_marginTop="50dp"
+        android:layout_toStartOf="@+id/stats"
+        android:text="Film Count: "
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tag_series_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tag_film_count"
+        android:layout_below="@+id/tag_film_count"
+        android:layout_marginTop="32dp"
+        android:text="Series Count:"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tag_minutes_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/tag_series_count"
+        android:layout_below="@+id/tag_series_count"
+        android:layout_marginTop="32dp"
+        android:text="Minutes Count:"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/film_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tag_series_count"
+        android:layout_marginStart="59dp"
+        android:layout_toEndOf="@+id/stats"
+        android:text="TextView"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/series_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/film_count"
+        android:layout_below="@+id/film_count"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/minutes_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/series_count"
+        android:layout_below="@+id/series_count"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="24sp" />
+
+</RelativeLayout>
