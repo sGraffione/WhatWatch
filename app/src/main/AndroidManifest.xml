@@ -23,6 +23,9 @@
             android:resource="@xml/searchable" />
         </activity>
 
+        <activity android:name=".AndroidDatabaseManager"
+            android:label="@string/app_label"/>
+
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

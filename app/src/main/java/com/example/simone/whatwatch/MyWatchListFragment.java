@@ -78,6 +78,7 @@ public class MyWatchListFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             database.updateWatched(((Film) films.get(j)).getId());
+
                             refreshWatchedWatchlist();
                         }
                     });

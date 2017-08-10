@@ -57,9 +57,17 @@ public class WatchedListFragment extends Fragment {
         Database database = new Database(getContext());
         final ArrayList<Object> films = database.getFilter(1, typeSelected, sortingType);
 
-        //film_count.setText(database.getFilmsSeen());
-        //series_count.setText(database.getSeriesSeen());
-        //minutes_count.setText(database.getFilmsTime()+database.getSeriesTime());
+        film_count.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                Intent dbmanager = new Intent(getActivity(),AndroidDatabaseManager.class);
+                startActivity(dbmanager);
+            }
+        });
+
+        /*film_count.setText(database.getFilmsSeen());
+        series_count.setText(database.getSeriesSeen());
+        minutes_count.setText(database.getFilmsTime()+database.getSeriesTime());*/
 
         WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), films);
         gridView.setAdapter(watchedAdapter);
