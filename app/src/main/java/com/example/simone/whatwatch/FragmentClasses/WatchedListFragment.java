@@ -70,9 +70,9 @@ public class WatchedListFragment extends Fragment {
             }
         });
 
-        /*film_count.setText(database.getFilmsSeen());
-        series_count.setText(database.getSeriesSeen());
-        minutes_count.setText(database.getFilmsTime()+database.getSeriesTime());*/
+        film_count.setText(Integer.toString(database.getFilmsSeen()));
+        series_count.setText(Integer.toString(database.getSeriesSeen()));
+        minutes_count.setText(Integer.toString(database.getFilmsTime()+database.getSeriesTime()));
 
         WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), films);
         gridView.setAdapter(watchedAdapter);

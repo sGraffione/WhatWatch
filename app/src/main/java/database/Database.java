@@ -894,7 +894,7 @@ public class Database {
             try{
                 while(cursor.moveToNext() || seasonMax.moveToNext()){
                    count = cursor.getInt(cursor.getColumnIndex("count(*)"));
-                   max = seasonMax.getInt(TV_SEASON_MAX_COL);
+                   max = seasonMax.getInt(seasonMax.getColumnIndex(TV_SEASON_MAX));
                    if(count == max){
                        seen += 1;
                    }
@@ -919,7 +919,8 @@ public class Database {
     public int updateFilmTime(int duration){
         this.openWriteableDB();
         Cursor timeCursor = db.rawQuery("SELECT films_time FROM personal_data", null);
-        int time = timeCursor.getInt(FILMS_TIME_COL);
+        timeCursor.moveToFirst();
+        int time = timeCursor.getInt(timeCursor.getColumnIndex(FILMS_TIME));
         time += duration;
         ContentValues up = new ContentValues();
         up.put(FILMS_TIME, time);
@@ -933,7 +934,8 @@ public class Database {
     public int updateSeriesTime(int duration){
         this.openWriteableDB();
         Cursor timeCursor = db.rawQuery("SELECT series_time FROM personal_data", null);
-        int time = timeCursor.getInt(SERIES_TIME_COL);
+        timeCursor.moveToFirst();
+        int time = timeCursor.getInt(timeCursor.getColumnIndex(SERIES_TIME));
         time += duration;
         ContentValues up = new ContentValues();
         up.put(SERIES_TIME, time);
@@ -946,8 +948,9 @@ public class Database {
 
     public int getFilmsSeen(){
         this.openReadableDB();
-        Cursor cursor = db.rawQuery("SELECT films_seen, FROM personal_data", null);
-        int time = cursor.getInt(FILMS_SEEN_COL);
+        Cursor cursor = db.rawQuery("SELECT films_seen FROM personal_data", null);
+        cursor.moveToFirst();
+        int time = cursor.getInt(cursor.getColumnIndex(FILMS_SEEN));
         cursor.close();
         db.close();
         return time;
@@ -957,7 +960,8 @@ public class Database {
     public int getSeriesSeen(){
         this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT series_seen FROM personal_data", null);
-        int time = cursor.getInt(SERIES_SEEN_COL);
+        cursor.moveToFirst();
+        int time = cursor.getInt(cursor.getColumnIndex(SERIES_SEEN));
         cursor.close();
         db.close();
         return time;
@@ -967,7 +971,8 @@ public class Database {
     public int getFilmsTime(){
         this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT films_time FROM personal_data", null);
-        int time = cursor.getInt(FILMS_TIME_COL);
+        cursor.moveToFirst();
+        int time = cursor.getInt(cursor.getColumnIndex(FILMS_TIME));
         cursor.close();
         db.close();
         return time;
@@ -977,7 +982,8 @@ public class Database {
     public int getSeriesTime(){
         this.openReadableDB();
         Cursor cursor = db.rawQuery("SELECT series_time FROM personal_data", null);
-        int time = cursor.getInt(SERIES_TIME_COL);
+        cursor.moveToFirst();
+        int time = cursor.getInt(cursor.getColumnIndex(SERIES_TIME));
         cursor.close();
         db.close();
         return time;
