@@ -69,6 +69,7 @@ public class Homepage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d("HOMEPAGE", "Entrato in onCreateView");
+
         view = inflater.inflate(R.layout.fragment_homepage, container, false);
 
         lv = (ListView) view.findViewById(R.id.filmList);

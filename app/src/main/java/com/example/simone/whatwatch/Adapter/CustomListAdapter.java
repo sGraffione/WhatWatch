@@ -63,82 +63,94 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView;
+        if(position < 20) {
+            if (convertView == null) {
+                LayoutInflater layoutInflater = (LayoutInflater) getContext()
+                        .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
-        if (convertView == null){
-            LayoutInflater layoutInflater = (LayoutInflater) getContext()
-                    .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.film_element, null, true);
+                convertView = layoutInflater.inflate(R.layout.film_element, null, true);
 
-        }
-        final View view = convertView;
-        final HashMap<String, Object> data = filmList.get(position);
+            }
+            final View view = convertView;
+            final HashMap<String, Object> data = filmList.get(position);
 
-        imageView = (ImageView) convertView.findViewById(R.id.photo);
-        Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
+            imageView = (ImageView) convertView.findViewById(R.id.photo);
+            Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
 
-        Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
+            Picasso.with(context).load((String) data.get("poster_path")).into(imageView);
 
-        TextView title = (TextView) convertView.findViewById(R.id.Title);
-        title.setText((String) data.get(TAG_TITLENAME));
+            TextView title = (TextView) convertView.findViewById(R.id.Title);
+            title.setText((String) data.get(TAG_TITLENAME));
 
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        Double ratingValue = (Double) data.get("vote_average");
-        if( ratingValue < 6){
-            rating.setTextColor(Color.RED);
-        }else if( ratingValue > 7.5){
-            rating.setTextColor(Color.GREEN);
-        }else{
-            rating.setTextColor(ContextCompat.getColor(getContext(), R.color.Orange));
-        }
-        rating.setText(new DecimalFormat("##.#").format(ratingValue));
+            TextView rating = (TextView) convertView.findViewById(R.id.rating);
+            Double ratingValue = (Double) data.get("vote_average");
+            if (ratingValue < 6) {
+                rating.setTextColor(Color.RED);
+            } else if (ratingValue > 7.5) {
+                rating.setTextColor(Color.GREEN);
+            } else {
+                rating.setTextColor(ContextCompat.getColor(getContext(), R.color.Orange));
+            }
+            rating.setText(new DecimalFormat("##.#").format(ratingValue));
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Film film = null;
-                Tv tv = null;
-                Database database = new Database(getContext());
-                if(type.equals("movie")) {
-                    if(database.verifyId((int) data.get("id")) == 0) {
-                        film = new Film((int) data.get("id"), (String) data.get(TAG_TITLENAME), 0, (String) data.get("poster_path"));
-                        database.insertFilm(film);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Film film = null;
+                    Tv tv = null;
+                    Database database = new Database(getContext());
+                    if (type.equals("movie")) {
+                        if (database.verifyId((int) data.get("id")) == 0) {
+                            film = new Film((int) data.get("id"), (String) data.get(TAG_TITLENAME), 0, (String) data.get("poster_path"));
+                            database.insertFilm(film);
 
-                        Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
-                        Fragment toRefresh = MainActivity.getToRefresh();
-                        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                        if (toRefresh != null && ft != null) {
-                            ft.detach(toRefresh);
-                            ft.attach(toRefresh);
-                            ft.commitAllowingStateLoss();
+                            Toast.makeText(view.getContext(), "Film added to your Watchlist", Toast.LENGTH_SHORT).show();
+                            Fragment toRefresh = MainActivity.getToRefresh();
+                            android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                            if (toRefresh != null && ft != null) {
+                                ft.detach(toRefresh);
+                                ft.attach(toRefresh);
+                                ft.commitAllowingStateLoss();
+                            }
+
+                        } else {
+                            Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                         }
+                    } else {
+                        if (database.verifyId((int) data.get("id"), (int) data.get("id_season")) == 0) {
+                            tv = new Tv((int) data.get("id"), (int) data.get("id_season"), (String) data.get(TAG_TITLENAME),
+                                    (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"),
+                                    (String) data.get("poster_path_season"));
+                            database.insertSeries(tv);
 
-                    }else{
-                        Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    if(database.verifyId((int) data.get("id"), (int) data.get("id_season")) == 0) {
-                        tv = new Tv((int) data.get("id"),(int) data.get("id_season"), (String) data.get(TAG_TITLENAME),
-                                (int) data.get("episode_max_season"), (int) data.get("number_of_seasons"), 0, (String) data.get("poster_path"),
-                                (String) data.get("poster_path_season"));
-                        database.insertSeries(tv);
+                            Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
+                            Fragment toRefresh = MainActivity.getToRefresh();
+                            android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
+                            if (toRefresh != null && ft != null) {
+                                ft.detach(toRefresh);
+                                ft.attach(toRefresh);
+                                ft.commitAllowingStateLoss();
+                            }
 
-                        Toast.makeText(view.getContext(), "Serie added to your Watchlist", Toast.LENGTH_SHORT).show();
-                        Fragment toRefresh = MainActivity.getToRefresh();
-                        android.support.v4.app.FragmentTransaction ft = MainActivity.getFragmentTransaction();
-                        if (toRefresh != null && ft != null) {
-                            ft.detach(toRefresh);
-                            ft.attach(toRefresh);
-                            ft.commitAllowingStateLoss();
+                        } else {
+                            Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                         }
-
-                    }else{
-                        Toast.makeText(view.getContext(), "It's already in your Watchlist!", Toast.LENGTH_SHORT).show();
                     }
                 }
+            });
+
+        }
+        else{
+            if (convertView == null) {
+                LayoutInflater layoutInflater = (LayoutInflater) getContext()
+                        .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+                convertView = layoutInflater.inflate(R.layout.navigation_button, null, true);
+
             }
-        });
 
+        }
+            return convertView;
+        }
 
-        return convertView;
-    }
 }
