@@ -24,7 +24,7 @@ import com.example.simone.whatwatch.R;
 
 public class SplashScreen extends Activity{
 
-    private static int SPLASH_TIME_OUT = 2000;
+    private static int SPLASH_TIME_OUT = 0;
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
 
     @Override
@@ -40,6 +40,7 @@ public class SplashScreen extends Activity{
                 new downloadJSONInfo(filmInfo, "movie").execute(URLSelected);
             }
         }, SPLASH_TIME_OUT);
+
 
     }
 
@@ -67,13 +68,14 @@ public class SplashScreen extends Activity{
         protected Void doInBackground(String... urlString){
             try {
                 HttpURLConnection urlConnection;
-                URL url = new URL(urlString[0]);
+                URL url = new URL("https://api.themoviedb.org/3/discover/tv?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n");
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.setReadTimeout(10000 /* milliseconds */);
                 urlConnection.setConnectTimeout(15000 /* milliseconds */);
                 urlConnection.setDoOutput(true);
                 urlConnection.connect();
+                urlConnection.disconnect();
 
                 BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
                 StringBuilder sb = new StringBuilder();
@@ -84,13 +86,38 @@ public class SplashScreen extends Activity{
                     sb.append(lineToAppend);
                 }
                 br.close();
-
                 String jsonString = sb.toString();
                 JSONObject JSONData = new JSONObject(jsonString);
-                int pageMax = JSONData.getInt("total_pages");
-                JSONArray jArray = JSONData.getJSONArray("results");
-                if(type.equals("movie")){
 
+
+                HashMap<String, Object> info = new HashMap<>();
+                info.put("total_pages_tv", JSONData.getInt("total_pages"));
+
+
+                url = new URL(urlString[0]);
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setReadTimeout(10000 /* milliseconds */);
+                urlConnection.setConnectTimeout(15000 /* milliseconds */);
+                urlConnection.setDoOutput(true);
+                urlConnection.connect();
+                urlConnection.disconnect();
+
+                br = new BufferedReader(new InputStreamReader(url.openStream()));
+                sb = new StringBuilder();
+
+                while ((line = br.readLine()) != null) {
+                    String lineToAppend = line + "\n";
+                    sb.append(lineToAppend);
+                }
+                br.close();
+
+                jsonString = sb.toString();
+                JSONData = new JSONObject(jsonString);
+                int pageMax = JSONData.getInt("total_pages");
+                info.put("total_pages", pageMax);
+
+                JSONArray jArray = JSONData.getJSONArray("results");
                     for (int i = 0; i < jArray.length(); i++) {
                         JSONObject film = jArray.getJSONObject(i);
                         String TAG_TITLE = film.getString("original_title");
@@ -101,42 +128,15 @@ public class SplashScreen extends Activity{
 
 
                         //General information of film
-                        HashMap<String, Object> info = new HashMap<>();
                         info.put("original_title", TAG_TITLE);
                         info.put("overview", TAG_OVERVIEW);
                         info.put("poster_path", TAG_PHOTO);
                         info.put("vote_average", TAG_RATING);
                         info.put("id", TAG_ID);
-                        info.put("total_pages", pageMax);
 
                         filmInfo.add(info);
+                        info = new HashMap<>();
                     }
-                }else if(type.equals("tv")) {
-
-                    for (int i = 0; i < jArray.length(); i++) {
-                        JSONObject tv_serie = jArray.getJSONObject(i);
-                        String TAG_NAME = tv_serie.getString("name");
-                        String TAG_OVERVIEW = tv_serie.getString("overview");
-                        int TAG_ID = tv_serie.getInt("id");
-                        String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + tv_serie.getString("poster_path");
-                        Double TAG_RATING = tv_serie.getDouble("vote_average");
-                        urlConnection.disconnect();
-
-
-                        //General information of film
-                        HashMap<String, Object> info = new HashMap<>();
-                        getExtraInfos(TAG_ID, info);
-                        info.put("name", TAG_NAME);
-                        info.put("overview", TAG_OVERVIEW);
-                        info.put("poster_path", TAG_PHOTO);
-                        info.put("vote_average", TAG_RATING);
-                        info.put("id", TAG_ID);
-                        info.put("total_pages", pageMax);
-
-                        filmInfo.add(info);
-                    }
-                }
-
             }catch (IOException e){
                 e.printStackTrace();
             }catch (JSONException e) {

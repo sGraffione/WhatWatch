@@ -6,13 +6,6 @@
     android:tag="@+id/homepage_fragment"
     tools:context="com.example.simone.whatwatch.FragmentClasses.Homepage">
 
-    <View
-        android:id="@+id/invisibleView"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/filmList" />
-
     <ListView
         android:id="@+id/filmList"
         android:layout_width="match_parent"
@@ -21,19 +14,5 @@
         android:footerDividersEnabled="false"
         android:headerDividersEnabled="false"
         android:layout_marginBottom="75dp"/>
-
-    <Button
-        android:id="@+id/forward"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/invisibleView"
-        android:layout_toEndOf="@+id/invisibleView" />
-
-    <Button
-        android:id="@+id/back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/invisibleView"
-        android:layout_toStartOf="@+id/invisibleView" />
 
 </RelativeLayout>

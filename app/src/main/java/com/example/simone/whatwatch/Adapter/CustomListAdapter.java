@@ -63,7 +63,6 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         ImageView imageView;
-        if(position < 20) {
             if (convertView == null) {
                 LayoutInflater layoutInflater = (LayoutInflater) getContext()
                         .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -138,18 +137,6 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                     }
                 }
             });
-
-        }
-        else{
-            if (convertView == null) {
-                LayoutInflater layoutInflater = (LayoutInflater) getContext()
-                        .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-
-                convertView = layoutInflater.inflate(R.layout.navigation_button, null, true);
-
-            }
-
-        }
             return convertView;
         }
 

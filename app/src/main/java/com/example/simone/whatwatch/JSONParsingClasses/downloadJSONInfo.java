@@ -79,7 +79,6 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
 
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
-            int pageMax = JSONData.getInt("total_pages");
             JSONArray jArray = JSONData.getJSONArray("results");
             if(type.equals("movie")){
 
@@ -99,7 +98,6 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     info.put("poster_path", TAG_PHOTO);
                     info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
-                    info.put("total_pages", pageMax);
 
                     filmInfo.add(info);
                 }
@@ -123,7 +121,6 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     info.put("poster_path", TAG_PHOTO);
                     info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
-                    info.put("total_pages", pageMax);
 
                     filmInfo.add(info);
                 }

@@ -1,5 +1,6 @@
 package com.example.simone.whatwatch.FragmentClasses;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.simone.whatwatch.Adapter.CustomListAdapter;
+import com.example.simone.whatwatch.Classes.App;
 import com.example.simone.whatwatch.JSONParsingClasses.downloadJSONInfo;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
@@ -42,6 +44,7 @@ public class Homepage extends Fragment {
 
     int page = 1;
     int pagMax;
+    int pagMaxTv;
     String typeSelected = "movie";
     String searchTypeSelected = "popularity";
     String firstPart = "https://api.themoviedb.org/3/discover/";
@@ -62,6 +65,8 @@ public class Homepage extends Fragment {
         Log.d("HOMEPAGE", "Entrato nell'onCreate");
 
         filmInfo = MainActivity.getFilmInfo();
+        pagMax = (int) filmInfo.get(0).get("total_pages");
+        pagMaxTv = (int) filmInfo.get(0).get("total_pages_tv");
 
     }
 
@@ -74,11 +79,15 @@ public class Homepage extends Fragment {
 
         lv = (ListView) view.findViewById(R.id.filmList);
 
-        forward = (Button) view.findViewById(R.id.forward);
-        back = (Button) view.findViewById(R.id.back);
+        View footerView =  ((LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.navigation_button, null, false);
+        lv.addFooterView(footerView);
+
+        forward = (Button) footerView.findViewById(R.id.next);
+        back = (Button) footerView.findViewById(R.id.back);
 
         adapter = new CustomListAdapter(getContext(), R.layout.film_element, filmInfo, typeSelected);
         lv.setAdapter(adapter);
+
 
 
         if(getTypeSelected().equals("movie")){
@@ -107,17 +116,23 @@ public class Homepage extends Fragment {
             });
         }
 
-        pagMax = (int) filmInfo.get(0).get("total_pages");
-
         if(page == 1){
             back.setVisibility(view.INVISIBLE);
         }else{
             back.setVisibility(view.VISIBLE);
         }
-        if(page == pagMax){
-            forward.setVisibility(view.INVISIBLE);
+        if(typeSelected.equals("movie")){
+            if(page == pagMax){
+                forward.setVisibility(view.INVISIBLE);
+            }else{
+                forward.setVisibility(view.VISIBLE);
+            }
         }else{
-            forward.setVisibility(view.VISIBLE);
+            if(page == pagMaxTv){
+                forward.setVisibility(view.INVISIBLE);
+            }else{
+                forward.setVisibility(view.VISIBLE);
+            }
         }
 
         back.setText("<< Page " + String.valueOf(page-1));
@@ -176,17 +191,24 @@ public class Homepage extends Fragment {
             });
         }
 
-        //pagMax = (int) filmInfo.get(0).get("total_pages");
 
         if(page == 1){
             back.setVisibility(view.INVISIBLE);
         }else{
             back.setVisibility(view.VISIBLE);
         }
-        if(page == pagMax){
-            forward.setVisibility(view.INVISIBLE);
+        if(typeSelected.equals("movie")){
+            if(page == pagMax){
+                forward.setVisibility(view.INVISIBLE);
+            }else{
+                forward.setVisibility(view.VISIBLE);
+            }
         }else{
-            forward.setVisibility(view.VISIBLE);
+            if(page == pagMaxTv){
+                forward.setVisibility(view.INVISIBLE);
+            }else{
+                forward.setVisibility(view.VISIBLE);
+            }
         }
 
         back.setText("<< Page " + String.valueOf(page-1));
@@ -199,18 +221,22 @@ public class Homepage extends Fragment {
         switch (homepageSearchSelected){
             case R.id.Popularity:
                 menu.findItem(R.id.Popularity).setChecked(true);
+                page = 1;
                 break;
             case R.id.Most_Voted:
                 menu.findItem(R.id.Most_Voted).setChecked(true);
+                page = 1;
                 break;
         }
 
         switch (getHomepageSearchTypeSelected){
             case R.id.Movies:
                 menu.findItem(R.id.Movies).setChecked(true);
+                page = 1;
                 break;
             case R.id.Tv_shows:
                 menu.findItem(R.id.Tv_shows).setChecked(true);
+                page = 1;
                 break;
         }
     }

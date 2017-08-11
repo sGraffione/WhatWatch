@@ -59,8 +59,11 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
 
             String jsonString = sb.toString();
             JSONObject JSONData = new JSONObject(jsonString);
+            HashMap<String, Object> info = new HashMap<>();
+            int pageMax = JSONData.getInt("total_pages");
+            info.put("total_pages", pageMax);
             JSONArray jArray = JSONData.getJSONArray("results");
-                for (int i = 0; i < jArray.length() - 10; i++) {
+                for (int i = 0; i < jArray.length(); i++) {
                     JSONObject film = jArray.getJSONObject(i);
                     String TAG_TYPE = film.getString("media_type");
                     String TAG_TITLE;
@@ -81,7 +84,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
 
 
                             //General information of film
-                            HashMap<String, Object> info = new HashMap<>();
+
                             if (TAG_TYPE.equals("tv"))
                                 getExtraInfos(TAG_ID, info, TAG_PHOTO);
 
@@ -90,12 +93,12 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                             info.put("poster_path", TAG_PHOTO);
                             info.put("vote_average", TAG_RATING);
                             info.put("id", TAG_ID);
-
                             filmInfo.add(info);
+                            info = new HashMap<>();
                         }
                     }else{
                         JSONArray jArrayPerson = film.getJSONArray("known_for");
-                        for(int j = 0; j < jArrayPerson.length() - 10; j++) {
+                        for(int j = 0; j < jArrayPerson.length(); j++) {
                             JSONObject data = jArrayPerson.getJSONObject(j);
                             TAG_TYPE = data.getString("media_type");
                             if (TAG_TYPE.equals("movie"))
@@ -111,7 +114,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
 
 
                                 //General information of film
-                                HashMap<String, Object> info = new HashMap<>();
+
                                 if (TAG_TYPE.equals("tv"))
                                     getExtraInfos(TAG_ID, info, TAG_PHOTO);
 
@@ -122,6 +125,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                                 info.put("id", TAG_ID);
 
                                 filmInfo.add(info);
+                                info = new HashMap<>();
                             }
                         }
                     }

@@ -2,22 +2,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
+    <View
+        android:id="@+id/invisibleView"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentTop="true"
+        />
     <Button
-        android:id="@+id/button"
+        android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:text="back"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="265dp"
-        android:layout_marginTop="78dp"
-        android:text="back" />
+        android:layout_toLeftOf="@id/invisibleView"
+        />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button"
-        android:layout_marginStart="142dp"
-        android:layout_toEndOf="@+id/button"
-        android:text="next" />
+        android:text="next"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/invisibleView"
+        />
 </RelativeLayout>
