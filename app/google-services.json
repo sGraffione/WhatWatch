@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "726869905956",
+    "firebase_url": "https://whatwatch-9e8c3.firebaseio.com",
+    "project_id": "whatwatch-9e8c3",
+    "storage_bucket": "whatwatch-9e8c3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:726869905956:android:5265db3e23d6992c",
+        "android_client_info": {
+          "package_name": "com.example.simone.whatwatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "726869905956-p4mbk9v8i3lv6qhhea8k6kgddg1ds0af.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simone.whatwatch",
+            "certificate_hash": "6027ca171a9966cef60f83aeb521f74056e8931c"
+          }
+        },
+        {
+          "client_id": "726869905956-pufbsvmndbd8tr83p5ld8nthm3vd9jf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpQqzBjaeoQa9MzMgXQJzPK_T20N8oiBk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "726869905956-pufbsvmndbd8tr83p5ld8nthm3vd9jf2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
