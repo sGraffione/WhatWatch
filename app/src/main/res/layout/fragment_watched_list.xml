@@ -5,6 +5,22 @@
     android:background="@color/Really_Really_Dark_Gray"
     tools:context="com.example.simone.whatwatch.FragmentClasses.WatchedListFragment">
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignBaseline="@+id/logout_button"
+        android:layout_alignBottom="@+id/logout_button"
+        android:layout_alignStart="@+id/tag_film_count" />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/logout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        />
 
     <GridView
         android:id="@+id/gridview"

@@ -20,6 +20,14 @@ import com.example.simone.whatwatch.FragmentClasses.Homepage;
 import com.example.simone.whatwatch.FragmentClasses.MyWatchListFragment;
 import com.example.simone.whatwatch.FragmentClasses.WatchedListFragment;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private Toolbar toolbar;
+
+    CallbackManager callbackManager;
 
     public static ArrayList<HashMap<String, Object>> filmInfo = new ArrayList<>();
 
@@ -58,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

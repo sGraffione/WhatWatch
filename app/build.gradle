@@ -19,15 +19,27 @@ android {
     }
 }
 
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile files('libs/picasso-2.5.2.jar')
+
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.google.firebase:firebase-auth:10.0.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.25.0'
     testCompile 'junit:junit:4.12'
+    
 }
+
+
+apply plugin: 'com.google.gms.google-services'
