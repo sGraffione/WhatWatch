@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "726869905956-tb93e0iu2rds3khppk4426eacf2l6b1f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.simone.whatwatch",
+            "certificate_hash": "97db2a7a3c076dbad1eecb7179d250be83877d5f"
+          }
+        },
+        {
           "client_id": "726869905956-p4mbk9v8i3lv6qhhea8k6kgddg1ds0af.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -21,11 +21,7 @@ import com.example.simone.whatwatch.FragmentClasses.MyWatchListFragment;
 import com.example.simone.whatwatch.FragmentClasses.WatchedListFragment;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.GoogleAuthCredential;
 
 
 import java.util.ArrayList;
