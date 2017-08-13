@@ -16,11 +16,13 @@ import android.view.Menu;
 
 import com.example.simone.whatwatch.Adapter.SectionsPageAdapter;
 import com.example.simone.whatwatch.Classes.SearchActivity;
+import com.example.simone.whatwatch.Firebase.FirebaseMessagingService;
 import com.example.simone.whatwatch.FragmentClasses.Homepage;
 import com.example.simone.whatwatch.FragmentClasses.MyWatchListFragment;
 import com.example.simone.whatwatch.FragmentClasses.WatchedListFragment;
 
 import com.facebook.CallbackManager;
+import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.google.firebase.auth.GoogleAuthCredential;
 
 
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO Aggiungere oggetto per la creazione di un JobService per la gestione delle notifiche
+        FirebaseMessagingService dispatcher = new FirebaseMessagingService();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

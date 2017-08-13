@@ -105,6 +105,8 @@ public class WatchedListFragment extends Fragment {
             }
         });
 
+
+        //Bottone per entrare nella chatGroup di testing
         view.findViewById(R.id.open_activity_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,6 +220,8 @@ public class WatchedListFragment extends Fragment {
         });
     }
 
+
+    //Il bottone della chat appare e scompare in base se si è loggati o meno
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
