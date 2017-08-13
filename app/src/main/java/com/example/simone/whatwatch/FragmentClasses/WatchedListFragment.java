@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.simone.whatwatch.Adapter.WatchedAdapter;
+import com.example.simone.whatwatch.ChatGroup.ChatGroup;
 import com.example.simone.whatwatch.R;
 import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
 import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
@@ -101,6 +102,14 @@ public class WatchedListFragment extends Fragment {
                 if(i == R.id.logout_button){
                     signOut();
                 }
+            }
+        });
+
+        view.findViewById(R.id.open_activity_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ChatGroup.class);
+                startActivity(intent);
             }
         });
 
@@ -217,12 +226,14 @@ public class WatchedListFragment extends Fragment {
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.GONE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.open_activity_test).setVisibility(View.VISIBLE);
         } else {
             minutes_count.setText("Disconnected");
             series_count.setText(null);
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.VISIBLE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.open_activity_test).setVisibility(View.GONE);
         }
     }
 

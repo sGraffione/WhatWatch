@@ -20,9 +20,22 @@ android {
 }
 
 
-repositories {
-    mavenCentral()
+buildscript {
+    repositories {
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+    }
 }
+
+allprojects {
+    repositories {
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
+    }
+}
+
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -40,7 +53,8 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.25.0'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.google.firebase:firebase-core:10.0.1'
-    //compile 'com.firebaseui:firebase-ui:2.2.0'
+    compile 'com.firebaseui:firebase-ui:1.1.1'
+
     testCompile 'junit:junit:4.12'
 }
 
