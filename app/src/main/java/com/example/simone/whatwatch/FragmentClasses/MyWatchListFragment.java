@@ -19,6 +19,7 @@ import android.widget.GridView;
 
 import com.example.simone.whatwatch.Adapter.WatchlistAdapter;
 import com.example.simone.whatwatch.JSONParsingClasses.ParsingInfoFilm;
+import com.example.simone.whatwatch.JSONParsingClasses.RuntimeParsing;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
 import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
@@ -89,7 +90,8 @@ public class MyWatchListFragment extends Fragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             database.updateWatched(((Film) films.get(j)).getId());
-
+                            String url = "https://api.themoviedb.org/3/movie/"+ ((Film) films.get(j)).getId() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
+                            new RuntimeParsing(view.getContext(), "movie").execute(url);
                             refreshWatchedWatchlist();
                         }
                     });
@@ -162,6 +164,8 @@ public class MyWatchListFragment extends Fragment {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 int var = database.updateEpisode(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
                                 Log.d("WATCHLIST", String.valueOf(var));
+                                String url = "https://api.themoviedb.org/3/tv/"+ ((Tv) films.get(j)).getIdSeries() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
+                                new RuntimeParsing(view.getContext(), "tv").execute(url);
                                 refreshWatchedWatchlist();
                             }
                         });

@@ -10,26 +10,34 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_alignBaseline="@+id/logout_button"
-        android:layout_alignBottom="@+id/logout_button"
-        android:layout_alignStart="@+id/tag_film_count" />
+        android:layout_below="@+id/tag_minutes_count"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
     <com.facebook.login.widget.LoginButton
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
-        />
+        android:layout_alignBaseline="@+id/login_button"
+        android:layout_alignBottom="@+id/login_button"
+        android:layout_toStartOf="@+id/minutes_count" />
+
+    <com.facebook.share.widget.ShareButton
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/stats"
+        android:layout_marginStart="30dp"
+        android:layout_toEndOf="@+id/stats" />
 
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="200dp"
-        android:gravity="center"
         android:layout_below="@+id/tag_minutes_count"
         android:layout_marginTop="50dp"
+        android:columnWidth="200dp"
+        android:gravity="center"
         android:horizontalSpacing="10dp"
         android:numColumns="3"
         android:verticalSpacing="10dp" />
@@ -113,13 +121,5 @@
         android:text="TextView"
         android:textColor="@color/WhiteSmoke"
         android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/open_activity_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/tag_film_count"
-        android:text="Chat" />
 
 </RelativeLayout>

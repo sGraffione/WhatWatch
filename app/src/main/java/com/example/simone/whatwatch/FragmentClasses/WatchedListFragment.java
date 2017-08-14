@@ -105,22 +105,6 @@ public class WatchedListFragment extends Fragment {
             }
         });
 
-
-        //Bottone per entrare nella chatGroup di testing
-        view.findViewById(R.id.open_activity_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChatGroup.class);
-                startActivity(intent);
-            }
-        });
-
-
-
-
-
-
-
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
         film_count = (TextView) view.findViewById(R.id.film_count);
@@ -137,10 +121,9 @@ public class WatchedListFragment extends Fragment {
                 startActivity(dbmanager);
             }
         });
-
-        /*film_count.setText(Integer.toString(database.getFilmsSeen()));
-        series_count.setText(Integer.toString(database.getSeriesSeen()));
-        minutes_count.setText(Integer.toString(database.getFilmsTime() + database.getSeriesTime()));*/
+        film_count.setText(Integer.toString(database.updateFilmsSeen()));
+        series_count.setText(Integer.toString(database.updateSeriesSeen()));
+        minutes_count.setText(Integer.toString(database.getFilmsTime() + database.getSeriesTime()));
 
         WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), films);
         gridView.setAdapter(watchedAdapter);
@@ -210,12 +193,12 @@ public class WatchedListFragment extends Fragment {
 
             @Override
             public void onCancel() {
-                film_count.setText("Canceled");
+                //film_count.setText("Canceled");
             }
 
             @Override
             public void onError(FacebookException e) {
-                minutes_count.setText("Login error: " + e.getMessage());
+                //minutes_count.setText("Login error: " + e.getMessage());
             }
         });
     }
@@ -225,19 +208,19 @@ public class WatchedListFragment extends Fragment {
     private void updateUI(FirebaseUser user) {
         //hideProgressDialog();
         if (user != null) {
-            minutes_count.setText(user.getDisplayName());
-            series_count.setText(user.getUid());
+            //minutes_count.setText(user.getDisplayName());
+            //series_count.setText(user.getUid());
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.GONE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.VISIBLE);
-            getActivity().findViewById(R.id.open_activity_test).setVisibility(View.VISIBLE);
+            //getActivity().findViewById(R.id.open_activity_test).setVisibility(View.VISIBLE);
         } else {
-            minutes_count.setText("Disconnected");
-            series_count.setText(null);
+            //minutes_count.setText("Disconnected");
+            //series_count.setText(null);
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.VISIBLE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.GONE);
-            getActivity().findViewById(R.id.open_activity_test).setVisibility(View.GONE);
+            //getActivity().findViewById(R.id.open_activity_test).setVisibility(View.GONE);
         }
     }
 

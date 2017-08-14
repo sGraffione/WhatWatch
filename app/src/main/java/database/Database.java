@@ -30,6 +30,9 @@ public class Database {
     public static String FILM_NAME = "film_name";
     public static final int FILM_NAME_COL = 2;
 
+    public static String FILM_TIME = "film_time";
+    public static final int FILM_TIME_COL = 5;
+
     public static String FILM_WATCHED = "film_watched";
     public static final int FILM_WATCHED_COL = 3;
 
@@ -67,6 +70,9 @@ public class Database {
     public static String TV_WATCHED = "tv_watched";
     public static final int TV_WATCHED_COL = 8;
 
+    public static String TV_TIME = "tv_time";
+    public static final int TV_TIME_COL = 11;
+
     public static String TV_IMG_URL_SERIES = "tv_img_url_series";
     public static int TV_IMG_URL_SERIES_COL = 9;
 
@@ -97,7 +103,7 @@ public class Database {
     //Query di creazione e drop delle due tabelle
     public static final String CREATE_FIL_TABLE =
             "CREATE TABLE " + FIL_TABLE + " (" + FILM_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILM_ID + " INTEGER NOT NULL UNIQUE, " +
-                    FILM_NAME + " STRING NOT NULL, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " STRING);";
+                    FILM_NAME + " STRING NOT NULL, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " STRING, " + FILM_TIME + " INTEGER NOT NULL);";
 
     public static final String DROP_FILM_TABLE = "DROP TABLE IF EXISTS " + FIL_TABLE;
 
@@ -107,7 +113,7 @@ public class Database {
                     TV_ID_SEASON + " INTEGER NOT NULL, " + TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " +
                     TV_EPISODE_MAX + " INTEGER NOT NULL, " + TV_SEASON_CURRENT + " INTEGER NOT NULL, " +
                     TV_SEASON_MAX + " INTEGER NOT NULL, " + TV_WATCHED + " INTEGER NOT NULL, " + TV_IMG_URL_SERIES + " STRING, " +
-                    TV_IMG_URL_SEASON + " STRING);";
+                    TV_IMG_URL_SEASON + " STRING, " + TV_TIME + " INTEGER NOT NULL);";
 
     public static final String DROP_TV_TABLE = "DROP TABLE IF EXISTS " + TV_TABLE;
 
@@ -332,14 +338,14 @@ public class Database {
         this.openReadableDB();
         Cursor cursor = db.query(FIL_TABLE, null, where, whereArgs, null, null, null);
 
-
         if(cursor == null || cursor.getCount() == 0){
             this.closeDB();
             return 0;
         }
         else{
             try{
-                int watched = cursor.getInt(FILM_WATCHED_COL);
+                cursor.moveToFirst();
+                int watched = cursor.getInt(cursor.getColumnIndex(FILM_WATCHED));
                 cursor.close();
                 this.closeDB();
                 return watched;
@@ -881,27 +887,28 @@ public class Database {
         int seen = 0;
 
         this.openWriteableDB();
-        //TODO testare con un solo cursore
-        Cursor cursor = db.rawQuery("SELECT count(*) FROM tv_data WHERE tv_watched = ? GROUP BY tv_id_series", whereArgs);
-        Cursor seasonMax = db.rawQuery("SELECT tv_season_max FROM tv_data WHERE tv_watched = ? GROUP BY tv_id_series", whereArgs);
 
-        if(cursor == null || cursor.getCount() == 0 || seasonMax == null || seasonMax.getCount() == 0){
+        Cursor cursor = db.rawQuery("SELECT COUNT(*), tv_season_max, tv_id_series FROM tv_data WHERE tv_watched = ? GROUP BY tv_id_series", whereArgs);
+
+        int column1 = cursor.getColumnIndex("COUNT(*)");
+        int column2 = cursor.getColumnIndex("tv_season_max");
+
+        if(cursor == null || cursor.getCount() == 0){
             cursor.close();
             this.closeDB();
             return 0;
         }
         else{
             try{
-                while(cursor.moveToNext() || seasonMax.moveToNext()){
-                   count = cursor.getInt(cursor.getColumnIndex("count(*)"));
-                   max = seasonMax.getInt(seasonMax.getColumnIndex(TV_SEASON_MAX));
+                while(cursor.moveToNext()){
+                   count = cursor.getInt(column1);
+                    max = cursor.getInt(column2);
                    if(count == max){
                        seen += 1;
                    }
                 }
 
                 cursor.close();
-                seasonMax.close();
             }
             catch (Exception e){
                 return 0;

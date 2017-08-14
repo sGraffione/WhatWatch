@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // TODO Aggiungere oggetto per la creazione di un JobService per la gestione delle notifiche
-        FirebaseMessagingService dispatcher = new FirebaseMessagingService();
+        //FirebaseMessagingService dispatcher = new FirebaseMessagingService();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
