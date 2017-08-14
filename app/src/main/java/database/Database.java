@@ -30,9 +30,6 @@ public class Database {
     public static String FILM_NAME = "film_name";
     public static final int FILM_NAME_COL = 2;
 
-    public static String FILM_TIME = "film_time";
-    public static final int FILM_TIME_COL = 5;
-
     public static String FILM_WATCHED = "film_watched";
     public static final int FILM_WATCHED_COL = 3;
 
@@ -70,9 +67,6 @@ public class Database {
     public static String TV_WATCHED = "tv_watched";
     public static final int TV_WATCHED_COL = 8;
 
-    public static String TV_TIME = "tv_time";
-    public static final int TV_TIME_COL = 11;
-
     public static String TV_IMG_URL_SERIES = "tv_img_url_series";
     public static int TV_IMG_URL_SERIES_COL = 9;
 
@@ -103,7 +97,7 @@ public class Database {
     //Query di creazione e drop delle due tabelle
     public static final String CREATE_FIL_TABLE =
             "CREATE TABLE " + FIL_TABLE + " (" + FILM_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILM_ID + " INTEGER NOT NULL UNIQUE, " +
-                    FILM_NAME + " STRING NOT NULL, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " STRING, " + FILM_TIME + " INTEGER NOT NULL);";
+                    FILM_NAME + " STRING NOT NULL, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " STRING);";
 
     public static final String DROP_FILM_TABLE = "DROP TABLE IF EXISTS " + FIL_TABLE;
 
@@ -113,7 +107,7 @@ public class Database {
                     TV_ID_SEASON + " INTEGER NOT NULL, " + TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " +
                     TV_EPISODE_MAX + " INTEGER NOT NULL, " + TV_SEASON_CURRENT + " INTEGER NOT NULL, " +
                     TV_SEASON_MAX + " INTEGER NOT NULL, " + TV_WATCHED + " INTEGER NOT NULL, " + TV_IMG_URL_SERIES + " STRING, " +
-                    TV_IMG_URL_SEASON + " STRING, " + TV_TIME + " INTEGER NOT NULL);";
+                    TV_IMG_URL_SEASON + " STRING);";
 
     public static final String DROP_TV_TABLE = "DROP TABLE IF EXISTS " + TV_TABLE;
 

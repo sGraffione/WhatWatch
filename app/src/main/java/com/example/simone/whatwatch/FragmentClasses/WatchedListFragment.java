@@ -121,9 +121,13 @@ public class WatchedListFragment extends Fragment {
                 startActivity(dbmanager);
             }
         });
+
+        int filmTime = database.getFilmsTime();
+        int seriesTime = database.getSeriesTime();
+        int total = filmTime + seriesTime;
         film_count.setText(Integer.toString(database.updateFilmsSeen()));
         series_count.setText(Integer.toString(database.updateSeriesSeen()));
-        minutes_count.setText(Integer.toString(database.getFilmsTime() + database.getSeriesTime()));
+        minutes_count.setText(Integer.toString(total));
 
         WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), films);
         gridView.setAdapter(watchedAdapter);

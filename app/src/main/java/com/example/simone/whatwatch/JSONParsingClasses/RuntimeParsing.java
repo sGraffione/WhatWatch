@@ -70,6 +70,8 @@ import database.Database;
                     int runtime = 0;
                     if(TAG_RUNTIME.equals("null"))
                         runtime = 0;
+                    else
+                        runtime = Integer.parseInt(TAG_RUNTIME);
 
                     //General information of film
                     info.put("runtime", runtime);
