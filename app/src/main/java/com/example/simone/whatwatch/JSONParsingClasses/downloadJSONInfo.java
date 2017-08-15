@@ -110,7 +110,6 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     int TAG_ID = tv_serie.getInt("id");
                     String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + tv_serie.getString("poster_path");
                     Double TAG_RATING = tv_serie.getDouble("vote_average");
-                    int TAG_RUNTIME = tv_serie.getInt("runtime");
                     urlConnection.disconnect();
 
 
@@ -122,7 +121,6 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     info.put("poster_path", TAG_PHOTO);
                     info.put("vote_average", TAG_RATING);
                     info.put("id", TAG_ID);
-                    info.put("runtime", TAG_RUNTIME);
 
                     filmInfo.add(info);
                 }
