@@ -180,6 +180,7 @@ public class ShowInfoAboutTvElement extends Activity {
     }
 
     private void setEpisodeList(JSONArray seasons) {
+        Database database = new Database(this);
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.tv_series_layout);
         RelativeLayout layout = new RelativeLayout(this);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -236,23 +237,36 @@ public class ShowInfoAboutTvElement extends Activity {
                 tv2.setHeight(height);
                 id_prec_tv2 = tv2.getId();
 
-                TextView btn_add = new TextView(this);
+                final TextView btn_add = new TextView(this);
                 params3.addRule(RelativeLayout.RIGHT_OF, tv2.getId());
                 params3.addRule(RelativeLayout.ALIGN_BOTTOM, tv2.getId());
                 params3.addRule(RelativeLayout.ALIGN_TOP, tv2.getId());
+                params3.addRule(RelativeLayout.ALIGN_BASELINE, tv2.getId());
                 if(id_prec_btn != 0){
                     params3.addRule(RelativeLayout.BELOW, id_prec_btn);
                     params3.addRule(RelativeLayout.ALIGN_START, id_prec_btn);
                 }else{
                     params3.addRule(RelativeLayout.BELOW, R.id.Overview);
                 }
+
                 btn_add.setId(View.generateViewId());
-                btn_add.setText("+");
-                btn_add.setBackgroundResource(R.drawable.button_selector);
-                btn_add.setHeight(height);
-                btn_add.setWidth(height);
-                btn_add.setGravity(Gravity.CENTER);
+                if(!database.verifySeasonWatched(id_film, seasons.getJSONObject(i).getInt("id"))){
+                    if(database.verifyId(id_film, seasons.getJSONObject(i).getInt("id")) == 0) {
+                        btn_add.setText("+");
+                        btn_add.setBackgroundResource(R.drawable.button_selector);
+                        btn_add.setHeight(height);
+                        btn_add.setWidth(height);
+                        btn_add.setGravity(Gravity.CENTER);
+                    }else{
+                        btn_add.setText("In watchlist");
+                        btn_add.setTextColor(getResources().getColor(R.color.Orange));
+                    }
+                }else{
+                    btn_add.setText("Watched");
+                    btn_add.setTextColor(Color.GREEN);
+                }
                 id_prec_btn = btn_add.getId();
+
 
                 if(start == 0){
                     j = i+1;
@@ -263,7 +277,7 @@ public class ShowInfoAboutTvElement extends Activity {
                 btn_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        add_season(index, v);
+                        add_season(index, v, btn_add.getId());
                     }
                 });
 
@@ -276,7 +290,7 @@ public class ShowInfoAboutTvElement extends Activity {
         }
     }
 
-    private void add_season(int i, View view){
+    private void add_season(int i, View view, int id_btn){
         try{
             filmInfo = new ParsingInfoFilm(this, "tv", i).execute(url).get();
         }catch (InterruptedException e){
@@ -298,6 +312,11 @@ public class ShowInfoAboutTvElement extends Activity {
             if(!database.verifyIdSeries(id_film)){
                 database.insertSeries(tv);
                 Toast.makeText(view.getContext(), "You added the season number " + i + " to your Watchlist", Toast.LENGTH_SHORT).show();
+                TextView btn_add = (TextView) findViewById(id_btn);
+                btn_add.setBackground(null);
+                btn_add.setWidth(80);
+                btn_add.setText("In watchlist");
+                btn_add.setTextColor(getResources().getColor(R.color.Orange));
             }else{
                 Toast.makeText(view.getContext(), "You have already a season of this serie", Toast.LENGTH_SHORT).show();
             }
