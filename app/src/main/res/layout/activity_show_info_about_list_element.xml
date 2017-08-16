@@ -52,9 +52,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="false"
-            android:layout_alignStart="@+id/joinChat"
-            android:layout_below="@+id/joinChat"
-            android:layout_marginTop="65dp"
+            android:layout_alignStart="@+id/tag_runtime"
+            android:layout_below="@+id/tag_runtime"
+            android:layout_marginTop="140dp"
             android:background="@drawable/button_selector"
             android:text="+"
             android:textSize="30sp" />
@@ -125,17 +125,6 @@
             android:textAlignment="center"
             android:textColor="@color/WhiteSmoke" />
 
-        <CheckBox
-            android:id="@+id/seen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/youtube"
-            android:layout_marginLeft="45dp"
-            android:layout_toRightOf="@+id/youtube"
-            android:text="Seen"
-            android:clickable="false"
-            android:textColor="@color/WhiteSmoke" />
-
         <Button
             android:id="@+id/youtube"
             android:layout_width="50dp"
@@ -192,24 +181,24 @@
             android:id="@+id/joinChat"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignStart="@+id/tag_runtime"
-            android:layout_below="@+id/tag_runtime"
-            android:layout_marginTop="65dp"
+            android:layout_alignBottom="@+id/youtube"
+            android:layout_marginLeft="45dp"
+            android:layout_toRightOf="@+id/youtube"
             android:background="@drawable/chat"
             android:focusable="false"
             android:focusableInTouchMode="false" />
 
-        <!--<Button
+        <Button
             android:id="@+id/eye"
             android:layout_width="37dp"
             android:layout_height="37dp"
             android:layout_alignBaseline="@+id/Title"
             android:layout_alignBottom="@+id/Title"
-            android:layout_alignEnd="@+id/joinChat"
             android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/Title"
             android:background="@drawable/eye"
             android:clickable="false"
-            android:paddingTop="8dp" />-->
+            android:paddingTop="8dp" />
 
         <Button
             android:id="@+id/check"
@@ -217,12 +206,24 @@
             android:layout_height="37dp"
             android:layout_alignBaseline="@+id/Title"
             android:layout_alignBottom="@+id/Title"
-            android:layout_alignEnd="@+id/joinChat"
             android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@+id/Title"
+            android:layout_toEndOf="@+id/Title"
             android:background="@drawable/check"
             android:clickable="false"
-            android:paddingTop="8dp" />
+            android:paddingTop="8dp"
+            android:visibility="invisible"/>
+
+        <TextView
+            android:id="@+id/tag_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/joinChat"
+            android:layout_below="@+id/joinChat"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="0dp"
+            android:text="Chat"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="22sp" />
 
     </RelativeLayout>
 </ScrollView>

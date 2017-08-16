@@ -48,7 +48,6 @@ public class ShowInfoAboutListElement extends Activity {
         TextView Title = (TextView) findViewById(R.id.Title);
         ImageView poster = (ImageView) findViewById(R.id.poster);
         Button add_button = (Button) findViewById(R.id.add_button);
-        final CheckBox seen = (CheckBox) findViewById(R.id.seen);
         Button ytBtn = (Button) findViewById(R.id.youtube);
         TextView overview = (TextView) findViewById(R.id.Overview);
         TextView rating = (TextView) findViewById(R.id.rating);
@@ -58,6 +57,7 @@ public class ShowInfoAboutListElement extends Activity {
         TextView cast = (TextView) findViewById(R.id.cast);
         TextView genres = (TextView) findViewById(R.id.genres);
         Button joinChat = (Button) findViewById(R.id.joinChat);
+        Button check = (Button) findViewById(R.id.check);
 
 
         String type = "movie";
@@ -135,7 +135,7 @@ public class ShowInfoAboutListElement extends Activity {
             isSeen = 0;
         }
         if(isSeen == 1){
-            seen.setChecked(true);
+            check.setVisibility(View.VISIBLE);
         }
 
         String url = parsingVideos((JSONArray) data.get("videos"));
