@@ -248,6 +248,7 @@ public class WatchedListFragment extends Fragment {
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.INVISIBLE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.share).setVisibility(View.VISIBLE);
             //getActivity().findViewById(R.id.open_activity_test).setVisibility(View.VISIBLE);
         } else {
             //minutes_count.setText("Disconnected");
@@ -255,6 +256,7 @@ public class WatchedListFragment extends Fragment {
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.VISIBLE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.INVISIBLE);
+            getActivity().findViewById(R.id.share).setVisibility(View.INVISIBLE);
             //getActivity().findViewById(R.id.open_activity_test).setVisibility(View.GONE);
         }
     }
