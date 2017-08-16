@@ -36,6 +36,9 @@ public class Database {
     public static String FILM_IMG_URL = "film_img_url";
     public static final int FILM_IMG_URL_COL = 4;
 
+    public static String FILM_GLOBAL_INDEX = "global_index";
+    public static final int FILM_GLOBAL_INDEX_COL = 5;
+
 
     //Costanti tabella Tv
     public static final String TV_TABLE = "tv_data";
@@ -68,10 +71,13 @@ public class Database {
     public static final int TV_WATCHED_COL = 8;
 
     public static String TV_IMG_URL_SERIES = "tv_img_url_series";
-    public static int TV_IMG_URL_SERIES_COL = 9;
+    public static final int TV_IMG_URL_SERIES_COL = 9;
 
     public static String TV_IMG_URL_SEASON = "tv_img_url_season";
-    public static int TV_IMG_URL_SEASON_COL = 10;
+    public static final int TV_IMG_URL_SEASON_COL = 10;
+
+    public static String TV_GLOBAL_INDEX = "global_index";
+    public static final int TV_GLOBAL_INDEX_COL = 11;
 
 
     //Costanti tabella personal data
@@ -79,25 +85,28 @@ public class Database {
     public static String PERSONAL_TABLE = "personal_data";
 
     public static String PERSONAL_ROW = "personal_row";
-    public static int PERSONAL_ROW_COL = 0;
+    public static final int PERSONAL_ROW_COL = 0;
 
     public static String FILMS_SEEN = "films_seen";
-    public static int FILMS_SEEN_COL = 1;
+    public static final int FILMS_SEEN_COL = 1;
 
     public static String SERIES_SEEN = "series_seen";
-    public static int SERIES_SEEN_COL = 2;
+    public static final int SERIES_SEEN_COL = 2;
 
     public static String FILMS_TIME = "films_time";
-    public static int FILMS_TIME_COL = 3;
+    public static final int FILMS_TIME_COL = 3;
 
     public static String SERIES_TIME = "series_time";
-    public static int SERIES_TIME_COL = 4;
+    public static final int SERIES_TIME_COL = 4;
+
+    public static String LAST_GLOBAL_INDEX = "last_global_index";
+    public static final int LAST_GLOBAL_INDEX_COL = 5;
 
 
     //Query di creazione e drop delle due tabelle
     public static final String CREATE_FIL_TABLE =
             "CREATE TABLE " + FIL_TABLE + " (" + FILM_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILM_ID + " INTEGER NOT NULL UNIQUE, " +
-                    FILM_NAME + " STRING NOT NULL, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " STRING);";
+                    FILM_NAME + " STRING NOT NULL, " + FILM_WATCHED + " INTEGER NOT NULL, " + FILM_IMG_URL + " STRING, " + FILM_GLOBAL_INDEX + " INTEGER NOT NULL);";
 
     public static final String DROP_FILM_TABLE = "DROP TABLE IF EXISTS " + FIL_TABLE;
 
@@ -107,18 +116,20 @@ public class Database {
                     TV_ID_SEASON + " INTEGER NOT NULL, " + TV_NAME + " STRING NOT NULL, " + TV_EPISODE_CURRENT + " INTEGER NOT NULL, " +
                     TV_EPISODE_MAX + " INTEGER NOT NULL, " + TV_SEASON_CURRENT + " INTEGER NOT NULL, " +
                     TV_SEASON_MAX + " INTEGER NOT NULL, " + TV_WATCHED + " INTEGER NOT NULL, " + TV_IMG_URL_SERIES + " STRING, " +
-                    TV_IMG_URL_SEASON + " STRING);";
+                    TV_IMG_URL_SEASON + " STRING, " + TV_GLOBAL_INDEX + " INTEGER NOT NULL);";
 
     public static final String DROP_TV_TABLE = "DROP TABLE IF EXISTS " + TV_TABLE;
 
 
     public static final String CREATE_PERSONAL_TABLE =
             "CREATE TABLE " + PERSONAL_TABLE + " (" + PERSONAL_ROW + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FILMS_SEEN + " INTEGER NOT NULL, " +
-                    SERIES_SEEN + " INTEGER NOT NULL, " + FILMS_TIME + " INTEGER NOT NULL, " + SERIES_TIME + " INTEGER NOT NULL);";
+                    SERIES_SEEN + " INTEGER NOT NULL, " + FILMS_TIME + " INTEGER NOT NULL, " + SERIES_TIME + " INTEGER NOT NULL, " + LAST_GLOBAL_INDEX + " INTEGER NOT NULL);";
 
     //database and database helper objects
     private SQLiteDatabase db;
     private DBHelper dbHelper;
+
+
 
     //costruttore della classe
     public Database(Context context){
@@ -142,6 +153,20 @@ public class Database {
             db.close();
     }
 
+
+    //Indice globale e metodo per ricavarlo dalla personal table
+    int global_index = getLastGlobalIndex();
+
+
+    private int getLastGlobalIndex(){
+        this.openReadableDB();
+        Cursor cursor = db.rawQuery("SELECT last_global_index FROM personal_table", null);
+        cursor.moveToFirst();
+        int index = cursor.getInt(cursor.getColumnIndex(LAST_GLOBAL_INDEX));
+        cursor.close();
+        this.closeDB();
+        return index;
+    }
 
 
     //                                  //
@@ -564,14 +589,22 @@ public class Database {
 
 
     public long insertFilm(Film film){
+        global_index += 1;
+
         ContentValues in = new ContentValues();
         in.put(FILM_ID, film.getId());
         in.put(FILM_NAME, film.getName());
         in.put(FILM_WATCHED, film.getWatched());
         in.put(FILM_IMG_URL, film.getImgUrl());
+        in.put(FILM_GLOBAL_INDEX, global_index);
 
         this.openWriteableDB();
         long rowID = db.insert(FIL_TABLE, null, in);
+
+        ContentValues ind = new ContentValues();
+        ind.put(LAST_GLOBAL_INDEX, global_index);
+        db.update(PERSONAL_TABLE, ind, null, null);
+
         this.closeDB();
 
         return rowID;
@@ -579,6 +612,8 @@ public class Database {
 
 
     public long insertSeries(Tv series){
+        global_index += 1;
+
         ContentValues in = new ContentValues();
         in.put(TV_ID_SERIES, series.getIdSeries());
         in.put(TV_ID_SEASON, series.getIdSeason());
@@ -590,9 +625,15 @@ public class Database {
         in.put(TV_WATCHED, series.getWatched());
         in.put(TV_IMG_URL_SERIES, series.getImgUrlSeries());
         in.put(TV_IMG_URL_SEASON, series.getImgUrlSeason());
+        in.put(TV_GLOBAL_INDEX, global_index);
 
         this.openWriteableDB();
         long rowID = db.insert(TV_TABLE, null, in);
+
+        ContentValues ind = new ContentValues();
+        ind.put(LAST_GLOBAL_INDEX, global_index);
+        db.update(PERSONAL_TABLE, ind, null, null);
+
         this.closeDB();
 
         return rowID;
@@ -641,46 +682,6 @@ public class Database {
     }
 
 
-    /*public int updateEpisode(int idSeries, int idSeason){
-        String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
-        String[] whereArgs = {Integer.toString(idSeries), Integer.toString(0)};
-        String[] column = {TV_EPISODE_CURRENT, TV_EPISODE_MAX};
-        ContentValues ep = new ContentValues();
-        int current_ep = 0;
-        int max_ep = 5;
-
-
-        this.openWriteableDB();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM tv_data WHERE tv_id_series = ? AND tv_watched = ?", whereArgs);
-        if(cursor == null || cursor.getCount() == 0){
-            cursor.close();
-            this.closeDB();
-            return 0;
-        }
-        else{
-            try{
-                current_ep = cursor.getInt(TV_EPISODE_CURRENT_COL);
-                max_ep = cursor.getInt(TV_EPISODE_MAX_COL);
-
-                if (current_ep < max_ep){
-                    current_ep += 1;
-                }
-
-                ep.put(TV_EPISODE_CURRENT, current_ep);
-                db.update(TV_TABLE, ep, where, whereArgs);
-            }
-            catch (Exception e){
-                //return 0;
-                e.printStackTrace();
-            }
-        }
-
-        cursor.close();
-        this.closeDB();
-
-        return current_ep;
-    }*/
 
 
     public int updateEpisode(int idSeries, int idSeason){
@@ -814,7 +815,8 @@ public class Database {
                         cursor.getInt(FILM_ID_COL),
                         cursor.getString(FILM_NAME_COL),
                         cursor.getInt(FILM_WATCHED_COL),
-                        cursor.getString(FILM_IMG_URL_COL)
+                        cursor.getString(FILM_IMG_URL_COL),
+                        cursor.getInt(FILM_GLOBAL_INDEX_COL)
                 );
                 return film;
             }
@@ -841,7 +843,8 @@ public class Database {
                         cursor.getInt(TV_SEASON_MAX_COL),
                         cursor.getInt(TV_WATCHED_COL),
                         cursor.getString(TV_IMG_URL_SERIES_COL),
-                        cursor.getString(TV_IMG_URL_SEASON_COL)
+                        cursor.getString(TV_IMG_URL_SEASON_COL),
+                        cursor.getInt(TV_GLOBAL_INDEX_COL)
                 );
                 return tv;
             }
