@@ -1,5 +1,6 @@
 package com.example.simone.whatwatch.JSONParsingClasses;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -30,13 +31,15 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
     private Context context;
     private String type;
     private String searchType;
+    private Activity activity;
 
     //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-    public downloadJSONInfo(Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv, String type, String searchType)
+    public downloadJSONInfo(Activity activity, Context context, ArrayList<HashMap<String, Object>> filmInfo, ListView lv, String type, String searchType)
     {
         this.filmInfo = filmInfo;
         this.lv = lv;
         this.context = context;
+        this.activity = activity;
         this.type = type;
         this.searchType = searchType;
         pDialog = new ProgressDialog(context);
@@ -186,7 +189,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
         if(pDialog.isShowing())
             pDialog.dismiss();
 
-        adapter = new CustomListAdapter(context, R.layout.film_element, filmInfo, type);
+        adapter = new CustomListAdapter(activity, context, R.layout.film_element, filmInfo, type);
         lv.setAdapter(adapter);
 
     }

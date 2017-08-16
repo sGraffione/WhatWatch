@@ -85,7 +85,7 @@ public class Homepage extends Fragment {
         forward = (Button) footerView.findViewById(R.id.next);
         back = (Button) footerView.findViewById(R.id.back);
 
-        adapter = new CustomListAdapter(getContext(), R.layout.film_element, filmInfo, typeSelected);
+        adapter = new CustomListAdapter(getActivity(), getContext(), R.layout.film_element, filmInfo, typeSelected);
         lv.setAdapter(adapter);
 
 
@@ -163,7 +163,7 @@ public class Homepage extends Fragment {
 
     public void refresh(String url) {
         filmInfo.clear();
-        new downloadJSONInfo(getActivity(), filmInfo, lv, getTypeSelected(), getTypeSelected()).execute(url);
+        new downloadJSONInfo(getActivity(), getActivity(), filmInfo, lv, getTypeSelected(), getTypeSelected()).execute(url);
         URLSelected = url;
         if (getTypeSelected().equals("movie")) {
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -28,7 +28,15 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/stats"
         android:layout_marginStart="30dp"
-        android:layout_toEndOf="@+id/stats" />
+        android:layout_toEndOf="@+id/stats"
+        android:clickable="true"/>
+
+    <!-- <Button
+        android:id="@+id/share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share sta minchia"
+        />-->
 
     <GridView
         android:id="@+id/gridview"

@@ -1,6 +1,10 @@
 package com.example.simone.whatwatch.FragmentClasses;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,11 +30,21 @@ import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
+import com.facebook.FacebookDialog;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.facebook.share.model.ShareContent;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.ShareMediaContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.LikeView;
+import com.facebook.share.widget.ShareButton;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -45,6 +59,10 @@ import database.AndroidDatabaseManager;
 import database.Film;
 import database.Tv;
 import database.Database;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 
 public class WatchedListFragment extends Fragment {
@@ -68,6 +86,9 @@ public class WatchedListFragment extends Fragment {
     TextView series_count;
 
     private FirebaseAuth mAuth;
+
+    GraphRequest facebook = new GraphRequest();
+
 
     @Override
     public void onStart() {
@@ -105,6 +126,7 @@ public class WatchedListFragment extends Fragment {
             }
         });
 
+
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
         film_count = (TextView) view.findViewById(R.id.film_count);
@@ -122,12 +144,24 @@ public class WatchedListFragment extends Fragment {
             }
         });
 
+
+
+
+
+
         int filmTime = database.getFilmsTime();
         int seriesTime = database.getSeriesTime();
         int total = filmTime + seriesTime;
         film_count.setText(Integer.toString(database.updateFilmsSeen()));
         series_count.setText(Integer.toString(database.updateSeriesSeen()));
         minutes_count.setText(Integer.toString(total));
+
+        String message = "I' ve watched almost "+ total +" minutes of film & tv series thanks to What Watch!";
+
+        ShareLinkContent contentLink = new ShareLinkContent.Builder().setContentUrl(Uri.parse("https://www.themoviedb.org/")).setQuote(message).build();
+        ShareButton shareButton = (ShareButton) view.findViewById(R.id.share);
+        shareButton.setShareContent(contentLink);
+
 
         WatchedAdapter watchedAdapter = new WatchedAdapter(getActivity(), films);
         gridView.setAdapter(watchedAdapter);
@@ -154,7 +188,6 @@ public class WatchedListFragment extends Fragment {
         return view;
     }
 
-
     private void handleFacebookAccessToken(AccessToken token) {
     Log.d(TAG, "handleFacebookAccessToken:" + token.getToken());
 
@@ -173,8 +206,6 @@ public class WatchedListFragment extends Fragment {
                         Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                     updateUI(null);
                     }
-
-                    // ...
                 }
             });
     }
@@ -215,7 +246,7 @@ public class WatchedListFragment extends Fragment {
             //minutes_count.setText(user.getDisplayName());
             //series_count.setText(user.getUid());
 
-            getActivity().findViewById(R.id.login_button).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.login_button).setVisibility(View.INVISIBLE);
             getActivity().findViewById(R.id.logout_button).setVisibility(View.VISIBLE);
             //getActivity().findViewById(R.id.open_activity_test).setVisibility(View.VISIBLE);
         } else {
@@ -223,7 +254,7 @@ public class WatchedListFragment extends Fragment {
             //series_count.setText(null);
 
             getActivity().findViewById(R.id.login_button).setVisibility(View.VISIBLE);
-            getActivity().findViewById(R.id.logout_button).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.logout_button).setVisibility(View.INVISIBLE);
             //getActivity().findViewById(R.id.open_activity_test).setVisibility(View.GONE);
         }
     }

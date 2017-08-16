@@ -1,6 +1,7 @@
 package com.example.simone.whatwatch.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,10 +10,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.annotation.MainThread;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +28,25 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.simone.whatwatch.ChatGroup.ChatGroup;
+import com.example.simone.whatwatch.Classes.App;
+import com.example.simone.whatwatch.FragmentClasses.Homepage;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,9 +59,11 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -49,15 +72,21 @@ import database.Film;
 import database.Tv;
 import database.Database;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
     ArrayList<HashMap<String, Object>> filmList;
     Context context;
+    Activity activity;
     int resource;
     String TAG_TITLENAME;
     String type;
+    private FirebaseAuth mAuth;
+    private View view;
+    CallbackManager mCallbackManager;
 
-    public CustomListAdapter(Context context, int resource, ArrayList<HashMap<String, Object>> filmList, String TAG_TYPE) {
+    public CustomListAdapter(Activity activity, Context context, int resource, ArrayList<HashMap<String, Object>> filmList, String TAG_TYPE) {
         super(context, resource, filmList);
         this.filmList = filmList;
         this.context = context;
@@ -68,11 +97,12 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
             TAG_TITLENAME = "name";
         }
         this.type = TAG_TYPE;
+        this.activity = activity;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        FacebookSdk.sdkInitialize(getContext());
         ImageView imageView;
             if (convertView == null) {
                 LayoutInflater layoutInflater = (LayoutInflater) getContext()
@@ -81,7 +111,8 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 convertView = layoutInflater.inflate(R.layout.film_element, null, true);
 
             }
-            final View view = convertView;
+            mAuth = FirebaseAuth.getInstance();
+            view = convertView;
             final HashMap<String, Object> data = filmList.get(position);
 
             imageView = (ImageView) convertView.findViewById(R.id.photo);
@@ -225,5 +256,4 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
             return convertView;
         }
-
 }

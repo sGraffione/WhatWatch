@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static Fragment getToRefreshWatched() {return toRefreshWatched;}
 
+    public static Fragment getToRefreshHomepage() {return toRefreshHomepage;}
+
 
     public static  android.support.v4.app.FragmentTransaction getFragmentTransaction() {
         return fragmentManager.beginTransaction();
