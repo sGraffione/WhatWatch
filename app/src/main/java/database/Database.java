@@ -350,6 +350,32 @@ public class Database {
     }
 
 
+    public ArrayList<String> getThisArrayListOfBelin (int watched, String sorting){
+        ArrayList<String> belin = new ArrayList<>();
+        Cursor cursor;
+
+        this.openReadableDB();
+
+        if(sorting.equals("Recent")) {
+            cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
+                    watched + " UNION ALL SELECT film_name, global_index WHERE film_watched = " +
+                    watched + " FROM film_data) T1 ORDER BY global_index", null);
+        } else{
+            cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
+                    watched + " UNION ALL SELECT film_name, global_index WHERE film_watched = " +
+                    watched + " FROM film_data) T1 ORDER BY tv_name", null);
+        }
+
+        while(cursor.moveToNext()){
+            belin.add(cursor.getString(cursor.getColumnIndex("tv_name")));
+        }
+
+        cursor.close();
+        this.closeDB();
+        return belin;
+    }
+
+
     public int getWatched(int id){
         String where = FILM_ID + "= ?";
         String[] whereArgs = {Integer.toString(id)};
