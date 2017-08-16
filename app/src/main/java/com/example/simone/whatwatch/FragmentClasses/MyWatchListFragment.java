@@ -66,7 +66,9 @@ public class MyWatchListFragment extends Fragment {
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         final Database database = new Database(getContext());
-        final ArrayList<Object> films = database.getFilter(0, typeSelected, sortingType);
+        ArrayList<Object> film = database.getFilter(0, typeSelected, sortingType);
+        ArrayList<String> orderedFilm = database.getThisArrayListOfBelin(0, sortingType);
+        final ArrayList<Object> films = sortArrayListByOrderedFilms(film, orderedFilm);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
@@ -121,7 +123,7 @@ public class MyWatchListFragment extends Fragment {
                                     int id_series = ((Tv) films.get(j)).getIdSeries();
                                     int id_season = ((Tv) films.get(j)).getIdSeason();
                                     int next_season = ((Tv) films.get(j)).getSeasonCurrent() + 1;
-                                    int max_season = ((Tv) films.get(j)).getEpisodeMax();
+                                    int max_season = ((Tv) films.get(j)).getSeasonMax();
                                     int trueNextSeason = checkNextSeason(id_series, next_season - 1, max_season, database);
                                     if(trueNextSeason != -1) {
                                         database.updateWatched(id_series, id_season);
@@ -135,7 +137,7 @@ public class MyWatchListFragment extends Fragment {
                                             }else{
                                                 poster_path_season = data.get("poster_path_season").toString();
                                             }
-                                            Tv tv = new Tv(id_series, (int) data.get("id_season"), (String) data.get("name"), 1, (int) data.get("episode_max_season"), next_season, (int) data.get("number_of_seasons"),
+                                            Tv tv = new Tv(id_series, (int) data.get("id_season"), (String) data.get("name"), 1, (int) data.get("episode_max_season"), trueNextSeason, (int) data.get("number_of_seasons"),
                                                     0, (String) data.get("poster_path"), poster_path_season);
                                             database.insertSeries(tv);
                                         }catch (InterruptedException e){
