@@ -564,9 +564,32 @@ public class Database {
     }
 
 
-   // public boolean verifySeriesWatched(int idSeries){
-//
-    //}
+    public boolean verifySeriesWatched(int idSeries){
+        Cursor cursorMaxSeason;
+        Cursor cursorSeasonSeen;
+
+        this.openReadableDB();
+        cursorMaxSeason = db.rawQuery("SELECT tv_season_max FROM tv_data WHERE tv_id_series = " + idSeries + " GROUP BY tv_id_series", null);
+        cursorSeasonSeen = db.rawQuery("SELECT tv_season_current FROM tv_data WHERE tv_id_series = " + idSeries, null);
+
+        cursorMaxSeason.moveToFirst();
+        int seasonMax = cursorMaxSeason.getInt(cursorMaxSeason.getColumnIndex("tv_season_max"));
+
+        if(cursorSeasonSeen.getCount() == seasonMax){
+            cursorMaxSeason.close();
+            cursorSeasonSeen.close();
+            this.closeDB();
+            return true;
+
+        } else{
+            cursorMaxSeason.close();
+            cursorSeasonSeen.close();
+            this.closeDB();
+            return false;
+
+        }
+
+    }
 
 
     public boolean verifySeasonWatched(int idSeries, int idSeason){
