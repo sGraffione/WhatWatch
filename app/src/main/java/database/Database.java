@@ -155,12 +155,12 @@ public class Database {
 
 
     //Indice globale e metodo per ricavarlo dalla personal table
-    int global_index = getLastGlobalIndex();
+    int global_index;
 
 
     private int getLastGlobalIndex(){
         this.openReadableDB();
-        Cursor cursor = db.rawQuery("SELECT last_global_index FROM personal_table", null);
+        Cursor cursor = db.rawQuery("SELECT last_global_index FROM personal_data", null);
         cursor.moveToFirst();
         int index = cursor.getInt(cursor.getColumnIndex(LAST_GLOBAL_INDEX));
         cursor.close();
@@ -589,8 +589,7 @@ public class Database {
 
 
     public long insertFilm(Film film){
-        global_index += 1;
-
+        global_index = getLastGlobalIndex()+1;
         ContentValues in = new ContentValues();
         in.put(FILM_ID, film.getId());
         in.put(FILM_NAME, film.getName());
@@ -612,7 +611,7 @@ public class Database {
 
 
     public long insertSeries(Tv series){
-        global_index += 1;
+        global_index = getLastGlobalIndex()+1;
 
         ContentValues in = new ContentValues();
         in.put(TV_ID_SERIES, series.getIdSeries());
