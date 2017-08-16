@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
@@ -29,6 +30,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
+import database.Film;
 import database.Tv;
 import database.Database;
 
@@ -56,6 +58,7 @@ public class ShowInfoAboutTvElement extends Activity {
         TextView youtube = (TextView) findViewById(R.id.youtube);
         CheckBox seen = (CheckBox) findViewById(R.id.seen);
         TextView runtime = (TextView) findViewById(R.id.runtime);
+        Button check = (Button) findViewById(R.id.check);
 
 
         id_film = 0;
@@ -175,6 +178,14 @@ public class ShowInfoAboutTvElement extends Activity {
                 }
             });
 
+        Database database = new Database(this);
+
+        Boolean isSeen;
+
+        isSeen = database.verifySeriesWatched(id);
+
+        if(isSeen)
+            check.setVisibility(View.VISIBLE);
 
             setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
     }
