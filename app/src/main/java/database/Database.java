@@ -359,7 +359,7 @@ public class Database {
         if(sorting.equals("Recent")) {
             cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
                     watched + " UNION ALL SELECT film_name, global_index FROM film_data WHERE film_watched = " +
-                    watched + ") T1 ORDER BY global_index", null);
+                    watched + ") T1 ORDER BY global_index DESC", null);
         } else{
             cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
                     watched + " UNION ALL SELECT film_name, global_index FROM film_data WHERE film_watched = " +
@@ -562,6 +562,11 @@ public class Database {
             return true;
         }
     }
+
+
+   // public boolean verifySeriesWatched(int idSeries){
+//
+    //}
 
 
     public boolean verifySeasonWatched(int idSeries, int idSeason){
