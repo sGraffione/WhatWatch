@@ -25,10 +25,10 @@
 
         <TextView
             android:id="@+id/Title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="false"
+            android:layout_centerHorizontal="true"
             android:layout_centerInParent="false"
             android:layout_marginTop="32dp"
             android:text="Titolo"
@@ -54,7 +54,7 @@
             android:layout_alignParentEnd="false"
             android:layout_alignStart="@+id/tag_runtime"
             android:layout_below="@+id/tag_runtime"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="140dp"
             android:background="@drawable/button_selector"
             android:text="+"
             android:textSize="30sp" />
@@ -63,12 +63,13 @@
             android:id="@+id/rating"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/tag_rating"
-            android:layout_alignBottom="@+id/tag_rating"
-            android:layout_alignEnd="@id/youtube"
             android:layout_marginLeft="140dp"
             android:text="rating"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:layout_marginStart="11dp"
+            android:layout_alignBaseline="@+id/tag_rating"
+            android:layout_alignBottom="@+id/tag_rating"
+            android:layout_toEndOf="@+id/youtube" />
 
 
         <TextView
@@ -105,23 +106,12 @@
 
         <Button
             android:id="@+id/youtube"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_alignBottom="@+id/add_button"
             android:layout_marginLeft="45dp"
             android:layout_toRightOf="@+id/add_button"
-            android:text="Go to youtube" />
-
-        <CheckBox
-            android:id="@+id/seen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/youtube"
-            android:layout_marginLeft="45dp"
-            android:layout_toRightOf="@+id/youtube"
-            android:text="Seen"
-            android:clickable="false"
-            android:textColor="@color/WhiteSmoke" />
+            android:background="@drawable/yt" />
 
         <TextView
             android:id="@+id/runtime"
@@ -178,5 +168,52 @@
             android:textColor="@color/WhiteSmoke"
             android:textSize="30sp" />
 
+        <Button
+            android:id="@+id/joinChat"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/youtube"
+            android:layout_marginLeft="45dp"
+            android:layout_toRightOf="@+id/youtube"
+            android:background="@drawable/chat"
+            android:focusable="false"
+            android:focusableInTouchMode="false" />
+
+        <TextView
+            android:id="@+id/tag_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/joinChat"
+            android:layout_below="@+id/joinChat"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="0dp"
+            android:text="Chat"
+            android:textColor="@color/WhiteSmoke"
+            android:textSize="22sp" />
+
+        <Button
+            android:id="@+id/eye"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignBaseline="@+id/Title"
+            android:layout_alignBottom="@+id/Title"
+            android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/Title"
+            android:background="@drawable/eye"
+            android:clickable="false"
+            android:paddingTop="8dp" />
+
+        <Button
+            android:id="@+id/check"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_alignBaseline="@+id/Title"
+            android:layout_alignBottom="@+id/Title"
+            android:layout_marginLeft="15dp"
+            android:layout_toEndOf="@+id/Title"
+            android:background="@drawable/check"
+            android:clickable="false"
+            android:paddingTop="8dp"
+            android:visibility="invisible"/>
     </RelativeLayout>
 </ScrollView>
