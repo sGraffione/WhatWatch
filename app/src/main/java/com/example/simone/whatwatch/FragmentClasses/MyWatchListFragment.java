@@ -26,6 +26,8 @@ import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
 import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
@@ -318,7 +320,9 @@ public class MyWatchListFragment extends Fragment {
 
     public void refresh() {
         Database database = new Database(getContext());
-        final ArrayList<Object> films = database.getFilter(0, typeSelected, sortingType);
+        ArrayList<Object> film = database.getFilter(0, typeSelected, sortingType);
+        ArrayList<String> orderedFilms = database.getThisArrayListOfBelin(0, sortingType);
+        final ArrayList<Object> films = sortArrayListByOrderedFilms(film, orderedFilms);
         if(films != null){
             watchlistAdapter = new WatchlistAdapter(getContext(), films);
             gridView.setAdapter(watchlistAdapter);
@@ -371,5 +375,27 @@ public class MyWatchListFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private ArrayList<Object> sortArrayListByOrderedFilms(ArrayList<Object> films, ArrayList<String> orderedFilms) {
+        ArrayList<Object> orderedList = new ArrayList<>();
+        for (int i = 0; i < orderedFilms.size(); i++){
+            String title = orderedFilms.get(i);
+            for(int j = 0; j < films.size(); j++){
+                Object element = films.get(j);
+                if(element instanceof Film){
+                    if(((Film) element).getName().equals(title)){
+                        orderedList.add(element);
+                        break;
+                    }
+                }else{
+                    if(((Tv) element).getName().equals(title)){
+                        orderedList.add(element);
+                        break;
+                    }
+                }
+            }
+        }
+        return orderedList;
     }
 }
