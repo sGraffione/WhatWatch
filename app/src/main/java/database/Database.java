@@ -350,6 +350,22 @@ public class Database {
     }
 
 
+    public ArrayList<String> getThisArrayListOfBelin (int watched){
+        ArrayList<String> belin = new ArrayList<>();
+        this.openReadableDB();
+
+        Cursor cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
+                    watched + " UNION ALL SELECT film_name, global_index WHERE film_watched = " +
+                    watched + " FROM film_data) T1 ORDER BY global_index", null);
+
+        while(cursor.moveToNext()){
+            belin.add(cursor.getString(cursor.getColumnIndex("tv_name")));
+        }
+
+        return belin;
+    }
+
+
     public int getWatched(int id){
         String where = FILM_ID + "= ?";
         String[] whereArgs = {Integer.toString(id)};
