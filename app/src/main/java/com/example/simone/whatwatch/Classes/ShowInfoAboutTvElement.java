@@ -264,7 +264,7 @@ public class ShowInfoAboutTvElement extends Activity {
                 if(!database.verifySeasonWatched(id_film, seasons.getJSONObject(i).getInt("id"))){
                     if(database.verifyId(id_film, seasons.getJSONObject(i).getInt("id")) == 0) {
                         btn_add.setText("+");
-                        btn_add.setBackgroundResource(R.drawable.button_selector);
+                        btn_add.setBackgroundResource(R.drawable.add);
                         btn_add.setHeight(height);
                         btn_add.setWidth(height);
                         btn_add.setGravity(Gravity.CENTER);

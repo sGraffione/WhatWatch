@@ -55,8 +55,7 @@
             android:layout_alignStart="@+id/tag_runtime"
             android:layout_below="@+id/tag_runtime"
             android:layout_marginTop="140dp"
-            android:background="@drawable/button_selector"
-            android:text="+"
+            android:background="@drawable/add"
             android:textSize="30sp" />
 
         <TextView
