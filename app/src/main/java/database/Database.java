@@ -358,8 +358,8 @@ public class Database {
 
         if(sorting.equals("Recent")) {
             cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
-                    watched + " UNION ALL SELECT film_name, global_index WHERE film_watched = " +
-                    watched + " FROM film_data) T1 ORDER BY global_index", null);
+                    watched + " UNION ALL SELECT film_name, global_index FROM film_data WHERE film_watched = " +
+                    watched + ") T1 ORDER BY global_index", null);
         } else{
             cursor = db.rawQuery("SELECT tv_name FROM (SELECT tv_name, global_index FROM tv_data WHERE tv_watched = " +
                     watched + " UNION ALL SELECT film_name, global_index WHERE film_watched = " +
