@@ -6,26 +6,32 @@ public class Film {
 
     private int id;
     private String name;
-    //private String type;
     private int watched;
     private String img_url;
+    private int index;
 
 
 
-    public Film(int id, String name, /*String type,*/ int watched){
+    public Film(int id, String name, int watched){
         this.id = id;
         this.name = name;
-        //this.type = type;
         this.watched = watched;
         this.img_url = null;
     }
 
-    public Film(int id, String name, /*String type,*/ int watched, String img_url){
+    public Film(int id, String name, int watched, String img_url){
         this.id = id;
         this.name = name;
-        //this.type = type;
         this.watched = watched;
         this.img_url = img_url;
+    }
+
+    public Film(int id, String name, int watched, String img_url, int index){
+        this.id = id;
+        this.name = name;
+        this.watched = watched;
+        this.img_url = img_url;
+        this.index = index;
     }
 
     public void setId(int id){
@@ -35,10 +41,6 @@ public class Film {
     public void setName(String name){
         this.name = name;
     }
-
-    /*public void setType(String type){
-        this.type = type;
-    }*/
 
     public void setWatched(int watched){
         this.watched = watched;
@@ -56,10 +58,6 @@ public class Film {
         return name;
     }
 
-    /*public String getType(){
-        return type;
-    }*/
-
     public int getWatched(){
         return watched;
     }
@@ -67,6 +65,10 @@ public class Film {
     public String getImgUrl(){
         return img_url;
     }
+
+    public int getIndex() { return index; }
+
+    public void setIndex(int index) { this.index = index; }
 
 
 }
