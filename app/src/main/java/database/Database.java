@@ -570,7 +570,7 @@ public class Database {
 
         this.openReadableDB();
         cursorMaxSeason = db.rawQuery("SELECT tv_season_max FROM tv_data WHERE tv_id_series = " + idSeries + " GROUP BY tv_id_series", null);
-        cursorSeasonSeen = db.rawQuery("SELECT tv_season_current FROM tv_data WHERE tv_id_series = " + idSeries, null);
+        cursorSeasonSeen = db.rawQuery("SELECT tv_season_current FROM tv_data WHERE tv_id_series = " + idSeries + " AND tv_watched = 1", null);
 
         cursorMaxSeason.moveToFirst();
         int seasonMax = cursorMaxSeason.getInt(cursorMaxSeason.getColumnIndex("tv_season_max"));
