@@ -9,19 +9,20 @@
         android:id="@+id/login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tag_minutes_count"
+        android:layout_alignBottom="@+id/stats"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="25dp" />
+        android:layout_marginEnd="30dp"
+        android:layout_toStartOf="@+id/stats" />
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/logout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/login_button"
-        android:layout_alignBottom="@+id/login_button"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal" />
+        android:layout_alignBottom="@+id/stats"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="30dp"
+        android:layout_toStartOf="@+id/stats" />
 
     <com.facebook.share.widget.ShareButton
         android:id="@+id/share"
@@ -30,7 +31,7 @@
         android:layout_alignBottom="@+id/stats"
         android:layout_marginStart="30dp"
         android:layout_toEndOf="@+id/stats"
-        android:clickable="true"/>
+        android:clickable="true" />
 
     <!-- <Button
         android:id="@+id/share"

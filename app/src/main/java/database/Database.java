@@ -206,6 +206,20 @@ public class Database {
         return tv;
     }
 
+    public Tv getTvById(int id_series){
+        String where = TV_ID_SERIES + "= ?";
+        String[] whereArgs = {Integer.toString(id_series)};
+
+        this.openReadableDB();
+        Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
+        cursor.moveToFirst();
+        Tv tv = getTvFromCursor(cursor);
+        if(cursor != null)
+            cursor.close();
+        this.closeDB();
+
+        return tv;
+    }
 
     public ArrayList<Film> getAllFilms(){
         this.openReadableDB();
