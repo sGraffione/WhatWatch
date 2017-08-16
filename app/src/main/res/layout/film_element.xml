@@ -42,13 +42,14 @@
         android:id="@+id/btnAddToWatch"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/button2"
-        android:layout_toEndOf="@+id/button2"
+        android:layout_marginTop="70dp"
         android:background="@drawable/button_selector"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:text="+"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_below="@+id/rating"
+        android:layout_alignStart="@+id/rating" />
 
     <TextView
         android:id="@+id/rating"
@@ -74,12 +75,14 @@
 
     <Button
         android:id="@+id/joinChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/chat"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:text="Partecipa alla chat"
-        android:layout_below="@+id/scale"
+        android:layout_marginStart="77dp"
+        android:layout_alignBaseline="@+id/btnAddToWatch"
+        android:layout_alignBottom="@+id/btnAddToWatch"
         android:layout_toEndOf="@+id/scale" />
 
 

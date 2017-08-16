@@ -1,22 +1,28 @@
 package com.example.simone.whatwatch.Classes;
 
 import android.app.Activity;
-        import android.content.Intent;
+import android.content.DialogInterface;
+import android.content.Intent;
         import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.simone.whatwatch.ChatGroup.ChatGroup;
 import com.example.simone.whatwatch.JSONParsingClasses.ParsingInfoFilm;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -42,7 +48,7 @@ public class ShowInfoAboutListElement extends Activity {
         TextView Title = (TextView) findViewById(R.id.Title);
         ImageView poster = (ImageView) findViewById(R.id.poster);
         Button add_button = (Button) findViewById(R.id.add_button);
-        CheckBox seen = (CheckBox) findViewById(R.id.seen);
+        final CheckBox seen = (CheckBox) findViewById(R.id.seen);
         Button ytBtn = (Button) findViewById(R.id.youtube);
         TextView overview = (TextView) findViewById(R.id.Overview);
         TextView rating = (TextView) findViewById(R.id.rating);
@@ -51,6 +57,7 @@ public class ShowInfoAboutListElement extends Activity {
         TextView director = (TextView) findViewById(R.id.director);
         TextView cast = (TextView) findViewById(R.id.cast);
         TextView genres = (TextView) findViewById(R.id.genres);
+        Button joinChat = (Button) findViewById(R.id.joinChat);
 
 
         String type = "movie";
@@ -161,6 +168,64 @@ public class ShowInfoAboutListElement extends Activity {
                     ft.detach(toRefresh);
                     ft.attach(toRefresh);
                     ft.commitAllowingStateLoss();
+                }
+            }
+        });
+
+
+
+        joinChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean flagWatched = false;
+                Film film = new Database(v.getContext()).getFilmById(id);
+                if (film == null) {
+                    final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                    alertDialog.setTitle("You need to watch this film!");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
+                } else {
+                    final String uniqueIdDatabaseChatGroupWithoutMarcoR;      //Complimenti marco eh...non aiutarci..stronzo >:-(
+                    //Database database = new Database(v.getContext());
+                    if (film.getWatched() == 0) {
+                        final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                        alertDialog.setTitle("Non l'hai visto");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
+                    } else {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            flagWatched = true;
+                        } else {
+                            final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                            alertDialog.setTitle("You need to be logged with your facebook account");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog.dismiss();
+                                }
+                            });
+                            alertDialog.show();
+                        }
+                    }
+
+                    uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((id + "_movie"));
+
+                    if (flagWatched) {
+                        Intent intent = new Intent(v.getContext(), ChatGroup.class);
+                        intent.putExtra("identifier", uniqueIdDatabaseChatGroupWithoutMarcoR);
+                        v.getContext().startActivity(intent);
+                    }
                 }
             }
         });

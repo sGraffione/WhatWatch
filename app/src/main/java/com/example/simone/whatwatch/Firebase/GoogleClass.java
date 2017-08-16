@@ -36,7 +36,6 @@ public class GoogleClass {
     }
 
 
-
     // This snippet takes the simple approach of using the first returned Google account,
     // but you can pick any Google account on the device.
     public String getAccount() {
