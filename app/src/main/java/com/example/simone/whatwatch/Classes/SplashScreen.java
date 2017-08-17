@@ -51,7 +51,6 @@ public class SplashScreen extends Activity{
         private ArrayList<HashMap<String, Object>> filmInfo;
         private String type;
 
-        //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
         public downloadJSONInfo(ArrayList<HashMap<String, Object>> filmInfo, String type)
         {
             this.filmInfo = filmInfo;

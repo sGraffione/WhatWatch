@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 import database.Film;
 import database.Tv;
-import database.Database;
 
 public class WatchlistAdapter extends BaseAdapter {
 

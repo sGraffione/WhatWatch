@@ -1,23 +1,13 @@
 package com.example.simone.whatwatch.Adapter;
 
 import android.app.Activity;
-import android.app.Dialog;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.annotation.MainThread;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,35 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.simone.whatwatch.ChatGroup.ChatGroup;
-import com.example.simone.whatwatch.Classes.App;
-import com.example.simone.whatwatch.FragmentClasses.Homepage;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -84,7 +51,6 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
     String type;
     private FirebaseAuth mAuth;
     private View view;
-    CallbackManager mCallbackManager;
 
     public CustomListAdapter(Activity activity, Context context, int resource, ArrayList<HashMap<String, Object>> filmList, String TAG_TYPE) {
         super(context, resource, filmList);
@@ -181,7 +147,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 }
             });
 
-        joinChat.setOnClickListener(new View.OnClickListener() {
+        /*joinChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean flagWatched = false;
@@ -190,8 +156,8 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 if(type.equals("movie")){
                     if(database.getWatched((int) data.get("id")) == 0){
                         final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
-                        alertDialog.setTitle("Non l'hai visto");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                        alertDialog.setTitle("You didn't watch this film!");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok..", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 alertDialog.dismiss();
@@ -205,7 +171,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                         }else{
                             final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
                             alertDialog.setTitle("You need to be logged with your facebook account");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -218,8 +184,8 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 }else{
                     if(database.getWatched((int) data.get("id"), (int) data.get("id_season")) == 0){
                         final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
-                        alertDialog.setTitle("Non l'hai visto");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                        alertDialog.setTitle("You didn't watch this serie!");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 alertDialog.dismiss();
@@ -233,7 +199,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                         }else{
                             final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
                             alertDialog.setTitle("You need to be logged with your facebook account");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();
@@ -250,7 +216,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                     context.startActivity(intent);
                 }
             }
-        });
+        });*/
 
 
 

@@ -1,13 +1,14 @@
 package com.example.simone.whatwatch.Classes;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,9 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.simone.whatwatch.ChatGroup.ChatGroup;
 import com.example.simone.whatwatch.JSONParsingClasses.ParsingInfoFilm;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -51,14 +55,13 @@ public class ShowInfoAboutTvElement extends Activity {
         final Button add_button = (Button) findViewById(R.id.add_button);
         final TextView overview = (TextView) findViewById(R.id.Overview);
         final TextView rating = (TextView) findViewById(R.id.rating);
-        //----seasonList usata in setEpisodeList----//
         TextView genres = (TextView) findViewById(R.id.genres);
         TextView creators = (TextView) findViewById(R.id.creators);
         TextView year = (TextView) findViewById(R.id.year);
         TextView youtube = (TextView) findViewById(R.id.youtube);
-        CheckBox seen = (CheckBox) findViewById(R.id.seen);
         TextView runtime = (TextView) findViewById(R.id.runtime);
         Button check = (Button) findViewById(R.id.check);
+        Button joinChat = (Button) findViewById(R.id.joinChat);
 
 
         id_film = 0;
@@ -188,6 +191,65 @@ public class ShowInfoAboutTvElement extends Activity {
             check.setVisibility(View.VISIBLE);
 
             setEpisodeList((JSONArray) filmInfo.get(0).get("seasons"));
+
+        joinChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean flagWatched = false;
+                Tv tv = new Database(v.getContext()).getTvById(id);
+                if (tv == null) {
+                    final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                    alertDialog.setTitle("You need to watch this serie!");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    alertDialog.show();
+                } else {
+                    final String uniqueIdDatabaseChatGroupWithoutMarcoR;      //Complimenti marco eh...non aiutarci..stronzo >:-(
+                    //Database database = new Database(v.getContext());
+                    if (tv.getWatched() == 0) {
+                        final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                        alertDialog.setTitle("You didn't watch this serie");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
+                    } else {
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+                            flagWatched = true;
+                        } else {
+                            final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                            alertDialog.setTitle("You need to be logged with your facebook account");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog.dismiss();
+                                }
+                            });
+                            alertDialog.show();
+                        }
+                    }
+
+                    uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((id + "_movie"));
+
+                    if (flagWatched) {
+                        Intent intent = new Intent(v.getContext(), ChatGroup.class);
+                        intent.putExtra("identifier", uniqueIdDatabaseChatGroupWithoutMarcoR);
+                        v.getContext().startActivity(intent);
+                    }
+                }
+            }
+        });
+
+
+
     }
 
     private void setEpisodeList(JSONArray seasons) {

@@ -2,10 +2,12 @@ package com.example.simone.whatwatch.Adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.simone.whatwatch.ChatGroup.ChatGroup;
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -59,6 +64,7 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
         imageView = (ImageView) convertView.findViewById(R.id.photo);
         Button button = (Button) convertView.findViewById(R.id.btnAddToWatch);
+        Button joinChat = (Button) convertView.findViewById(R.id.joinChat);
 
         if(data.get("poster_path").equals("null") || data.get("poster_path").equals("")) {
             Picasso.with(context).load(R.drawable.noavailable).into(imageView);
@@ -119,6 +125,76 @@ public class SearchAdapter extends ArrayAdapter<HashMap<String, Object>> {
         });
 
 
+        /*joinChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean flagWatched = false;
+                final String uniqueIdDatabaseChatGroupWithoutMarcoR;      //Complimenti marco eh...non aiutarci..stronzo >:-(
+                Database database = new Database(getContext());
+                if(type.equals("movie")){
+                    if(database.getWatched((int) data.get("id")) == 0){
+                        final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+                        alertDialog.setTitle("You didn't watch this film!");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok..", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
+                    }else{
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if(user != null){
+                            flagWatched = true;
+                        }else{
+                            final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+                            alertDialog.setTitle("You need to be logged with your facebook account");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog.dismiss();
+                                }
+                            });
+                            alertDialog.show();
+                        }
+                    }
+                    uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((int) data.get("id")) + "_movie";
+                }else{
+                    if(database.getWatched((int) data.get("id"), (int) data.get("id_season")) == 0){
+                        final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+                        alertDialog.setTitle("You didn't watch this serie!");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                        alertDialog.show();
+                    }else{
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if(user != null){
+                            flagWatched = true;
+                        }else{
+                            final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+                            alertDialog.setTitle("You need to be logged with your facebook account");
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    alertDialog.dismiss();
+                                }
+                            });
+                            alertDialog.show();
+                        }
+                    }
+                    uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((int) data.get("id")) + "_tv";
+                }
+                if(flagWatched){
+                    Intent intent = new Intent(context, ChatGroup.class);
+                    intent.putExtra("identifier", uniqueIdDatabaseChatGroupWithoutMarcoR);
+                    context.startActivity(intent);
+                }
+            }
+        });*/
         return convertView;
     }
 }
