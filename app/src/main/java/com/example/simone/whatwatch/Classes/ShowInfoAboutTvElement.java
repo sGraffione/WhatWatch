@@ -196,10 +196,10 @@ public class ShowInfoAboutTvElement extends Activity {
             @Override
             public void onClick(View v) {
                 boolean flagWatched = false;
-                Tv tv = new Database(v.getContext()).getTvById(id);
-                if (tv == null) {
+                boolean watched = new Database(v.getContext()).getTvById(id);
+                if (!watched) {
                     final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
-                    alertDialog.setTitle("You need to watch this serie!");
+                    alertDialog.setTitle("You need to watch at least one season of this series!");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -210,17 +210,6 @@ public class ShowInfoAboutTvElement extends Activity {
                 } else {
                     final String uniqueIdDatabaseChatGroupWithoutMarcoR;      //Complimenti marco eh...non aiutarci..stronzo >:-(
                     //Database database = new Database(v.getContext());
-                    if (tv.getWatched() == 0) {
-                        final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
-                        alertDialog.setTitle("You didn't watch this serie");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                alertDialog.dismiss();
-                            }
-                        });
-                        alertDialog.show();
-                    } else {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         if (user != null) {
                             flagWatched = true;
@@ -234,7 +223,6 @@ public class ShowInfoAboutTvElement extends Activity {
                                 }
                             });
                             alertDialog.show();
-                        }
                     }
 
                     uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((id + "_movie"));

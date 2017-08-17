@@ -206,19 +206,21 @@ public class Database {
         return tv;
     }
 
-    public Tv getTvById(int id_series){
-        String where = TV_ID_SERIES + "= ?";
+    public boolean getTvById(int id_series){
+        String where = TV_ID_SERIES + "= ? AND tv_watched = 1";
         String[] whereArgs = {Integer.toString(id_series)};
 
         this.openReadableDB();
         Cursor cursor = db.query(TV_TABLE, null, where, whereArgs, null, null, null);
-        cursor.moveToFirst();
-        Tv tv = getTvFromCursor(cursor);
-        if(cursor != null)
+        if(cursor.getCount() == 0){
             cursor.close();
-        this.closeDB();
-
-        return tv;
+            this.closeDB();
+            return false;
+        }else{
+            cursor.close();
+            this.closeDB();
+            return true;
+        }
     }
 
 

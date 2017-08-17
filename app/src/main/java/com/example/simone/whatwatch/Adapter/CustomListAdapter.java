@@ -147,7 +147,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 }
             });
 
-        /*joinChat.setOnClickListener(new View.OnClickListener() {
+        joinChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 boolean flagWatched = false;
@@ -182,9 +182,10 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                     }
                     uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((int) data.get("id")) + "_movie";
                 }else{
-                    if(database.getWatched((int) data.get("id"), (int) data.get("id_season")) == 0){
-                        final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
-                        alertDialog.setTitle("You didn't watch this serie!");
+                    boolean watched = new Database(v.getContext()).getTvById((int) data.get("id"));
+                    if (!watched) {
+                        final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+                        alertDialog.setTitle("You need to watch at least one season of this series!");
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -216,7 +217,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                     context.startActivity(intent);
                 }
             }
-        });*/
+        });
 
 
 
