@@ -1,10 +1,15 @@
 package com.example.simone.whatwatch;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -13,6 +18,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 
 import com.example.simone.whatwatch.Adapter.SectionsPageAdapter;
 import com.example.simone.whatwatch.Classes.SearchActivity;
@@ -87,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("MAIN ACTIVITY", "Preso filmInfo");
         filmInfo = (ArrayList<HashMap<String, Object>>) getIntent().getSerializableExtra("INFO");
     }
+
 
     @Override
     public void onResume(){

@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.simone.whatwatch.Adapter.WatchedAdapter;
 import com.example.simone.whatwatch.ChatGroup.ChatGroup;
+import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
 import com.example.simone.whatwatch.Classes.ShowInfoAboutListElement;
 import com.example.simone.whatwatch.Classes.ShowInfoAboutTvElement;
@@ -46,6 +47,7 @@ import com.facebook.share.widget.LikeView;
 import com.facebook.share.widget.ShareButton;
 import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -63,6 +65,9 @@ import database.Database;
 import static com.facebook.FacebookSdk.getApplicationContext;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 
 public class WatchedListFragment extends Fragment {
@@ -86,8 +91,7 @@ public class WatchedListFragment extends Fragment {
     TextView series_count;
 
     private FirebaseAuth mAuth;
-
-    GraphRequest facebook = new GraphRequest();
+    private DatabaseReference mUserDatabase;
 
 
     @Override
@@ -115,6 +119,7 @@ public class WatchedListFragment extends Fragment {
         loginWithFb();
 
         mAuth = FirebaseAuth.getInstance();
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         view.findViewById(R.id.logout_button).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,9 +150,6 @@ public class WatchedListFragment extends Fragment {
                 startActivity(dbmanager);
             }
         });
-
-
-
 
 
 
@@ -199,13 +201,21 @@ public class WatchedListFragment extends Fragment {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
-                        Log.d("BANANA", "signInWithCredential:success");
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        updateUI(user);
+                    Log.d("BANANA", "signInWithCredential:success");
+                    FirebaseUser user = mAuth.getCurrentUser();
+                    String device_token = FirebaseInstanceId.getInstance().getToken();
+                    String current_user_id = mAuth.getCurrentUser().getUid();
+                    mUserDatabase.child(current_user_id).child("device_token").setValue(device_token).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("SubscribeUser", "SUCCESS");
+                        }
+                    });
+                    updateUI(user);
                     } else {
                     // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithCredential:failure", task.getException());
-                        Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                    Log.w(TAG, "signInWithCredential:failure", task.getException());
+                    //Toast.makeText(getActivity(), "Authentication failed.", Toast.LENGTH_SHORT).show();
                     updateUI(null);
                     }
                 }

@@ -8,7 +8,11 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
+import com.example.simone.whatwatch.ChatGroup.ChatGroup;
+import com.example.simone.whatwatch.FragmentClasses.WatchedListFragment;
 import com.example.simone.whatwatch.MainActivity;
+import com.example.simone.whatwatch.R;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
@@ -21,64 +25,22 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-    // ...
-
-    // TODO(developer): Handle FCM messages here.
-    // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-    Log.d(TAG, "From: " + remoteMessage.getFrom());
-
-    // Check if message contains a data payload.
-    if (remoteMessage.getData().size() > 0) {
-        Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-        if (/* Check if data needs to be processed by long running job */ true) {
-            // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
-            scheduleJob();
-        } else {
-            // Handle message within 10 seconds
-            handleNow();
-        }
+        // TODO(developer): Handle FCM messages here.
+        // If the application is in the foreground handle both data and notification messages here.
+        // Also if you intend on generating your own notifications as a result of a received FCM
+        // message, here is where that should be initiated. See sendNotification method below.
+        sendNotification(remoteMessage.getNotification().getBody());
+        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
     }
 
-    // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
-
-    // Also if you intend on generating your own notifications as a result of a received FCM
-    // message, here is where that should be initiated. See sendNotification method below.
-    }
-
-    private void scheduleJob() {
-        // [START dispatch_job]
-        FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(this));
-        Job myJob = dispatcher.newJobBuilder()
-                .setService(MyJobService.class)
-                .setTag("my-job-tag")
-                .build();
-        dispatcher.schedule(myJob);
-        // [END dispatch_job]
-    }
-
-    /**
-     * Handle time allotted to BroadcastReceivers.
-     */
-
-    private void handleNow() {
-        Log.d(TAG, "Short lived task is done.");
-    }
-    /**
-     * Create and show a simple notification containing the received FCM message.
-     *
-     * @param messageBody FCM message body received.
-     */
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ChatGroup.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
+        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle("FCM Message")
                 .setContentText(messageBody)
@@ -88,6 +50,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
 }

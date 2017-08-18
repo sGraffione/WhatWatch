@@ -1,28 +1,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
-     
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Really_Really_Dark_Grey_But_Not_Too_Much">
+
     <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentStart="true"
         android:id="@+id/message_user"
-    android:textStyle="normal|bold" />
-     
-        <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_alignBottom="@+id/message_user"
-    android:layout_alignParentEnd="true"
-    android:id="@+id/message_time" />
-     
-        <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/message_user"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        android:text="User 1"
+        android:textColor="@color/WhiteSmoke"
+        android:textStyle="normal|bold" />
+
+    <TextView
+        android:id="@+id/message_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/message_user"
+        android:layout_alignParentEnd="true"
+        android:text="Orario"
+        android:textColor="@color/WhiteSmoke" />
+
+    <TextView
         android:id="@+id/message_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/message_user"
+        android:layout_marginTop="5dp"
+        android:text="Test messaggio"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/WhiteSmoke"
         android:textSize="18sp" />
-    </RelativeLayout>
+</RelativeLayout>
