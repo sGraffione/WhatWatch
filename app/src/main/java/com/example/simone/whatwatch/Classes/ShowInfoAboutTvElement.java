@@ -225,11 +225,12 @@ public class ShowInfoAboutTvElement extends Activity {
                             alertDialog.show();
                     }
 
-                    uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((id + "_movie"));
+                    uniqueIdDatabaseChatGroupWithoutMarcoR = String.valueOf((id + "_tv"));
 
                     if (flagWatched) {
                         Intent intent = new Intent(v.getContext(), ChatGroup.class);
                         intent.putExtra("identifier", uniqueIdDatabaseChatGroupWithoutMarcoR);
+                        intent.putExtra("title", (String) data.get("name"));
                         v.getContext().startActivity(intent);
                     }
                 }

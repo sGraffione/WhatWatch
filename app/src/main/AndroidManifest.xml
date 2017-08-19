@@ -41,6 +41,10 @@
         <activity
             android:name=".ChatGroup.ChatGroup"
             android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name = "com.example.simone.whatwatch_TARGET_NOTIFICATION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
         <activity

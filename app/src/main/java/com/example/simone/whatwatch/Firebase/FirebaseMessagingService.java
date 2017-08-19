@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -29,29 +30,36 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // If the application is in the foreground handle both data and notification messages here.
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(remoteMessage.getNotification().getBody());
+        sendNotification(remoteMessage);
         Log.d(TAG, "From: " + remoteMessage.getFrom());
         Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
     }
 
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, ChatGroup.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+    private void sendNotification(RemoteMessage remoteMessage) {
+
+        String messageBody = remoteMessage.getNotification().getBody();
+        String title = remoteMessage.getNotification().getTitle();
+        String click_action = remoteMessage.getNotification().getClickAction();
+        String identifier = remoteMessage.getData().get("identifier");
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("FCM Message")
+                .setContentTitle(title)
                 .setContentText(messageBody)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
+                .setSound(defaultSoundUri);
+
+        Intent intent = new Intent(click_action);
+        intent.putExtra("identifier", identifier);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        notificationBuilder.setContentIntent(pendingIntent);
+
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify((int) System.currentTimeMillis() /* ID of notification */, notificationBuilder.build());
     }
 
 }

@@ -224,6 +224,7 @@ public class ShowInfoAboutListElement extends Activity {
                     if (flagWatched) {
                         Intent intent = new Intent(v.getContext(), ChatGroup.class);
                         intent.putExtra("identifier", uniqueIdDatabaseChatGroupWithoutMarcoR);
+                        intent.putExtra("title", (String) data.get("original_title"));
                         v.getContext().startActivity(intent);
                     }
                 }

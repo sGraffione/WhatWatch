@@ -28,9 +28,11 @@ public class ChatGroup extends AppCompatActivity{
 
     private FirebaseListAdapter<ChatMessage> adapter;
     String id_chat;
+    String title;
     private DatabaseReference mNotificationDatabase;
     private FirebaseUser mCurrentUser;
     private DatabaseReference mChatGroup;
+    private DatabaseReference mUserPerChat;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -40,8 +42,10 @@ public class ChatGroup extends AppCompatActivity{
         mNotificationDatabase = FirebaseDatabase.getInstance().getReference().child("Notification");
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mChatGroup = FirebaseDatabase.getInstance().getReference().child("ChatGroup");
+        mUserPerChat = FirebaseDatabase.getInstance().getReference().child("UserPerChat");
 
         id_chat = getIntent().getStringExtra("identifier");
+        title = getIntent().getStringExtra("title");
 
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,10 +56,16 @@ public class ChatGroup extends AppCompatActivity{
                 // of ChatMessage to the Firebase database
 
                 mChatGroup.child(id_chat).push().setValue(new ChatMessage(input.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+
+                HashMap<String, String> addUser = new HashMap<>();
+                addUser.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                mUserPerChat.child(id_chat).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(addUser);
+
                 HashMap<String, String> notificationData = new HashMap<>();
                 notificationData.put("from", mCurrentUser.getUid());
                 notificationData.put("chat", id_chat);
                 notificationData.put("text", input.getText().toString());
+                notificationData.put("title", title);
                 mNotificationDatabase.child(id_chat).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

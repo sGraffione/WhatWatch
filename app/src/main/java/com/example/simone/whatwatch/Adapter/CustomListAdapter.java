@@ -214,6 +214,7 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 if(flagWatched){
                     Intent intent = new Intent(context, ChatGroup.class);
                     intent.putExtra("identifier", uniqueIdDatabaseChatGroupWithoutMarcoR);
+                    intent.putExtra("title", (String) data.get(TAG_TITLENAME));
                     context.startActivity(intent);
                 }
             }
