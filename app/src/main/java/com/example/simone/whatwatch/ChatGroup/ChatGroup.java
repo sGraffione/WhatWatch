@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.simone.whatwatch.R;
@@ -123,6 +124,7 @@ public class ChatGroup extends AppCompatActivity{
                 HashMap<String, String> addUser = new HashMap<>();
                 addUser.put("user_id", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 mUserPerChat.child(id_chat).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(addUser);
+
                 exit.setVisibility(View.VISIBLE);
                 join.setVisibility(View.INVISIBLE);
                 input.setEnabled(true);
@@ -137,19 +139,21 @@ public class ChatGroup extends AppCompatActivity{
                 // Read the input field and push a new instance
                 // of ChatMessage to the Firebase database
 
-                mChatGroup.child(id_chat).push().setValue(new ChatMessage(input.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName()));
+                if(input.getText().toString().trim().length() > 0) {
+                    mChatGroup.child(id_chat).push().setValue(new ChatMessage(input.getText().toString().trim(), FirebaseAuth.getInstance().getCurrentUser().getDisplayName(), id_user));
 
-                HashMap<String, String> notificationData = new HashMap<>();
-                notificationData.put("from", mCurrentUser.getUid());
-                notificationData.put("chat", id_chat);
-                notificationData.put("text", input.getText().toString());
-                notificationData.put("title", title);
-                mNotificationDatabase.child(id_chat).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "Notifica caricata con successo");
-                    }
-                });
+                    HashMap<String, String> notificationData = new HashMap<>();
+                    notificationData.put("from", mCurrentUser.getUid());
+                    notificationData.put("chat", id_chat);
+                    notificationData.put("text", input.getText().toString());
+                    notificationData.put("title", title);
+                    mNotificationDatabase.child(id_chat).push().setValue(notificationData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "Notifica caricata con successo");
+                        }
+                    });
+                }
                 // Clear the input
                 input.setText("");
             }
@@ -166,6 +170,41 @@ public class ChatGroup extends AppCompatActivity{
                 TextView messageText = (TextView)v.findViewById(R.id.message_text);
                 TextView messageUser = (TextView)v.findViewById(R.id.message_user);
                 TextView messageTime = (TextView)v.findViewById(R.id.message_time);
+
+
+                if(model.getFirebaseId().equals(id_user)){
+                    RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                    params1.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    messageUser.setLayoutParams(params1);
+
+                    params2.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    params2.addRule(RelativeLayout.BELOW, R.id.message_user);
+                    messageText.setLayoutParams(params2);
+
+                    params3.addRule(RelativeLayout.BELOW, R.id.message_text);
+                    params3.addRule(RelativeLayout.ALIGN_PARENT_END);
+                    params3.setMargins(0,0,0,0);
+                    messageTime.setLayoutParams(params3);
+                }else{
+                    RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                    RelativeLayout.LayoutParams params3 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+                    params1.addRule(RelativeLayout.ALIGN_PARENT_START);
+                    messageUser.setLayoutParams(params1);
+
+                    params2.addRule(RelativeLayout.ALIGN_PARENT_START);
+                    params2.addRule(RelativeLayout.BELOW, R.id.message_user);
+                    messageText.setLayoutParams(params2);
+
+                    params3.addRule(RelativeLayout.BELOW, R.id.message_text);
+                    params3.addRule(RelativeLayout.RIGHT_OF, R.id.message_text);
+                    params3.setMargins(30,0,0,0);
+                    messageTime.setLayoutParams(params3);
+                }
 
                 // Set their text
                 messageText.setText(model.getMessageText());

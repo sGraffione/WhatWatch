@@ -12,7 +12,7 @@
     <color name="white">#FFFFFF</color>
     <color name="yellow">#FFFF00</color>
     <color name="fuchsia">#FF00FF</color>
-    <color name="red">#FF0000</color>
+    <color name="red">#cd0000</color>
     <color name="silver">#C0C0C0</color>
     <color name="gray">#808080</color>
     <color name="olive">#808000</color>
@@ -170,6 +170,7 @@
     <color name="Really_Really_Dark_Grey_But_Not_Too_Much">#1a1a1a</color>
     <color name="The_nicest_green_for_button_and_stuff">#1ab14a</color>
     <color name="A_fucking_transparent_white">#caffffff</color>
+    <color name="dark_grey_but_not_important_as_the_other">#FF515151</color>
 
 
 </resources>

@@ -17,4 +17,16 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
     <style name="AppTheme.NoActionBar." parent = "ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="TextLabel" parent="TextAppearance.AppCompat">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/WhiteSmoke</item>
+        <item name="android:textColorHighlight">@color/WhiteSmoke</item>
+        <item name="android:textColorLink">@color/WhiteSmoke</item>
+        <item name="android:textSize">20sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/WhiteSmoke</item>
+        <item name="colorControlNormal">@color/WhiteSmoke</item>
+        <item name="colorControlActivated">@color/WhiteSmoke</item>
+    </style>
+
 </resources>
