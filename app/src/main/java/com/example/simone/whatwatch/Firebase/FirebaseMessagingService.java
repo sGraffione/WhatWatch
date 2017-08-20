@@ -46,8 +46,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(title)
                 .setContentText(messageBody)
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri);
+                .setSmallIcon(R.drawable.chat);
 
         Intent intent = new Intent(click_action);
         intent.putExtra("identifier", identifier);
