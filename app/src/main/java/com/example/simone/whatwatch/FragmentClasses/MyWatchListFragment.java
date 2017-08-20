@@ -90,6 +90,13 @@ public class MyWatchListFragment extends Fragment {
                             alertDialog.dismiss();
                         }
                     });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Not interested", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            database.deleteFilm(((Film) films.get(j)).getId());
+                            refreshWatchedWatchlist();
+                        }
+                    });
                     alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "I've watched it!", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
@@ -174,7 +181,42 @@ public class MyWatchListFragment extends Fragment {
                             }
                         });
                     }
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "I don't like it (delete now)", new DialogInterface.OnClickListener() {
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Go to the next season", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int id_series = ((Tv) films.get(j)).getIdSeries();
+                            int id_season = ((Tv) films.get(j)).getIdSeason();
+                            int next_season = ((Tv) films.get(j)).getSeasonCurrent() + 1;
+                            int max_season = ((Tv) films.get(j)).getSeasonMax();
+                            int trueNextSeason = checkNextSeason(id_series, next_season - 1, max_season, database);
+                            if(trueNextSeason != -1) {
+                                database.updateWatched(id_series, id_season);
+                                String url = "https://api.themoviedb.org/3/tv/"+ id_series + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
+                                try{
+                                    ArrayList<HashMap<String, Object>> newSeason = new ParsingInfoFilm(view.getContext(), "tv", trueNextSeason).execute(url).get();
+                                    String poster_path_season;
+                                    HashMap<String, Object> data = newSeason.get(0);
+                                    if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("") || data.get("poster_path_season") == null){
+                                        poster_path_season = data.get("poster_path").toString();
+                                    }else{
+                                        poster_path_season = data.get("poster_path_season").toString();
+                                    }
+                                    Tv tv = new Tv(id_series, (int) data.get("id_season"), (String) data.get("name"), 1, (int) data.get("episode_max_season"), trueNextSeason, (int) data.get("number_of_seasons"),
+                                            0, (String) data.get("poster_path"), poster_path_season);
+                                    database.insertSeries(tv);
+                                }catch (InterruptedException e){
+                                    e.printStackTrace();
+                                }catch (ExecutionException e){
+                                    e.printStackTrace();
+                                }
+                            }else{
+                                diplayAlertSeasonMax(id_series, id_season);
+                            }
+
+                            refreshWatchedWatchlist();
+                        }
+                    });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Not interested", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             database.deleteSeason(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
@@ -237,7 +279,11 @@ public class MyWatchListFragment extends Fragment {
                 return -1;
             }
         }
-        return nextSeason;
+        if(nextSeason > season_max){
+            return -1;
+        }else{
+            return nextSeason;
+        }
     }
 
 
