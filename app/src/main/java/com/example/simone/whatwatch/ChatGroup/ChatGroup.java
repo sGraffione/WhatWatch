@@ -208,7 +208,7 @@ public class ChatGroup extends AppCompatActivity{
 
                 // Set their text
                 messageText.setText(model.getMessageText());
-                messageUser.setText(model.getMessageUser());
+                messageUser.setText(model.getMessageUser().substring(0, model.getMessageUser().indexOf(' ')));
                 // Format the date before showing it
                 messageTime.setText(DateFormat.format("HH:mm",model.getMessageTime()));
             }
