@@ -45,9 +45,23 @@
         android:layout_height="match_parent"
         android:layout_above="@id/fab"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_marginBottom="16dp"
         android:background="@color/Really_Really_Dark_Grey_But_Not_Too_Much"
         android:divider="@android:color/transparent"
-        android:dividerHeight="16dp" />
+        android:dividerHeight="16dp"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        android:layout_marginTop="40dp"/>
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:textSize="30sp"
+        android:text="Test titolo"
+        android:textColor="@color/White"
+        />
 </RelativeLayout>

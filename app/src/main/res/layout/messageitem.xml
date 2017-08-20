@@ -11,7 +11,8 @@
         android:layout_alignParentTop="true"
         android:text="User 1"
         android:textColor="@color/WhiteSmoke"
-        android:textStyle="normal|bold" />
+        android:textStyle="normal|bold"
+        android:textSize="20sp"/>
 
     <TextView
         android:id="@+id/message_time"
@@ -32,5 +33,5 @@
         android:text="Test messaggio"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textColor="@color/WhiteSmoke"
-        android:textSize="18sp" />
+        android:textSize="25sp" />
 </RelativeLayout>
