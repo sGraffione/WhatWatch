@@ -65,4 +65,27 @@
         android:textColor="@color/White"
         android:textSize="45sp" />
         />
+
+    <Button
+        android:id="@+id/exit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/title"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:backgroundTint="@android:color/holo_red_dark"
+        android:text="Exit from chat"
+        android:textColor="@color/WhiteSmoke" />
+
+    <Button
+        android:id="@+id/join"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/exit"
+        android:layout_alignParentEnd="true"
+        android:layout_alignStart="@+id/exit"
+        android:backgroundTint="@color/green_temp"
+        android:text="Join chat"
+        android:textColor="@color/WhiteSmoke"
+        android:layout_alignParentTop="true" />
 </RelativeLayout>
