@@ -17,6 +17,8 @@ import com.example.simone.whatwatch.R;
 import com.firebase.jobdispatcher.FirebaseJobDispatcher;
 import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.RemoteMessage;
 
 
@@ -30,9 +32,15 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         // If the application is in the foreground handle both data and notification messages here.
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(remoteMessage);
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-        Log.d(TAG, "Notification Message Body: " + remoteMessage.getNotification().getBody());
+        String from = remoteMessage.getData().get("from_user");
+        if(!from.equals(FirebaseAuth.getInstance().getCurrentUser().getUid())){
+            Log.d(TAG, "Invio notifica");
+            sendNotification(remoteMessage);
+        }else{
+            Log.d(TAG, "Blocco notifica");
+        }
+        Log.d(TAG, "From: " + from);
+        Log.d(TAG, "CurrentUser: " + FirebaseAuth.getInstance().getCurrentUser().getUid());
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
