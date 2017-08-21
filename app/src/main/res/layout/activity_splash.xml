@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Really_Really_Dark_Gray"
+    android:background="@color/dark_grey_but_not_important_as_the_other"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -10,7 +11,9 @@
         android:id="@+id/intro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="false"
+        android:layout_marginTop="500dp"
         android:scrollbarAlwaysDrawVerticalTrack="false"
         android:text="What Watch"
         android:textAlignment="center"
@@ -28,4 +31,12 @@
         android:textAlignment="center"
         android:textColor="@color/WhiteSmoke"
         android:textSize="40sp" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="300dp"
+        app:srcCompat="@drawable/splash_logo" />
 </RelativeLayout>

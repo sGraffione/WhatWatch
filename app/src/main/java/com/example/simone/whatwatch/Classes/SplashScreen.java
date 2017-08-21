@@ -17,14 +17,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
 
 
-public class SplashScreen extends Activity{
+public class SplashScreen extends AppCompatActivity{
 
-    private static int SPLASH_TIME_OUT = 0;
+    private static int SPLASH_TIME_OUT = 1000;
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
 
     @Override
