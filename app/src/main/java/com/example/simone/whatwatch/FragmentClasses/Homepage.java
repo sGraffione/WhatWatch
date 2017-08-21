@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.simone.whatwatch.Adapter.CustomListAdapter;
 import com.example.simone.whatwatch.Classes.App;
@@ -39,6 +40,8 @@ public class Homepage extends Fragment {
     CustomListAdapter adapter;
     Button forward;
     Button back;
+    TextView forwardNumber;
+    TextView backNumber;
 
     View view = null;
 
@@ -84,6 +87,8 @@ public class Homepage extends Fragment {
 
         forward = (Button) footerView.findViewById(R.id.next);
         back = (Button) footerView.findViewById(R.id.back);
+        forwardNumber = (TextView) footerView.findViewById(R.id.nextNumber);
+        backNumber = (TextView) footerView.findViewById(R.id.backNumber);
 
         adapter = new CustomListAdapter(getActivity(), getContext(), R.layout.film_element, filmInfo, typeSelected);
         lv.setAdapter(adapter);
@@ -118,25 +123,33 @@ public class Homepage extends Fragment {
 
         if(page == 1){
             back.setVisibility(view.INVISIBLE);
+            backNumber.setVisibility(view.INVISIBLE);
         }else{
             back.setVisibility(view.VISIBLE);
+            backNumber.setVisibility(view.VISIBLE);
         }
         if(typeSelected.equals("movie")){
             if(page == pagMax){
                 forward.setVisibility(view.INVISIBLE);
+                forwardNumber.setVisibility(view.INVISIBLE);
             }else{
                 forward.setVisibility(view.VISIBLE);
+                forwardNumber.setVisibility(view.VISIBLE);
             }
         }else{
             if(page == pagMaxTv){
                 forward.setVisibility(view.INVISIBLE);
+                forwardNumber.setVisibility(view.INVISIBLE);
             }else{
                 forward.setVisibility(view.VISIBLE);
+                forwardNumber.setVisibility(view.VISIBLE);
             }
         }
 
-        back.setText("<< Page " + String.valueOf(page-1));
-        forward.setText("Page " + String.valueOf(page+1) + " >>");
+        backNumber.setText("#" + String.valueOf(page-1) + " ");
+        forwardNumber.setText(" #" + String.valueOf(page+1));
+
+
 
         forward.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,25 +207,31 @@ public class Homepage extends Fragment {
 
         if(page == 1){
             back.setVisibility(view.INVISIBLE);
+            backNumber.setVisibility(view.INVISIBLE);
         }else{
             back.setVisibility(view.VISIBLE);
+            backNumber.setVisibility(view.VISIBLE);
         }
         if(typeSelected.equals("movie")){
             if(page == pagMax){
                 forward.setVisibility(view.INVISIBLE);
+                forwardNumber.setVisibility(view.INVISIBLE);
             }else{
                 forward.setVisibility(view.VISIBLE);
+                forwardNumber.setVisibility(view.VISIBLE);
             }
         }else{
             if(page == pagMaxTv){
                 forward.setVisibility(view.INVISIBLE);
+                forwardNumber.setVisibility(view.INVISIBLE);
             }else{
                 forward.setVisibility(view.VISIBLE);
+                forwardNumber.setVisibility(view.VISIBLE);
             }
         }
 
-        back.setText("<< Page " + String.valueOf(page-1));
-        forward.setText("Page " + String.valueOf(page+1) + " >>");
+        backNumber.setText("#" + String.valueOf(page-1) + " ");
+        forwardNumber.setText(" #" + String.valueOf(page+1));
 
     }
 

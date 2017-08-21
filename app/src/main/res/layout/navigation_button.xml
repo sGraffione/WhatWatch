@@ -11,19 +11,39 @@
         />
     <Button
         android:id="@+id/back"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:text="back"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@id/invisibleView"
+        android:background="@drawable/back48"
         />
 
     <Button
         android:id="@+id/next"
-        android:layout_width="wrap_content"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:text="next"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/invisibleView"
+        android:background="@drawable/next48"
+        />
+
+    <TextView
+        android:id="@+id/nextNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@id/next"
+        android:textSize="30dp"
+        android:textColor="@color/WhiteSmoke"
+        />
+
+    <TextView
+        android:id="@+id/backNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/back"
+        android:textSize="30dp"
+        android:textColor="@color/WhiteSmoke"
         />
 </RelativeLayout>

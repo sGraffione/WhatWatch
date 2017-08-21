@@ -765,8 +765,6 @@ public class Database {
     }
 
 
-
-
     public int updateEpisode(int idSeries, int idSeason){
         int watched = 0;
         int currentEp = 1;
@@ -799,7 +797,7 @@ public class Database {
     }
 
 
-    public int updateSeason(int idSeries, int idSeason){
+    /*public int updateSeason(int idSeries, int idSeason){
         String where = TV_ID_SERIES + "= ? AND " + TV_ID_SEASON + "= ?";
         String[] whereArgs = {Integer.toString(idSeries), Integer.toString(idSeason)};
         String[] column = {TV_SEASON_CURRENT, TV_SEASON_MAX};
@@ -823,7 +821,7 @@ public class Database {
         this.closeDB();
 
         return current_sn;
-    }
+    }*/
 
 
     public int updateWatched(int id){
@@ -1024,6 +1022,21 @@ public class Database {
         timeCursor.moveToFirst();
         int time = timeCursor.getInt(timeCursor.getColumnIndex(SERIES_TIME));
         time += duration;
+        ContentValues up = new ContentValues();
+        up.put(SERIES_TIME, time);
+        db.update(PERSONAL_TABLE, up, null, null);
+        timeCursor.close();
+        db.close();
+        return time;
+    }
+
+
+    public int updateSeriesTime(int duration, int number){
+        this.openWriteableDB();
+        Cursor timeCursor = db.rawQuery("SELECT series_time FROM personal_data", null);
+        timeCursor.moveToFirst();
+        int time = timeCursor.getInt(timeCursor.getColumnIndex(SERIES_TIME));
+        time += (duration * number);
         ContentValues up = new ContentValues();
         up.put(SERIES_TIME, time);
         db.update(PERSONAL_TABLE, up, null, null);
