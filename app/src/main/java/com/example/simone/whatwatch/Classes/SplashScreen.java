@@ -1,7 +1,11 @@
 package com.example.simone.whatwatch.Classes;
 
 import android.app.Activity;
+import android.app.Service;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -17,7 +21,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import android.os.Handler;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.simone.whatwatch.MainActivity;
 import com.example.simone.whatwatch.R;
@@ -26,6 +33,7 @@ import com.example.simone.whatwatch.R;
 public class SplashScreen extends AppCompatActivity{
 
     private static int SPLASH_TIME_OUT = 1000;
+    private boolean easyPeasy = false;
     String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
 
     @Override
@@ -33,18 +41,78 @@ public class SplashScreen extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Service.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo != null && networkInfo.isConnected()) {
+            boolean is3G = networkInfo.getType() == ConnectivityManager.TYPE_MOBILE;
+            boolean isWifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            if (is3G == true || isWifi == true) {
+                new Handler().postDelayed(new Runnable() {
 
-            @Override
-            public void run() {
-                ArrayList<HashMap<String, Object>> filmInfo = new ArrayList<>();
-                new downloadJSONInfo(filmInfo, "movie").execute(URLSelected);
+                    @Override
+                    public void run() {
+                        ArrayList<HashMap<String, Object>> filmInfo = new ArrayList<>();
+                        new downloadJSONInfo(filmInfo, "movie").execute(URLSelected);
+                    }
+                }, SPLASH_TIME_OUT);
+            }else{
+                AlertDialog alertDialog = new AlertDialog.Builder(SplashScreen.this).create();
+                alertDialog.setTitle("Oops..it looks like you have connection problem");
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Open wifi settings", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        easyPeasy = true;
+                        startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                    }
+                });
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Close What Watch app", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        System.exit(0);
+                    }
+                });
+                alertDialog.show();
             }
-        }, SPLASH_TIME_OUT);
-
-
+        }else{
+            AlertDialog alertDialog = new AlertDialog.Builder(SplashScreen.this).create();
+            alertDialog.setTitle("Oops..it looks like you have connection problem");
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Open wifi settings", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    easyPeasy = true;
+                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                }
+            });
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Close What Watch app", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    System.exit(0);
+                }
+            });
+            alertDialog.show();
+        }
     }
 
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.d("SPLASHSCREEN", "ONPAUSE");
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        Log.d("SPLASHSCREEN", "ONRESUME");
+        reloadSplashScreen();
+    }
+
+    public void reloadSplashScreen(){
+        if(easyPeasy) {
+            easyPeasy = false;
+            startActivity(new Intent(this, SplashScreen.class));
+            finish();
+        }
+    }
 
 
     public class downloadJSONInfo extends AsyncTask<String, Void, Void> {

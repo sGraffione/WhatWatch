@@ -252,7 +252,7 @@ public class ShowInfoAboutTvElement extends Activity {
         int id_prec_tv2 = 0;
         int id_prec_btn = 0;
 
-        int height = 60;
+        int height = 100;
         int start = 0;
         try {
             JSONObject object = seasons.getJSONObject(0);
@@ -303,7 +303,7 @@ public class ShowInfoAboutTvElement extends Activity {
                 params3.addRule(RelativeLayout.RIGHT_OF, tv2.getId());
                 params3.addRule(RelativeLayout.ALIGN_BOTTOM, tv2.getId());
                 params3.addRule(RelativeLayout.ALIGN_TOP, tv2.getId());
-                params3.addRule(RelativeLayout.ALIGN_BASELINE, tv2.getId());
+                //params3.addRule(RelativeLayout.ALIGN_BASELINE, tv2.getId());
                 if(id_prec_btn != 0){
                     params3.addRule(RelativeLayout.BELOW, id_prec_btn);
                     params3.addRule(RelativeLayout.ALIGN_START, id_prec_btn);
@@ -315,8 +315,8 @@ public class ShowInfoAboutTvElement extends Activity {
                 if(!database.verifySeasonWatched(id_film, seasons.getJSONObject(i).getInt("id"))){
                     if(database.verifyId(id_film, seasons.getJSONObject(i).getInt("id")) == 0) {
                         btn_add.setBackgroundResource(R.drawable.add);
-                        btn_add.setHeight(height);
-                        btn_add.setWidth(height);
+                        //btn_add.setHeight(height);
+
                         btn_add.setGravity(Gravity.CENTER);
                     }else{
                         btn_add.setText("In watchlist");
