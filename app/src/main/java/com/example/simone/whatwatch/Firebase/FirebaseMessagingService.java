@@ -59,7 +59,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         intent.putExtra("identifier", identifier);
         intent.putExtra("title", titleOfElement);
         Log.d(TAG, "titleOfElement: " + titleOfElement);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         notificationBuilder.setContentIntent(pendingIntent);
 
