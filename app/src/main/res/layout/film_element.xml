@@ -42,32 +42,34 @@
         android:id="@+id/btnAddToWatch"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="70dp"
+        android:layout_below="@+id/Title"
+        android:layout_marginLeft="150dp"
+        android:layout_marginTop="150dp"
+        android:layout_toRightOf="@+id/photo"
         android:background="@drawable/add"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:textSize="30sp"
-        android:layout_below="@+id/rating"
-        android:layout_alignStart="@+id/rating" />
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/rating"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="63dp"
-        android:layout_marginTop="37dp"
-        android:text="TextView"
-        android:textSize="36sp"
         android:layout_below="@+id/Title"
-        android:layout_toEndOf="@+id/photo" />
+        android:layout_marginLeft="220dp"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/photo"
+        android:text="TextView"
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/scale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/rating"
-        android:layout_alignTop="@+id/rating"
-        android:layout_toEndOf="@+id/rating"
+        android:layout_below="@+id/Title"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/rating"
         android:text="/10"
         android:textColor="@color/White"
         android:textSize="36sp" />
@@ -76,13 +78,12 @@
         android:id="@+id/joinChat"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_alignBottom="@+id/btnAddToWatch"
+        android:layout_marginLeft="150dp"
+        android:layout_toRightOf="@+id/btnAddToWatch"
         android:background="@drawable/chat"
         android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:layout_marginStart="77dp"
-        android:layout_alignBaseline="@+id/btnAddToWatch"
-        android:layout_alignBottom="@+id/btnAddToWatch"
-        android:layout_toEndOf="@+id/scale" />
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:id="@+id/tag_chat"
@@ -92,6 +93,17 @@
         android:layout_below="@+id/joinChat"
         android:layout_marginLeft="2dp"
         android:text="Chat"
+        android:textColor="@color/WhiteSmoke"
+        android:textSize="22sp" />
+
+    <TextView
+        android:id="@+id/tag_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/btnAddToWatch"
+        android:layout_below="@+id/btnAddToWatch"
+        android:layout_marginLeft="5dp"
+        android:text="Add"
         android:textColor="@color/WhiteSmoke"
         android:textSize="22sp" />
 
