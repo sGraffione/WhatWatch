@@ -50,11 +50,10 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         String click_action = remoteMessage.getNotification().getClickAction();
         String identifier = remoteMessage.getData().get("identifier");
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setContentTitle(title)
                 .setContentText(messageBody)
-                .setSmallIcon(R.drawable.chat);
+                .setSmallIcon(R.drawable.notification);
 
         Intent intent = new Intent(click_action);
         intent.putExtra("identifier", identifier);

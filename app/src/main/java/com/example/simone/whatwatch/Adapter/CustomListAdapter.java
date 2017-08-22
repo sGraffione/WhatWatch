@@ -25,21 +25,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
-import java.util.StringTokenizer;
 
 import database.Film;
 import database.Tv;
 import database.Database;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
 
@@ -219,9 +212,6 @@ public class CustomListAdapter extends ArrayAdapter<HashMap<String, Object>> {
                 }
             }
         });
-
-
-
             return convertView;
         }
 }

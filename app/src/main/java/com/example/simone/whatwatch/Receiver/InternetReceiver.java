@@ -17,6 +17,7 @@ public class InternetReceiver extends BroadcastReceiver {
             Log.d("NetReceiver", "Internet is connected");
         }else {
             Log.d("NetReceiver", "Internet is not connected");
+            System.exit(0);
         }
     }
 

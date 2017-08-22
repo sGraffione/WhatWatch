@@ -75,6 +75,7 @@ public class MyWatchListFragment extends Fragment {
             gridView.setAdapter(watchlistAdapter);
         }
 
+
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
