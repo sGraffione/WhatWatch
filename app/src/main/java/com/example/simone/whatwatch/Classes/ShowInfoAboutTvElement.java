@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.View;
@@ -248,11 +249,12 @@ public class ShowInfoAboutTvElement extends Activity {
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         layout.setLayoutParams(layoutParams);
 
+        final float scale = getResources().getDisplayMetrics().density;
+
         int id_prec_tv1 = 0;
         int id_prec_tv2 = 0;
         int id_prec_btn = 0;
 
-        int height = 100;
         int start = 0;
         try {
             JSONObject object = seasons.getJSONObject(0);
@@ -264,6 +266,8 @@ public class ShowInfoAboutTvElement extends Activity {
         }
         int j = 0;
         for(int i = start; i < seasons.length(); i++){
+            int dps = 30;
+            int pixel = (int) (dps * scale + 0.5f);
             try {
 
                 RelativeLayout.LayoutParams params1 = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -272,7 +276,7 @@ public class ShowInfoAboutTvElement extends Activity {
 
                 TextView tv1 = new TextView(this);
                 params1.addRule(RelativeLayout.ALIGN_START, R.id.Overview);
-                params1.setMargins(0,10 ,30,0);
+                params1.setMargins(0,0,30,0);
                 if(id_prec_tv1 != 0) {
                     params1.addRule(RelativeLayout.BELOW, id_prec_tv1);
                 }else{
@@ -281,12 +285,12 @@ public class ShowInfoAboutTvElement extends Activity {
                 tv1.setId(View.generateViewId());
                 tv1.setText("Season #" + seasons.getJSONObject(i).getInt("season_number"));
                 tv1.setTextColor(getResources().getColor(R.color.WhiteSmoke));
-                tv1.setHeight(height);
+                tv1.setHeight(pixel);
                 id_prec_tv1 = tv1.getId();
 
                 TextView tv2 = new TextView(this);
                 params2.addRule(RelativeLayout.RIGHT_OF, tv1.getId());
-                params2.setMargins(0,10,20,0);
+                params2.setMargins(0,0,30,0);
                 if(id_prec_tv2 != 0) {
                     params2.addRule(RelativeLayout.BELOW, id_prec_tv2);
                     params2.addRule(RelativeLayout.ALIGN_START, id_prec_tv2);
@@ -296,14 +300,12 @@ public class ShowInfoAboutTvElement extends Activity {
                 tv2.setId(View.generateViewId());
                 tv2.setText(seasons.getJSONObject(i).getString("episode_count") + " episodes");
                 tv2.setTextColor(getResources().getColor(R.color.WhiteSmoke));
-                tv2.setHeight(height);
+                tv2.setHeight(pixel);
                 id_prec_tv2 = tv2.getId();
 
                 final TextView btn_add = new TextView(this);
                 params3.addRule(RelativeLayout.RIGHT_OF, tv2.getId());
-                params3.addRule(RelativeLayout.ALIGN_BOTTOM, tv2.getId());
-                params3.addRule(RelativeLayout.ALIGN_TOP, tv2.getId());
-                //params3.addRule(RelativeLayout.ALIGN_BASELINE, tv2.getId());
+                params3.height = pixel;
                 if(id_prec_btn != 0){
                     params3.addRule(RelativeLayout.BELOW, id_prec_btn);
                     params3.addRule(RelativeLayout.ALIGN_START, id_prec_btn);
@@ -315,19 +317,25 @@ public class ShowInfoAboutTvElement extends Activity {
                 if(!database.verifySeasonWatched(id_film, seasons.getJSONObject(i).getInt("id"))){
                     if(database.verifyId(id_film, seasons.getJSONObject(i).getInt("id")) == 0) {
                         btn_add.setBackgroundResource(R.drawable.add);
-                        //btn_add.setHeight(height);
-
-                        btn_add.setGravity(Gravity.CENTER);
                     }else{
+                        dps = 80;
+                        pixel = (int) (dps * scale + 0.5f);
                         btn_add.setText("In watchlist");
                         btn_add.setTextColor(getResources().getColor(R.color.Orange));
                     }
                 }else{
+                    dps = 80;
+                    pixel = (int) (dps * scale + 0.5f);
                     btn_add.setText("Watched");
                     btn_add.setTextColor(Color.GREEN);
                 }
+                params3.width = pixel;
                 id_prec_btn = btn_add.getId();
 
+
+                relativeLayout.addView(tv1, params1);
+                relativeLayout.addView(tv2, params2);
+                relativeLayout.addView(btn_add, params3);
 
                 if(start == 0){
                     j = i+1;
@@ -335,23 +343,27 @@ public class ShowInfoAboutTvElement extends Activity {
                     j = i;
                 }
                 final int index = j;
+                final RelativeLayout.LayoutParams params = params3;
                 btn_add.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        add_season(index, v, btn_add.getId());
+                        add_season(index, v, btn_add.getId(), params);
                     }
                 });
 
-                relativeLayout.addView(tv1, params1);
-                relativeLayout.addView(tv2, params2);
-                relativeLayout.addView(btn_add, params3);
+
             }catch (JSONException e){
                 e.printStackTrace();
             }
         }
     }
 
-    private void add_season(int i, View view, int id_btn){
+    private void add_season(int i, View view, int id_btn, RelativeLayout.LayoutParams params){
+
+        final float scale = getResources().getDisplayMetrics().density;
+        int dps = 80;
+        int pixel = (int) (dps * scale + 0.5f);
+
         try{
             filmInfo = new ParsingInfoFilm(this, "tv", i).execute(url).get();
         }catch (InterruptedException e){
@@ -375,9 +387,10 @@ public class ShowInfoAboutTvElement extends Activity {
                 database.insertSeries(tv);
                 TextView btn_add = (TextView) findViewById(id_btn);
                 btn_add.setBackground(null);
-                btn_add.setWidth(80);
                 btn_add.setText("In watchlist");
                 btn_add.setTextColor(getResources().getColor(R.color.Orange));
+                params.width = pixel;
+                btn_add.setLayoutParams(params);
             }else{
                 Toast.makeText(view.getContext(), "You have already a season of this serie", Toast.LENGTH_SHORT).show();
             }

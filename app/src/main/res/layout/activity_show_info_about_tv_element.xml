@@ -39,12 +39,13 @@
             android:id="@+id/Overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/genres"
+            android:layout_below="@+id/genres"
+            android:layout_marginBottom="20dp"
             android:layout_marginTop="16dp"
             android:text="Overview"
             android:textColor="@color/WhiteSmoke"
-            android:textSize="18sp"
-            android:layout_below="@+id/genres"
-            android:layout_alignStart="@+id/genres" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/add_button"
