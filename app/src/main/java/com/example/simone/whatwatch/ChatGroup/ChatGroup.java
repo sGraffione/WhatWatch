@@ -2,6 +2,7 @@ package com.example.simone.whatwatch.ChatGroup;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -61,6 +62,7 @@ public class ChatGroup extends AppCompatActivity{
 
         id_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        onNewIntent(getIntent());
         id_chat = getIntent().getStringExtra("identifier");
         title = getIntent().getStringExtra("title");
         Log.d(TAG, "title: " + title +" | identifier: " + id_chat);
@@ -160,6 +162,12 @@ public class ChatGroup extends AppCompatActivity{
             }
         });
         displayChatMessage();
+    }
+
+    @Override
+    public void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        setIntent(intent);
     }
 
     public void displayChatMessage(){
