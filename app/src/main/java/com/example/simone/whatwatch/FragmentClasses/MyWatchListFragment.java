@@ -75,12 +75,9 @@ public class MyWatchListFragment extends Fragment {
             gridView.setAdapter(watchlistAdapter);
         }
 
-        final InternetReceiver internetReceiver = new InternetReceiver();
-
         gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                Log.d("WATCHLIST", "isConnected: " + internetReceiver.getIsConnected());
                 final Database database = new Database(view.getContext());
                 final int j = position;
                 if(films.get(position) instanceof Film){
