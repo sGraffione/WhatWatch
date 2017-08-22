@@ -63,6 +63,7 @@ public class ChatGroup extends AppCompatActivity{
 
         id_chat = getIntent().getStringExtra("identifier");
         title = getIntent().getStringExtra("title");
+        Log.d(TAG, "title: " + title +" | identifier: " + id_chat);
 
         exit = (Button) findViewById(R.id.exit);
         join = (Button) findViewById(R.id.join);

@@ -36,7 +36,7 @@ public class Homepage extends Fragment {
 
     ArrayList<HashMap<String, Object>> filmInfo;
     ListView lv;
-    String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=1\n";
+    String URLSelected = "https://api.themoviedb.org/3/discover/movie?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=1\n";
     CustomListAdapter adapter;
     Button forward;
     Button back;
@@ -51,7 +51,7 @@ public class Homepage extends Fragment {
     String typeSelected = "movie";
     String searchTypeSelected = "popularity";
     String firstPart = "https://api.themoviedb.org/3/discover/";
-    String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=";
+    String secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=";
     int homepageSearchSelected = R.id.Popularity;
     int getHomepageSearchTypeSelected = R.id.Movies;
 
@@ -283,7 +283,7 @@ public class Homepage extends Fragment {
             switch (item.getItemId()){
                 case R.id.Popularity:
                     homepageSearchSelected = R.id.Popularity;
-                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=true&include_video=true&page=";
+                    secondPart = "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=true&page=";
                     searchTypeSelected = "popularity";
                     break;
                 case R.id.Most_Voted:

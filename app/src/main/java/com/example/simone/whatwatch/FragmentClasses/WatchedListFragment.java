@@ -143,13 +143,13 @@ public class WatchedListFragment extends Fragment {
         ArrayList<String> orderedFilm = database.getThisArrayListOfBelin(1, sortingType);
         final ArrayList<Object> films = sortArrayListByOrderedFilms(film, orderedFilm);
 
-        film_count.setOnClickListener(new View.OnClickListener() {
+        /*film_count.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 Intent dbmanager = new Intent(getActivity(), AndroidDatabaseManager.class);
                 startActivity(dbmanager);
             }
-        });
+        });*/
 
 
 
