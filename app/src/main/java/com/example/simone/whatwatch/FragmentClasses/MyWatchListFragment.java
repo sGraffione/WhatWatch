@@ -67,7 +67,7 @@ public class MyWatchListFragment extends Fragment {
         gridView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.Really_Really_Dark_Gray));
 
         final Database database = new Database(getContext());
-        ArrayList<Object> film = database.getFilter(0, typeSelected, sortingType);
+        final ArrayList<Object> film = database.getFilter(0, typeSelected, sortingType);
         ArrayList<String> orderedFilm = database.getThisArrayListOfBelin(0, sortingType);
         final ArrayList<Object> films = sortArrayListByOrderedFilms(film, orderedFilm);
         if(films != null){
@@ -189,6 +189,11 @@ public class MyWatchListFragment extends Fragment {
                             int id_season = ((Tv) films.get(j)).getIdSeason();
                             int next_season = ((Tv) films.get(j)).getSeasonCurrent() + 1;
                             int max_season = ((Tv) films.get(j)).getSeasonMax();
+                            int current_Episode = ((Tv) films.get(j)).getEpisodeCurrent();
+                            int max_episode = ((Tv) films.get(j)).getEpisodeMax();
+                            int episodesSeen = max_episode - current_Episode;
+                            //String url = "https://api.themoviedb.org/3/tv/"+ ((Tv) films.get(j)).getIdSeries() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
+                            //new RuntimeParsing(view.getContext(), "tv").execute(url);
                             int trueNextSeason = checkNextSeason(id_series, next_season - 1, max_season, database);
                             if(trueNextSeason != -1) {
                                 database.updateWatched(id_series, id_season);

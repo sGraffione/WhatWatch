@@ -59,6 +59,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... urlString){
+        //android.os.Debug.waitForDebugger();
         try {
             HttpURLConnection urlConnection;
             URL url = new URL(urlString[0]);
@@ -111,21 +112,22 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                     String TAG_NAME = tv_serie.getString("name");
                     String TAG_OVERVIEW = tv_serie.getString("overview");
                     int TAG_ID = tv_serie.getInt("id");
-                    String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + tv_serie.getString("poster_path");
-                    Double TAG_RATING = tv_serie.getDouble("vote_average");
-                    urlConnection.disconnect();
+                    if(!tv_serie.getString("poster_path").equals("null")) {
+                        String TAG_PHOTO = "https://image.tmdb.org/t/p/w500" + tv_serie.getString("poster_path");
+                        Double TAG_RATING = tv_serie.getDouble("vote_average");
 
 
-                    //General information of film
-                    HashMap<String, Object> info = new HashMap<>();
-                    getExtraInfos(TAG_ID, info);
-                    info.put("name", TAG_NAME);
-                    info.put("overview", TAG_OVERVIEW);
-                    info.put("poster_path", TAG_PHOTO);
-                    info.put("vote_average", TAG_RATING);
-                    info.put("id", TAG_ID);
+                        //General information of film
+                        HashMap<String, Object> info = new HashMap<>();
+                        getExtraInfos(TAG_ID, info, TAG_PHOTO);
+                        info.put("name", TAG_NAME);
+                        info.put("overview", TAG_OVERVIEW);
+                        info.put("poster_path", TAG_PHOTO);
+                        info.put("vote_average", TAG_RATING);
+                        info.put("id", TAG_ID);
 
-                    filmInfo.add(info);
+                        filmInfo.add(info);
+                    }
                 }
             }
 
@@ -138,7 +140,7 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
         return null;
     }
 
-    protected void getExtraInfos(int id, HashMap<String, Object> info){
+    protected void getExtraInfos(int id, HashMap<String, Object> info, String TAG){
         String urlString = "https://api.themoviedb.org/3/tv/"+id+"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
         try {
             HttpURLConnection urlConnection;
@@ -171,7 +173,11 @@ public class downloadJSONInfo extends AsyncTask<String, Void, Void> {
                 JSONObject object = jArray.getJSONObject(i);
                 if((int) object.get("season_number") == 1){
                     info.put("id_season", object.get("id"));
-                    info.put("poster_path_season", "https://image.tmdb.org/t/p/w500"+ object.getString("poster_path"));
+                    if(object.getString("poster_path").equals("null")){
+                        info.put("poster_path_season", TAG);
+                    }else{
+                        info.put("poster_path_season", "https://image.tmdb.org/t/p/w500" + object.get("poster_path"));
+                    }
                     info.put("episode_max_season", object.get("episode_count"));
                 }
             }

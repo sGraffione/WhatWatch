@@ -361,13 +361,13 @@ public class ShowInfoAboutTvElement extends Activity {
         }
         String poster_path_season;
         HashMap<String, Object> data = filmInfo.get(0);
-        /*if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("") || data.get("poster_path_season") == null){
+        if(data.get("poster_path_season").toString().equals("null") || data.get("poster_path_season").toString().equals("") || data.get("poster_path_season") == null){
             poster_path_season = data.get("poster_path").toString();
         }else{
             poster_path_season = data.get("poster_path_season").toString();
-        }*/
+        }
         Tv tv = new Tv(id_film, (int) data.get("id_season"), (String) data.get("name"), 1, (int) data.get("episode_max_season"), i, (int) data.get("number_of_seasons"),
-                0, (String) data.get("poster_path"), (String) data.get("poster_path_season"));
+                0, (String) data.get("poster_path"), poster_path_season /*(String) data.get("poster_path_season")*/);
         Database database = new Database(view.getContext());
         if (!database.verifySeasonWatched(id_film, (int) data.get("id_season"))) {
             if(!database.verifyIdSeries(id_film)){

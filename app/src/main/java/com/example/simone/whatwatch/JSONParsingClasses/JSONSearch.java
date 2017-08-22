@@ -172,7 +172,7 @@ public class JSONSearch extends AsyncTask<String, Void, ArrayList<HashMap<String
                 JSONObject object = jArray.getJSONObject(i);
                 if((int) object.get("season_number") == 1){
                     info.put("id_season", object.get("id"));
-                    if(object.get("poster_path").equals("null")){
+                    if(object.getString("poster_path").equals("null")){
                         info.put("poster_path_season", TAG);
                     }else{
                         info.put("poster_path_season", "https://image.tmdb.org/t/p/w500" + object.get("poster_path"));

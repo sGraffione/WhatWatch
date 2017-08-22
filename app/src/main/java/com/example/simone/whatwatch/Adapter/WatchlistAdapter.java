@@ -65,7 +65,7 @@ public class WatchlistAdapter extends BaseAdapter {
                 season.setText("S " + tv.getSeasonCurrent());
                 episode.setText("E " + tv.getEpisodeCurrent());
 
-                if(tv.getImgUrlSeason() == "" || tv.getImgUrlSeason() == null || tv.getImgUrlSeason().isEmpty()){
+                if(tv.getImgUrlSeason().equals("") || tv.getImgUrlSeason() == null || tv.getImgUrlSeason().isEmpty()){
                     Picasso.with(mContext).load(R.drawable.noavailable).into(imageView);
                 }else{
                     Picasso.with(mContext).load(tv.getImgUrlSeason()).into(imageView);
