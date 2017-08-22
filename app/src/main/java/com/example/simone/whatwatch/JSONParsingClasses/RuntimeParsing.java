@@ -22,13 +22,15 @@ import database.Database;
         private String type;
         private Context mContext;
         HashMap<String, Integer> info;
+        private int numberEpisode;
 
         //Il construttore riceve un contesto e lo usa per istanziare la progressDialog
-        public RuntimeParsing(Context context, String type)
+        public RuntimeParsing(Context context, String type, int numberEpisode)
         {
             info = new HashMap<>();
             this.type = type;
             mContext = context;
+            this.numberEpisode = numberEpisode;
         }
 
 
@@ -105,7 +107,11 @@ import database.Database;
             if(type.equals("movie")){
                 database.updateFilmTime(info.get("runtime"));
             }else{
-                database.updateSeriesTime(info.get("runtime"));
+                if(numberEpisode != 0){
+                    database.updateSeriesTime(info.get("runtime"), numberEpisode);
+                }else{
+                    database.updateSeriesTime(info.get("runtime"));
+                }
             }
         }
     }

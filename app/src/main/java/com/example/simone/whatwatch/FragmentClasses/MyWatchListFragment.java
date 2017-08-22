@@ -103,7 +103,7 @@ public class MyWatchListFragment extends Fragment {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             database.updateWatched(((Film) films.get(j)).getId());
                             String url = "https://api.themoviedb.org/3/movie/"+ ((Film) films.get(j)).getId() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
-                            new RuntimeParsing(view.getContext(), "movie").execute(url);
+                            new RuntimeParsing(view.getContext(), "movie", 0).execute(url);
                             refreshWatchedWatchlist();
                         }
                     });
@@ -177,7 +177,7 @@ public class MyWatchListFragment extends Fragment {
                                 int var = database.updateEpisode(((Tv) films.get(j)).getIdSeries(), ((Tv) films.get(j)).getIdSeason());
                                 Log.d("WATCHLIST", String.valueOf(var));
                                 String url = "https://api.themoviedb.org/3/tv/"+ ((Tv) films.get(j)).getIdSeries() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
-                                new RuntimeParsing(view.getContext(), "tv").execute(url);
+                                new RuntimeParsing(view.getContext(), "tv", 0).execute(url);
                                 refreshWatchedWatchlist();
                             }
                         });
@@ -192,12 +192,12 @@ public class MyWatchListFragment extends Fragment {
                             int current_Episode = ((Tv) films.get(j)).getEpisodeCurrent();
                             int max_episode = ((Tv) films.get(j)).getEpisodeMax();
                             int episodesSeen = max_episode - current_Episode;
-                            //String url = "https://api.themoviedb.org/3/tv/"+ ((Tv) films.get(j)).getIdSeries() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
-                            //new RuntimeParsing(view.getContext(), "tv").execute(url);
+                            String url = "https://api.themoviedb.org/3/tv/"+ ((Tv) films.get(j)).getIdSeries() +"?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US";
+                            new RuntimeParsing(view.getContext(), "tv", episodesSeen).execute(url);
                             int trueNextSeason = checkNextSeason(id_series, next_season - 1, max_season, database);
                             if(trueNextSeason != -1) {
                                 database.updateWatched(id_series, id_season);
-                                String url = "https://api.themoviedb.org/3/tv/"+ id_series + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
+                                url = "https://api.themoviedb.org/3/tv/"+ id_series + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US&append_to_response=credits,videos\n";
                                 try{
                                     ArrayList<HashMap<String, Object>> newSeason = new ParsingInfoFilm(view.getContext(), "tv", trueNextSeason).execute(url).get();
                                     String poster_path_season;
