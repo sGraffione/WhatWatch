@@ -182,7 +182,7 @@ public class ShowInfoAboutListElement extends Activity {
                 if (film == null) {
                     final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
                     alertDialog.setTitle("You need to watch this film!");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             alertDialog.dismiss();
@@ -195,7 +195,7 @@ public class ShowInfoAboutListElement extends Activity {
                     if (film.getWatched() == 0) {
                         final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
                         alertDialog.setTitle("Non l'hai visto");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 alertDialog.dismiss();
@@ -209,7 +209,7 @@ public class ShowInfoAboutListElement extends Activity {
                         } else {
                             final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
                             alertDialog.setTitle("You need to be logged with your facebook account");
-                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ah...ok :'(", new DialogInterface.OnClickListener() {
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     alertDialog.dismiss();

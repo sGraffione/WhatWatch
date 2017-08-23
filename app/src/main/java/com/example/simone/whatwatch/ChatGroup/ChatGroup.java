@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.simone.whatwatch.JSONParsingClasses.TitleParsing;
 import com.example.simone.whatwatch.R;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class ChatGroup extends AppCompatActivity{
 
@@ -62,9 +64,19 @@ public class ChatGroup extends AppCompatActivity{
 
         id_user = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        onNewIntent(getIntent());
+        //onNewIntent(getIntent());
         id_chat = getIntent().getStringExtra("identifier");
-        title = getIntent().getStringExtra("title");
+        //title = getIntent().getStringExtra("title");
+        int id_series = Integer.parseInt(id_chat.substring(0, id_chat.indexOf("_")));
+        String type = id_chat.substring(id_chat.indexOf("_") + 1);
+        String url = "https://api.themoviedb.org/3/" + type + "/"+ id_series + "?api_key=22dee1f565e5788c58062fdeaf490afc&language=en-US\n";
+        try{
+            title = new TitleParsing(type).execute(url).get();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }catch (ExecutionException e){
+            e.printStackTrace();
+        }
         Log.d(TAG, "title: " + title +" | identifier: " + id_chat);
 
         exit = (Button) findViewById(R.id.exit);
