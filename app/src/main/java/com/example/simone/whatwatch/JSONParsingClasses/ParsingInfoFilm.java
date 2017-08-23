@@ -91,13 +91,28 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
                     if(TAG_RUNTIME.equals("null"))
                         TAG_RUNTIME = "Not available";
 
+                    HashMap<String, Object> info = new HashMap<>();
+
                     JSONObject jArrayCredits = film.getJSONObject("credits");
                     JSONArray jArrayCrew = jArrayCredits.getJSONArray("crew");
-                    String TAG_DIRECTOR;
-                    if(jArrayCrew.length() == 0)
+
+                    ArrayList<String> TAG_DIRECTOR = new ArrayList<>();
+                    for(int j = 0; j < jArrayCrew.length(); j++){
+                        JSONObject object = jArrayCrew.getJSONObject(j);
+                        if(object.getString("job").equals("Director")){
+                            TAG_DIRECTOR.add(object.getString("name"));
+                        }
+                    }
+                    if(TAG_DIRECTOR.size() == 0){
+                        TAG_DIRECTOR.add("Not available");
+                    }
+                    info.put("director", TAG_DIRECTOR);
+                    /*if(jArrayCrew.length() == 0)
                         TAG_DIRECTOR = "not available";
                     else
-                        TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");
+                        TAG_DIRECTOR = jArrayCrew.getJSONObject(0).getString("name");*/
+
+
 
                     JSONArray TAG_CAST = jArrayCredits.getJSONArray("cast");
                     if(TAG_CAST.length() == 0){
@@ -119,7 +134,6 @@ public class ParsingInfoFilm extends AsyncTask<String, Void, ArrayList<HashMap<S
 
 
                     //General information of film
-                    HashMap<String, Object> info = new HashMap<>();
                     info.put("original_title", TAG_TITLE);
                     info.put("overview", TAG_OVERVIEW);
                     info.put("poster_path", TAG_PHOTO);

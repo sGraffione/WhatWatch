@@ -105,7 +105,11 @@ public class ShowInfoAboutListElement extends Activity {
         }
 
         String element = null;
-        director.setText((String) data.get("director"));
+        ArrayList<String> directorsArray = (ArrayList<String>) data.get("director");
+        director.setText(directorsArray.get(0));
+        for(int i = 1; i < directorsArray.size(); i++){
+            director.append(", " + directorsArray.get(i));
+        }
 
             ArrayList<HashMap<String, Object>> genre = parsingJSONArray((JSONArray) data.get("genres"));
             genres.setText((String) genre.get(0).get("name"));
@@ -139,16 +143,20 @@ public class ShowInfoAboutListElement extends Activity {
         }
 
         String url = parsingVideos((JSONArray) data.get("videos"));
-        if(url.equals("Video not available")){
-            ytBtn.setVisibility(View.INVISIBLE);
+        if(url != null){
+            if(url.equals("Video not available")){
+                ytBtn.setVisibility(View.INVISIBLE);
+            }else{
+                final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
+                ytBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
+                    }
+                });
+            }
         }else{
-            final String ytLink = "https://www.youtube.com/watch?v=" + parsingVideos((JSONArray) data.get("videos"));
-            ytBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(ytLink)));
-                }
-            });
+            ytBtn.setVisibility(View.INVISIBLE);
         }
 
         final int id = id_film;
@@ -194,7 +202,7 @@ public class ShowInfoAboutListElement extends Activity {
                     //Database database = new Database(v.getContext());
                     if (film.getWatched() == 0) {
                         final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
-                        alertDialog.setTitle("Non l'hai visto");
+                        alertDialog.setTitle("You need to watch this film");
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
